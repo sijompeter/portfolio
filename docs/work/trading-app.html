@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Watching your money work, Sijo M Peter</title>
+<meta name="description" content="A 0→1 mobile app for funded marketfeed users to track performance and manage allocations, built to hold on to the users activation had just won.">
+<meta property="og:title" content="Watching your money work, marketfeed">
+<meta property="og:description" content="0→1 mobile product for automated trading users. Case study in progress.">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;450;500&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@500;600&display=swap">
+<link rel="stylesheet" href="../assets/site.css">
+<script>(function(){try{var u=new URL(location.href),q=u.searchParams.get('t'),t=null;
+if(q==='dark'||q==='light'){t=q;try{localStorage.setItem('smp-theme',t)}catch(e){}}
+else{try{t=localStorage.getItem('smp-theme')}catch(e){}}
+if(t==='dark')document.documentElement.setAttribute('data-theme','dark');
+if(u.searchParams.has('t')){u.searchParams.delete('t');history.replaceState(history.state,'',u.pathname+(u.searchParams.toString()?'?'+u.searchParams:'')+u.hash)}
+}catch(e){}})();</script>
+</head>
+<body>
+
+<span id="pagelabel" hidden data-no="02">Watching your money work</span>
+<div class="gridlines" aria-hidden="true"></div>
+<div class="gridspot" aria-hidden="true"></div>
+
+<header class="site-head" id="topbar">
+  <div class="bar">
+    <a class="brand" href="../index.html" aria-label="Sijo M Peter, home">SMP</a>
+    <span class="bar-div" aria-hidden="true"></span>
+    <nav class="topnav" aria-label="Primary">
+      <a href="../index.html#work" aria-current="page">Work</a>
+      <a href="../experience.html">Experience</a>
+      <a href="../about.html">About</a>
+      <a href="https://medium.com/@sijompeter" target="_blank" rel="noopener">Writing</a>
+    </nav>
+    <button class="themetgl head" type="button" data-theme-toggle aria-label="Switch colour theme"><span class="i-moon"><svg class="ic" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M27 18.6A11.5 11.5 0 0 1 13.4 5 11.5 11.5 0 1 0 27 18.6z"/></svg></span><span class="i-sun"><svg class="ic" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="16" cy="16" r="6"/><path d="M16 3v3M16 26v3M3 16h3M26 16h3M7 7l2 2M23 23l2 2M25 7l-2 2M9 23l-2 2"/></svg></span></button>
+    <a class="talk" href="../contact.html">Let&rsquo;s talk <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"/><path d="M8.5 7H17v8.5"/></svg></a>
+  </div>
+</header>
+
+<div class="navzone" id="navzone">
+  <nav class="dock" id="dock" aria-label="Site navigation">
+    <span class="dock-loc">
+      <a class="dock-home" href="../index.html" aria-label="Back to the top of the home page">
+        <span class="sp" aria-hidden="true">SP</span><span class="lb">Home</span>
+      </a>
+      <span class="loc-div" aria-hidden="true"></span>
+      <button class="dock-now" id="nowbtn" type="button" aria-expanded="false" aria-controls="map">
+        <span class="n" id="nowno">00</span>
+        <span class="t" id="nowtitle">You are here</span>
+        <span class="cv" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+      </button>
+    </span>
+    <span class="dock-sep" aria-hidden="true"></span>
+    <a href="../index.html#work" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="7.5" height="7.5" rx="1.2"/><rect x="13.5" y="4" width="7.5" height="7.5" rx="1.2"/><rect x="3" y="14.5" width="7.5" height="5.5" rx="1.2"/><rect x="13.5" y="14.5" width="7.5" height="5.5" rx="1.2"/></svg><span>Work</span></a>
+    <a href="../experience.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4.5v15"/><circle cx="5" cy="8" r="1.6"/><circle cx="5" cy="16" r="1.6"/><path d="M9.5 8H20M9.5 16H17"/></svg><span>Experience</span></a>
+    <a href="../about.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c0-3.6 3.4-5.8 7.5-5.8s7.5 2.2 7.5 5.8"/></svg><span>About</span></a>
+    <a href="../assets/doc/Sijo-M-Peter-Senior-Product-Designer.pdf" download data-resume><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5v11"/><path d="M8 11l4 3.5 4-3.5"/><path d="M4.5 17.5v1.5a1.5 1.5 0 0 0 1.5 1.5h12a1.5 1.5 0 0 0 1.5-1.5v-1.5"/></svg><span>R&eacute;sum&eacute;</span></a>
+    <a class="cta" href="../contact.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/></svg><span>Contact</span></a>
+  </nav>
+
+  <div class="map" id="map" role="dialog" aria-label="Everything on this site" data-lenis-prevent>
+    <div class="mapgrid">
+      <div class="mg-cases">
+        <span class="h5">Case studies <em>Four projects, four kinds of problem</em></span>
+        <a class="cs-row" href="../work/fund-allocation.html" data-case="01">
+          <span class="mk" aria-hidden="true"><svg class="mk mk-funnel" viewBox="0 0 300 300" fill="none" stroke="currentColor" aria-hidden="true" focusable="false"><ellipse class="r" style="--i:0" cx="150" cy="54.0" rx="116.0" ry="33.6" stroke-opacity="0.8" stroke-width="1.05"/><ellipse class="r" style="--i:1" cx="150" cy="66.0" rx="110.2" ry="32.0" stroke-opacity="0.764" stroke-width="1.03"/><ellipse class="r" style="--i:2" cx="150" cy="78.0" rx="104.5" ry="30.3" stroke-opacity="0.728" stroke-width="1.01"/><ellipse class="r" style="--i:3" cx="150" cy="90.0" rx="98.8" ry="28.6" stroke-opacity="0.691" stroke-width="0.99"/><ellipse class="r" style="--i:4" cx="150" cy="102.0" rx="93.0" ry="27.0" stroke-opacity="0.655" stroke-width="0.98"/><ellipse class="r" style="--i:5" cx="150" cy="114.0" rx="87.2" ry="25.3" stroke-opacity="0.619" stroke-width="0.96"/><ellipse class="r" style="--i:6" cx="150" cy="126.0" rx="81.5" ry="23.6" stroke-opacity="0.583" stroke-width="0.94"/><ellipse class="r" style="--i:7" cx="150" cy="138.0" rx="75.8" ry="22.0" stroke-opacity="0.546" stroke-width="0.92"/><ellipse class="r" style="--i:8" cx="150" cy="150.0" rx="70.0" ry="20.3" stroke-opacity="0.51" stroke-width="0.9"/><ellipse class="r" style="--i:9" cx="150" cy="162.0" rx="64.2" ry="18.6" stroke-opacity="0.474" stroke-width="0.88"/><ellipse class="r" style="--i:10" cx="150" cy="174.0" rx="58.5" ry="17.0" stroke-opacity="0.438" stroke-width="0.86"/><ellipse class="r" style="--i:11" cx="150" cy="186.0" rx="52.8" ry="15.3" stroke-opacity="0.401" stroke-width="0.84"/><ellipse class="r" style="--i:12" cx="150" cy="198.0" rx="47.0" ry="13.6" stroke-opacity="0.365" stroke-width="0.83"/><ellipse class="r" style="--i:13" cx="150" cy="210.0" rx="41.2" ry="12.0" stroke-opacity="0.329" stroke-width="0.81"/><ellipse class="r" style="--i:14" cx="150" cy="222.0" rx="35.5" ry="10.3" stroke-opacity="0.293" stroke-width="0.79"/><ellipse class="r" style="--i:15" cx="150" cy="234.0" rx="29.8" ry="8.6" stroke-opacity="0.256" stroke-width="0.77"/><ellipse class="r" style="--i:16" cx="150" cy="246.0" rx="24.0" ry="7.0" stroke-opacity="0.22" stroke-width="0.75"/><path class="g" d="M34 54 L126 246" stroke-opacity=".22" stroke-width="1"/><path class="g" d="M266 54 L174 246" stroke-opacity=".22" stroke-width="1"/></svg></span>
+          <span class="tx">
+            <span class="k">01<span class="lead">Start here</span></span>
+            <strong>Capital that already existed</strong>
+            <span class="d">Process, end to end</span>
+          </span>
+          <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13"/><path d="M12.5 6.5L19 12l-6.5 5.5"/></svg></span>
+        </a>
+        <a class="cs-row" href="../work/trading-app.html" data-case="02">
+          <span class="mk" aria-hidden="true"><svg class="mk mk-burst" viewBox="0 0 300 300" fill="none" stroke="currentColor" aria-hidden="true" focusable="false"><defs><pattern id="mk-dots-m" width="7.5" height="7.5" patternUnits="userSpaceOnUse"><circle cx="3.75" cy="3.75" r="1.15" fill="currentColor" stroke="none"/></pattern><radialGradient id="mk-fade-m"><stop offset="0" stop-color="#fff" stop-opacity="1"/><stop offset=".45" stop-color="#fff" stop-opacity=".92"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient><mask id="mk-star-m"><path d="M292.0 150.0 L291.6 156.2 L290.3 162.3 L288.2 168.2 L285.3 173.9 L281.6 179.2 L277.2 184.1 L272.0 188.5 L266.3 192.3 L259.9 195.5 L253.0 198.0 L245.7 199.8 L237.9 200.8 L229.8 200.8 L221.4 200.0 L212.8 198.2 L203.9 195.2 L194.5 190.8 L183.1 183.1 L190.8 194.5 L195.2 203.9 L198.2 212.8 L200.0 221.4 L200.8 229.8 L200.8 237.9 L199.8 245.7 L198.0 253.0 L195.5 259.9 L192.3 266.3 L188.5 272.0 L184.1 277.2 L179.2 281.6 L173.9 285.3 L168.2 288.2 L162.3 290.3 L156.2 291.6 L150.0 292.0 L143.8 291.6 L137.7 290.3 L131.8 288.2 L126.1 285.3 L120.8 281.6 L115.9 277.2 L111.5 272.0 L107.7 266.3 L104.5 259.9 L102.0 253.0 L100.2 245.7 L99.2 237.9 L99.2 229.8 L100.0 221.4 L101.8 212.8 L104.8 203.9 L109.2 194.5 L116.9 183.1 L105.5 190.8 L96.1 195.2 L87.2 198.2 L78.6 200.0 L70.2 200.8 L62.1 200.8 L54.3 199.8 L47.0 198.0 L40.1 195.5 L33.7 192.3 L28.0 188.5 L22.8 184.1 L18.4 179.2 L14.7 173.9 L11.8 168.2 L9.7 162.3 L8.4 156.2 L8.0 150.0 L8.4 143.8 L9.7 137.7 L11.8 131.8 L14.7 126.1 L18.4 120.8 L22.8 115.9 L28.0 111.5 L33.7 107.7 L40.1 104.5 L47.0 102.0 L54.3 100.2 L62.1 99.2 L70.2 99.2 L78.6 100.0 L87.2 101.8 L96.1 104.8 L105.5 109.2 L116.9 116.9 L109.2 105.5 L104.8 96.1 L101.8 87.2 L100.0 78.6 L99.2 70.2 L99.2 62.1 L100.2 54.3 L102.0 47.0 L104.5 40.1 L107.7 33.7 L111.5 28.0 L115.9 22.8 L120.8 18.4 L126.1 14.7 L131.8 11.8 L137.7 9.7 L143.8 8.4 L150.0 8.0 L156.2 8.4 L162.3 9.7 L168.2 11.8 L173.9 14.7 L179.2 18.4 L184.1 22.8 L188.5 28.0 L192.3 33.7 L195.5 40.1 L198.0 47.0 L199.8 54.3 L200.8 62.1 L200.8 70.2 L200.0 78.6 L198.2 87.2 L195.2 96.1 L190.8 105.5 L183.1 116.9 L194.5 109.2 L203.9 104.8 L212.8 101.8 L221.4 100.0 L229.8 99.2 L237.9 99.2 L245.7 100.2 L253.0 102.0 L259.9 104.5 L266.3 107.7 L272.0 111.5 L277.2 115.9 L281.6 120.8 L285.3 126.1 L288.2 131.8 L290.3 137.7 L291.6 143.8 L292.0 150.0 Z" fill="url(#mk-fade-m)" stroke="none"/></mask></defs><g class="fld"><rect x="0" y="0" width="300" height="300" fill="url(#mk-dots-m)" stroke="none" mask="url(#mk-star-m)"/></g></svg></span>
+          <span class="tx">
+            <span class="k">02</span>
+            <strong>Watching your money work</strong>
+            <span class="d">0 to 1, under a pivot</span>
+          </span>
+          <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13"/><path d="M12.5 6.5L19 12l-6.5 5.5"/></svg></span>
+        </a>
+        <a class="cs-row" href="../work/zolo-booking.html" data-case="03">
+          <span class="mk" aria-hidden="true"><svg class="mk mk-lattice" viewBox="0 0 300 300" fill="none" stroke="currentColor" aria-hidden="true" focusable="false"><rect class="fillcell" style="--i:0" x="22.0" y="44.0" width="36" height="36" rx="4" fill="currentColor" stroke="none" fill-opacity=".10"/><rect class="c taken" style="--i:0" x="22.0" y="44.0" width="36" height="36" rx="4" stroke-opacity=".30" stroke-width="1"/><rect class="c" style="--i:1" x="66.0" y="44.0" width="36" height="36" rx="4" stroke-opacity=".72" stroke-width="1"/><rect class="c" style="--i:2" x="110.0" y="44.0" width="36" height="36" rx="4" stroke-opacity=".72" stroke-width="1"/><rect class="fillcell" style="--i:3" x="154.0" y="44.0" width="36" height="36" rx="4" fill="currentColor" stroke="none" fill-opacity=".10"/><rect class="c taken" style="--i:3" x="154.0" y="44.0" width="36" height="36" rx="4" stroke-opacity=".30" stroke-width="1"/><rect class="c" style="--i:4" x="198.0" y="44.0" width="36" height="36" rx="4" stroke-opacity=".72" stroke-width="1"/><rect class="fillcell" style="--i:5" x="242.0" y="44.0" width="36" height="36" rx="4" fill="currentColor" stroke="none" fill-opacity=".10"/><rect class="c taken" style="--i:5" x="242.0" y="44.0" width="36" height="36" rx="4" stroke-opacity=".30" stroke-width="1"/><rect class="c" style="--i:6" x="22.0" y="88.0" width="36" height="36" rx="4" stroke-opacity=".72" stroke-width="1"/><rect class="fillcell" style="--i:7" x="66.0" y="88.0" width="36" height="36" rx="4" fill="currentColor" stroke="none" fill-opacity=".10"/><rect class="c taken" style="--i:7" x="66.0" y="88.0" width="36" height="36" rx="4" stroke-opacity=".30" stroke-width="1"/><rect class="c" style="--i:8" x="110.0" y="88.0" width="36" height="36" rx="4" stroke-opacity=".72" stroke-width="1"/><rect class="fillcell" style="--i:9" x="154.0" y="88.0" width="36" height="36" rx="4" fill="currentColor" stroke="none" fill-opacity=".10"/><rect class="c taken" style="--i:9" x="154.0" y="88.0" width="36" height="36" rx="4" stroke-opacity=".30" stroke-width="1"/><rect class="c" style="--i:10" x="198.0" y="88.0" width="36" height="36" rx="4" stroke-opacity=".72" stroke-width="1"/><rect class="fillcell" style="--i:11" x="242.0" y="88.0" width="36" height="36" rx="4" fill="currentColor" stroke="none" fill-opacity=".10"/><rect class="c taken" style="--i:11" x="242.0" y="88.0" width="36" height="36" rx="4" stroke-opacity=".30" stroke-width="1"/><rect class="c" style="--i:12" x="22.0" y="132.0" width="36" height="36" rx="4" stroke-opacity=".72" stroke-width="1"/><rect class="fillcell" style="--i:13" x="66.0" y="132.0" width="36" height="36" rx="4" fill="currentColor" stroke="none" fill-opacity=".10"/><rect class="c taken" style="--i:13" x="66.0" y="132.0" width="36" height="36" rx="4" stroke-opacity=".30" stroke-width="1"/><rect class="c" style="--i:14" x="110.0" y="132.0" width="36" height="36" rx="4" stroke-opacity=".72" stroke-width="1"/><rect class="c" style="--i:15" x="154.0" y="132.0" width="36" height="36" rx="4" stroke-opacity=".72" stroke-width="1"/><rect class="c" style="--i:16" x="198.0" y="132.0" width="36" height="36" rx="4" stroke-opacity=".72" stroke-width="1"/><rect class="c" style="--i:17" x="242.0" y="132.0" width="36" height="36" rx="4" stroke-opacity=".72" stroke-width="1"/><rect class="fillcell" style="--i:18" x="22.0" y="176.0" width="36" height="36" rx="4" fill="currentColor" stroke="none" fill-opacity=".10"/><rect class="c taken" style="--i:18" x="22.0" y="176.0" width="36" height="36" rx="4" stroke-opacity=".30" stroke-width="1"/><rect class="c" style="--i:19" x="66.0" y="176.0" width="36" height="36" rx="4" stroke-opacity=".72" stroke-width="1"/><rect class="fillcell" style="--i:20" x="110.0" y="176.0" width="36" height="36" rx="4" fill="currentColor" stroke="none" fill-opacity=".10"/><rect class="c taken" style="--i:20" x="110.0" y="176.0" width="36" height="36" rx="4" stroke-opacity=".30" stroke-width="1"/><rect class="c" style="--i:21" x="154.0" y="176.0" width="36" height="36" rx="4" stroke-opacity=".72" stroke-width="1"/><rect class="c" style="--i:22" x="198.0" y="176.0" width="36" height="36" rx="4" stroke-opacity=".72" stroke-width="1"/><rect class="fillcell" style="--i:23" x="242.0" y="176.0" width="36" height="36" rx="4" fill="currentColor" stroke="none" fill-opacity=".10"/><rect class="c taken" style="--i:23" x="242.0" y="176.0" width="36" height="36" rx="4" stroke-opacity=".30" stroke-width="1"/><rect class="c" style="--i:24" x="22.0" y="220.0" width="36" height="36" rx="4" stroke-opacity=".72" stroke-width="1"/><rect class="c" style="--i:25" x="66.0" y="220.0" width="36" height="36" rx="4" stroke-opacity=".72" stroke-width="1"/><rect class="fillcell" style="--i:26" x="110.0" y="220.0" width="36" height="36" rx="4" fill="currentColor" stroke="none" fill-opacity=".10"/><rect class="c taken" style="--i:26" x="110.0" y="220.0" width="36" height="36" rx="4" stroke-opacity=".30" stroke-width="1"/><rect class="fillcell" style="--i:27" x="154.0" y="220.0" width="36" height="36" rx="4" fill="currentColor" stroke="none" fill-opacity=".10"/><rect class="c taken" style="--i:27" x="154.0" y="220.0" width="36" height="36" rx="4" stroke-opacity=".30" stroke-width="1"/><rect class="c" style="--i:28" x="198.0" y="220.0" width="36" height="36" rx="4" stroke-opacity=".72" stroke-width="1"/><rect class="fillcell" style="--i:29" x="242.0" y="220.0" width="36" height="36" rx="4" fill="currentColor" stroke="none" fill-opacity=".10"/><rect class="c taken" style="--i:29" x="242.0" y="220.0" width="36" height="36" rx="4" stroke-opacity=".30" stroke-width="1"/><rect class="pick" x="149.0" y="127.0" width="46" height="46" rx="7" stroke-dasharray="3 3" stroke-width="1.2"/></svg></span>
+          <span class="tx">
+            <span class="k">03</span>
+            <strong>Availability, discovered too late</strong>
+            <span class="d">Conversion and sequencing</span>
+          </span>
+          <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13"/><path d="M12.5 6.5L19 12l-6.5 5.5"/></svg></span>
+        </a>
+        <a class="cs-row" href="../work/design-system.html" data-case="04">
+          <span class="mk" aria-hidden="true"><svg class="mk mk-graph" viewBox="0 0 300 300" fill="none" stroke="currentColor" aria-hidden="true" focusable="false"><path class="e" style="--i:0" pathLength="1" d="M48 48 L116 48" stroke-opacity=".30" stroke-width="1"/><path class="e" style="--i:1" pathLength="1" d="M116 48 L184 48" stroke-opacity=".30" stroke-width="1"/><path class="e" style="--i:2" pathLength="1" d="M184 48 L252 48" stroke-opacity=".30" stroke-width="1"/><path class="e" style="--i:3" pathLength="1" d="M48 48 L48 116" stroke-opacity=".30" stroke-width="1"/><path class="e" style="--i:4" pathLength="1" d="M116 48 L116 116" stroke-opacity=".30" stroke-width="1"/><path class="e" style="--i:5" pathLength="1" d="M252 48 L252 116" stroke-opacity=".30" stroke-width="1"/><path class="e" style="--i:6" pathLength="1" d="M48 116 L116 116" stroke-opacity=".30" stroke-width="1"/><path class="e" style="--i:7" pathLength="1" d="M116 116 L184 116" stroke-opacity=".30" stroke-width="1"/><path class="e" style="--i:8" pathLength="1" d="M184 116 L252 116" stroke-opacity=".30" stroke-width="1"/><path class="e" style="--i:9" pathLength="1" d="M48 116 L48 184" stroke-opacity=".30" stroke-width="1"/><path class="e" style="--i:10" pathLength="1" d="M184 116 L184 184" stroke-opacity=".30" stroke-width="1"/><path class="e" style="--i:11" pathLength="1" d="M252 116 L252 184" stroke-opacity=".30" stroke-width="1"/><path class="e" style="--i:12" pathLength="1" d="M48 184 L116 184" stroke-opacity=".30" stroke-width="1"/><path class="e" style="--i:13" pathLength="1" d="M116 184 L184 184" stroke-opacity=".30" stroke-width="1"/><path class="e" style="--i:14" pathLength="1" d="M184 184 L252 184" stroke-opacity=".30" stroke-width="1"/><path class="e" style="--i:15" pathLength="1" d="M48 184 L48 252" stroke-opacity=".30" stroke-width="1"/><path class="e" style="--i:16" pathLength="1" d="M116 184 L116 252" stroke-opacity=".30" stroke-width="1"/><path class="e" style="--i:17" pathLength="1" d="M252 184 L252 252" stroke-opacity=".30" stroke-width="1"/><path class="e" style="--i:18" pathLength="1" d="M48 252 L116 252" stroke-opacity=".30" stroke-width="1"/><path class="e" style="--i:19" pathLength="1" d="M116 252 L184 252" stroke-opacity=".30" stroke-width="1"/><path class="e" style="--i:20" pathLength="1" d="M184 252 L252 252" stroke-opacity=".30" stroke-width="1"/><path class="e" style="--i:21" pathLength="1" d="M116 48 L184 116" stroke-opacity=".30" stroke-width="1"/><path class="e" style="--i:22" pathLength="1" d="M116 116 L184 184" stroke-opacity=".30" stroke-width="1"/><path class="e" style="--i:23" pathLength="1" d="M184 116 L116 184" stroke-opacity=".30" stroke-width="1"/><path class="e" style="--i:24" pathLength="1" d="M184 184 L116 252" stroke-opacity=".30" stroke-width="1"/><circle class="n" style="--i:0" cx="48" cy="48" r="5.5" fill="currentColor" stroke="none" fill-opacity=".85"/><circle class="n" style="--i:1" cx="116" cy="48" r="5" stroke-opacity=".75" stroke-width="1.1"/><circle class="n" style="--i:2" cx="184" cy="48" r="5" stroke-opacity=".75" stroke-width="1.1"/><circle class="n" style="--i:3" cx="252" cy="48" r="5.5" fill="currentColor" stroke="none" fill-opacity=".85"/><circle class="n" style="--i:4" cx="48" cy="116" r="5" stroke-opacity=".75" stroke-width="1.1"/><circle class="n" style="--i:5" cx="116" cy="116" r="5.5" fill="currentColor" stroke="none" fill-opacity=".85"/><circle class="n" style="--i:6" cx="184" cy="116" r="5" stroke-opacity=".75" stroke-width="1.1"/><circle class="n" style="--i:7" cx="252" cy="116" r="5" stroke-opacity=".75" stroke-width="1.1"/><circle class="n" style="--i:8" cx="48" cy="184" r="5.5" fill="currentColor" stroke="none" fill-opacity=".85"/><circle class="n" style="--i:9" cx="116" cy="184" r="5" stroke-opacity=".75" stroke-width="1.1"/><circle class="n" style="--i:10" cx="184" cy="184" r="5.5" fill="currentColor" stroke="none" fill-opacity=".85"/><circle class="n" style="--i:11" cx="252" cy="184" r="5" stroke-opacity=".75" stroke-width="1.1"/><circle class="n" style="--i:12" cx="48" cy="252" r="5" stroke-opacity=".75" stroke-width="1.1"/><circle class="n" style="--i:13" cx="116" cy="252" r="5.5" fill="currentColor" stroke="none" fill-opacity=".85"/><circle class="n" style="--i:14" cx="184" cy="252" r="5" stroke-opacity=".75" stroke-width="1.1"/><circle class="n" style="--i:15" cx="252" cy="252" r="5.5" fill="currentColor" stroke="none" fill-opacity=".85"/></svg></span>
+          <span class="tx">
+            <span class="k">04</span>
+            <strong>Keystone</strong>
+            <span class="d">Design systems at scale</span>
+          </span>
+          <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13"/><path d="M12.5 6.5L19 12l-6.5 5.5"/></svg></span>
+        </a>
+        <div class="mg-else">
+          <a href="https://dribbble.com/sillysijo" target="_blank" rel="noopener">
+            <span class="ic" data-logo="dribbble"><svg class="ic" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="9" y="4.5" width="18" height="13" rx="2.5" stroke-opacity=".3"/><rect x="6.5" y="8" width="18" height="13" rx="2.5" stroke-opacity=".55"/><rect x="4" y="11.5" width="18" height="13" rx="2.5"/><path d="M4 20.5l4.6-3.6 3.3 2.4 4-3.6 6.1 5" stroke-opacity=".75"/><circle cx="9" cy="15" r="1.5"/></svg></span>
+            <span class="tx"><strong>Dribbble</strong><em>The work that stayed small</em></span>
+            <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"/><path d="M8.5 7H17v8.5"/></svg></span>
+          </a>
+          <a href="https://medium.com/@sijompeter" target="_blank" rel="noopener">
+            <span class="ic" data-logo="medium"><svg class="ic" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h22M5 13h22M5 18h16" stroke-opacity=".45"/><path d="M5 23h22M5 27h12"/></svg></span>
+            <span class="tx"><strong>Medium</strong><em>Longer arguments about design</em></span>
+            <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"/><path d="M8.5 7H17v8.5"/></svg></span>
+          </a>
+        </div>
+      </div>
+
+      <div class="mg-side">
+        <div class="mg-block">
+          <span class="h5">Experience &amp; about</span>
+          <a href="../experience.html" data-page="experience"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4.5v15"/><circle cx="5" cy="8" r="1.6"/><circle cx="5" cy="16" r="1.6"/><path d="M9.5 8H20M9.5 16H17"/></svg><span><strong>Experience</strong><em>Eleven years, six roles</em></span></a>
+          <a href="../about.html" data-page="about"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c0-3.6 3.4-5.8 7.5-5.8s7.5 2.2 7.5 5.8"/></svg><span><strong>About me</strong><em>The longer version</em></span></a>
+          <a href="../index.html#proof"><svg class="ic" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="5" width="22" height="22" rx="3" stroke-opacity=".4"/><path d="M11 20V12l-2.5 2"/><path d="M17 20h5M17 20c0-3 5-3.6 5-6a2.5 2.5 0 0 0-5-.6"/></svg><span><strong>Proof in numbers</strong><em>On the home page</em></span></a>
+          <a href="../index.html#fit"><svg class="tick" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17l6 6 12-14"/></svg><span><strong>Where I fit</strong><em>On the home page</em></span></a>
+        </div>
+        <div class="mg-block">
+          <span class="h5">Contact &amp; r&eacute;sum&eacute;</span>
+          <a href="https://wa.me/919447784143?text=Hi%20Sijo%20%F0%9F%91%8B%0AI%20came%20across%20your%20portfolio%0A" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M27 17.5c0 5-4.9 9-11 9a12.7 12.7 0 0 1-3.6-.5L6 28l1.6-4.6C5.9 21.8 5 19.8 5 17.5c0-5 4.9-9 11-9s11 4 11 9z"/><path d="M12 16h8M12 20h5" stroke-opacity=".45"/></svg><span><strong>WhatsApp</strong><em>Fastest way in</em></span></a>
+          <a href="mailto:sijompeter@gmail.com"><svg class="ic" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="7" width="24" height="18" rx="2.5"/><path d="M4.8 9.5L16 18l11.2-8.5"/></svg><span><strong>Email</strong><em>sijompeter@gmail.com</em></span></a>
+          <a href="../assets/doc/Sijo-M-Peter-Senior-Product-Designer.pdf" download data-resume><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5v11"/><path d="M8 11l4 3.5 4-3.5"/><path d="M4.5 17.5v1.5a1.5 1.5 0 0 0 1.5 1.5h12a1.5 1.5 0 0 0 1.5-1.5v-1.5"/></svg><span><strong>R&eacute;sum&eacute;</strong><em>PDF, two pages</em></span></a>
+          <a href="../contact.html" data-page="contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/></svg><span><strong>Contact page</strong><em>Every way at once</em></span></a>
+        </div>
+      </div>
+    </div>
+    <div class="foot">
+      <span>Available immediately &middot; Bangalore or remote</span>
+      <span class="footright"><button class="themetgl menu" type="button" data-theme-toggle aria-label="Switch colour theme"><span class="i-moon"><svg class="ic" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M27 18.6A11.5 11.5 0 0 1 13.4 5 11.5 11.5 0 1 0 27 18.6z"/></svg></span><span class="i-sun"><svg class="ic" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="16" cy="16" r="6"/><path d="M16 3v3M16 26v3M3 16h3M26 16h3M7 7l2 2M23 23l2 2M25 7l-2 2M9 23l-2 2"/></svg></span><span class="lb lb-dark">Dark</span><span class="lb lb-light">Light</span></button><kbd>Esc</kbd> to close</span>
+    </div>
+  </div>
+</div>
+
+<div class="sheet" id="sheet" aria-hidden="true">
+  <div class="scrim" data-close></div>
+  <div class="panel" role="dialog" aria-modal="true" aria-label="Case study">
+    <div class="sheet-head">
+      <button class="sheet-back" type="button" data-close><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span>Back to the work</span></button>
+      <span class="sheet-where"><span class="ct" id="sheetct">01 / 04</span><span class="tt" id="sheettt"></span></span>
+      <span class="sheet-steps">
+        <button type="button" id="sheetprev" aria-label="Previous case study"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <button type="button" id="sheetnext" aria-label="Next case study"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+      </span>
+      <button class="sheet-close" type="button" data-close aria-label="Close case study"><svg class="ic" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 9l14 14M23 9L9 23"/></svg></button>
+      <span class="sheet-prog" id="sheetprog"></span>
+    </div>
+    <!-- data-lenis-prevent: the smooth-scroll library swallows wheel and touch
+         events across the whole document, including inside this panel. The
+         attribute tells it to leave events that start in here alone. -->
+    <div class="sheet-body" id="sheetbody" data-lenis-prevent></div>
+  </div>
+</div>
+
+<main>
+<article>
+
+  <div class="case-hero">
+    <div class="wrap">
+      <p class="crumb"><a href="../index.html#work"><span aria-hidden="true">&larr;</span> Selected work</a><span aria-hidden="true">/</span><span>Case 02 of 04</span></p>
+      <p class="mono lead">02 &mdash; marketfeed · Portfolio management · iOS &amp; Android</p>
+      <h1>Watching your money work</h1>
+      <p class="lede">Activation got users to fund the account. Keeping them meant somewhere to see what the strategy was doing with their money, and a way to change their mind without leaving.</p>
+      <div class="casemeta">
+        <div><span class="mono k">Role</span><span class="v">Sole product designer on the portfolio management squad, one of three squads I covered.</span></div>
+        <div><span class="mono k">Owned</span><span class="v">End-to-end: problem framing, interaction and UI, prototyping, developer handoff.</span></div>
+        <div><span class="mono k">Team</span><span class="v">Product, growth, engineering and leadership. I was the only designer.</span></div>
+        <div><span class="mono k">Timeline</span><span class="v">Within Jan 2023 – Mar 2026. <span data-note class="fill">[Exact window]</span></span></div>
+      </div>
+      <div data-note class="draftbar">
+        <p class="h">This case study is in progress</p>
+        <p>The structure below matches case study 01 exactly. Every dashed box is a slot with a note saying what belongs in it. Fill them from your own files and memory, I've deliberately left them empty rather than writing plausible-sounding research and metrics you'd then have to defend in an interview.</p>
+      </div>
+    </div>
+  </div>
+
+  <section class="cs">
+    <div class="wrap">
+      <p class="mono lead">Context</p>
+      <h2>What the app had to do</h2>
+      <div class="two sideways" style="margin-top:30px">
+        <div class="prose" style="margin-top:0">
+          <p>marketfeed ran automated options strategies inside the user's own IIFL broking account, on a platform that reached ₹300 Cr+ in assets under management and 5,500+ users across iOS and Android. Once someone had funded that account, everything they could see about their money, whether the strategy was working, what it had done this cycle, whether to add or withdraw, had to live in this part of the product.</p>
+          <p>This was a 0→1 build: there was no existing product to improve, only a funnel that ended at a payment and then went quiet.</p>
+        </div>
+        <div data-note class="slot">
+          <p class="lbl">Slot, context</p>
+          <p>Two or three sentences on what existed before the app, and what a funded user actually did in the gap. Specifically:</p>
+          <ul>
+            <li>Where did users check performance before this app existed?</li>
+            <li>What was the first version's scope, MVP or full product?</li>
+            <li>Which platforms, and why</li>
+          </ul>
+        </div>
+      </div>
+      <div data-note class="slotgrid">
+        <div data-note class="slot">
+          <p class="lbl">Upload, the app's main screen</p>
+          <p>The home or portfolio screen a funded user lands on. Full screen, uncropped. This is the one image that proves the product exists.</p>
+        </div>
+        <div data-note class="slot">
+          <p class="lbl">Slot, the user journey</p>
+          <p>The four or five steps a funded user moves through, so the reader can place this work. Use the same chip row as case study 01.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs">
+    <div class="wrap">
+      <p class="mono lead">The problem</p>
+      <h2>Churn after the money went in</h2>
+      <p class="lede">Users were activating and then leaving. The hard part of a retention problem is that it is never one thing, so the first job was finding which thing.</p>
+      <div data-note class="slotgrid">
+        <div data-note class="slot">
+          <p class="lbl">Slot, the evidence</p>
+          <p>What told you churn was the problem, and where it sat. One number and one source beats a paragraph:</p>
+          <ul>
+            <li>What was the retention or churn figure, and over what window?</li>
+            <li>Was it measured in Mixpanel? Which event defined "retained"?</li>
+            <li>Did users withdraw, go dormant, or uninstall? Those are three different problems.</li>
+          </ul>
+        </div>
+        <div data-note class="slot">
+          <p class="lbl">Slot, why it mattered commercially</p>
+          <p>Revenue was a share of what users had invested, so a withdrawal is a direct revenue loss, not just a lost user. Write the version of that sentence that's true for this project.</p>
+        </div>
+      </div>
+      <div data-note class="slot" style="margin-top:16px">
+        <p class="lbl">Upload, evidence, if you have it</p>
+        <p>A funnel or retention chart, redrawn in greyscale rather than screenshotted from a dashboard. If you don't have one, this section works on prose alone, don't recreate a chart from memory.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs">
+    <div class="wrap">
+      <p class="mono lead">Constraints</p>
+      <h2>What I couldn't change</h2>
+      <p class="lede">Case study 01 earns its credibility here. Do the same: name the real walls, including the ones that were your own decision.</p>
+      <div class="cards" style="margin-top:32px">
+        <div class="card"><p class="mono">Product / business</p><p class="big"><span data-note class="fill">[Constraint]</span></p><p>What the business or the strategy required that you had no authority to move.</p></div>
+        <div class="card"><p class="mono">Regulatory</p><p class="big"><span data-note class="fill">[Constraint]</span></p><p>Likely relevant again here, what you could and couldn't show about performance and returns.</p></div>
+        <div class="card"><p class="mono">Technical</p><p class="big"><span data-note class="fill">[Constraint]</span></p><p>What the broking rail, the data refresh rate or the trade cycle imposed on the design.</p></div>
+        <div class="card"><p class="mono">Scope, my call</p><p class="big"><span data-note class="fill">[Constraint]</span></p><p>What you chose not to build, and why. This is the one that reads as seniority.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs">
+    <div class="wrap">
+      <p class="mono lead">Research</p>
+      <h2>What users told me</h2>
+      <div class="two sideways" style="margin-top:32px">
+        <div data-note class="slot">
+          <p class="lbl">Slot, the headline finding</p>
+          <p>One number at display size, as "14/16" works on case study 01. A count out of a count, never a percentage of a small sample.</p>
+          <ul>
+            <li>How many users did you speak to?</li>
+            <li>What did the majority have in common?</li>
+            <li>What assumption did it kill?</li>
+          </ul>
+        </div>
+        <div data-note class="slot">
+          <p class="lbl">Slot, assumed / found / changed</p>
+          <p>The three-beat structure from case study 01, which is what makes research read as research rather than decoration:</p>
+          <ul>
+            <li><b>What I assumed</b> going in, be willing to look wrong here</li>
+            <li><b>What I found</b>, the behaviour, in users' terms, not in feature terms</li>
+            <li><b>What changed</b>, the problem statement after the calls, in one sentence</li>
+          </ul>
+          <p>No invented quotes. If you don't have one verbatim, paraphrase and say you're paraphrasing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs">
+    <div class="wrap">
+      <p class="mono lead">The design</p>
+      <h2>What I built, and why each part exists</h2>
+      <p class="lede">Four steps, four screens, one line each naming the decision rather than describing the UI.</p>
+      <div class="shotgrid" style="margin-top:34px">
+        <figure><p class="mono">Step 01</p><div data-note class="slot" style="min-height:300px; align-content:center"><p class="lbl">Upload</p><p>Screen 1, and the decision it embodies.</p></div></figure>
+        <figure><p class="mono">Step 02</p><div data-note class="slot" style="min-height:300px; align-content:center"><p class="lbl">Upload</p><p>Screen 2, performance, probably. The hard part is what you chose not to show.</p></div></figure>
+        <figure><p class="mono">Step 03</p><div data-note class="slot" style="min-height:300px; align-content:center"><p class="lbl">Upload</p><p>Screen 3, managing or changing an allocation.</p></div></figure>
+        <figure><p class="mono">Step 04</p><div data-note class="slot" style="min-height:300px; align-content:center"><p class="lbl">Upload</p><p>Screen 4, and the outcome state.</p></div></figure>
+      </div>
+      <div class="two" style="margin-top:clamp(42px,6vw,66px)">
+        <div data-note class="slot">
+          <p class="lbl">Slot, key decision 01</p>
+          <p>Problem → decision → why → result. The strongest candidate here is how you presented performance when you couldn't promise returns. Showing a loss honestly, in a product people trusted with real money, is a genuinely hard design problem and worth the space.</p>
+        </div>
+        <div data-note class="slot">
+          <p class="lbl">Slot, key decision 02</p>
+          <p>Same structure. A before/after is ideal if one exists. If you reused the fund allocation slider or the IIFL deep link here, say so, reuse across a product is a design-system argument, not a shortcut.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs">
+    <div class="wrap">
+      <p class="mono lead">Edge states</p>
+      <h2>When it doesn't go right</h2>
+      <p class="lede">This is the section almost nobody brings to a portfolio review, and it's the one that separates a designer from someone who draws happy paths.</p>
+      <div data-note class="slotgrid">
+        <div data-note class="slot">
+          <p class="lbl">Upload + slot, edge state 01</p>
+          <p>A loss, a drawdown, a strategy paused, a margin shortfall. What does the app say when the number is red?</p>
+        </div>
+        <div data-note class="slot">
+          <p class="lbl">Upload + slot, edge state 02</p>
+          <p>Stale data, a broker token expiry, a cycle that hasn't run yet, a zero state before the first trade. Pick the two you actually designed.</p>
+        </div>
+      </div>
+      <div data-note class="slot" style="margin-top:16px">
+        <p class="lbl">Slot, the rule</p>
+        <p>One sentence of principle, like "the user shouldn't have to reconcile whether their payment worked" on case study 01. What was the equivalent rule here?</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs">
+    <div class="wrap">
+      <p class="mono lead">Impact</p>
+      <h2>What changed</h2>
+      <div class="cards" style="margin-top:30px">
+        <div class="card"><p class="mono">Metric 01</p><p class="big"><span data-note class="fill">[Figure]</span></p><p>Retention or churn, with the window and the definition stated. A figure without a denominator is not a figure.</p></div>
+        <div class="card"><p class="mono">Metric 02</p><p class="big"><span data-note class="fill">[Figure]</span></p><p>Engagement, session frequency, or whatever the app's own health measure was.</p></div>
+        <div class="card"><p class="mono">Metric 03</p><p class="big"><span data-note class="fill">[Figure]</span></p><p>A business number if you have one, AUM retained, withdrawals avoided, support volume.</p></div>
+      </div>
+      <p class="note" style="margin-top:24px"><b>Keep the honesty line.</b> If these are directional and from memory, say so here exactly as case study 01 does. It converts a weakness into a credential, and an interviewer who asks "how do you know?" gets an answer you've already given. If you have no reliable numbers at all, write the qualitative outcome instead, that is a legitimate case study. Inventing one is not.</p>
+    </div>
+  </section>
+
+  <section class="cs">
+    <div class="wrap">
+      <p class="mono lead">Reflection</p>
+      <h2>What I took from it</h2>
+      <div class="two" style="margin-top:30px">
+        <div data-note class="slot">
+          <p class="lbl">Slot, three learnings</p>
+          <p>Three, no more. Each one a sentence of principle plus a sentence of evidence from this project. Not "I learned the importance of user research".</p>
+        </div>
+        <div data-note class="slot">
+          <p class="lbl">Slot, one thing I'd change</p>
+          <p>A real regret with a specific fix, as on case study 01. This is the single highest-signal paragraph on any case study page, it tells a hiring manager you can assess your own work.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <a class="next wrap" href="zolo-booking.html" style="display:block">
+    <p class="mono lead">Next project</p>
+    <h2>Availability, discovered too late <span class="arw" aria-hidden="true">→</span></h2>
+  </a>
+
+</article>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap in">
+    <p class="mono lead">Contact</p>
+    <h2>Looking for a designer who owns the metric?</h2>
+        <div class="chancards">
+      <a class="cc hot" href="https://wa.me/919447784143?text=Hi%20Sijo%20%F0%9F%91%8B%0AI%20came%20across%20your%20portfolio%0A" target="_blank" rel="noopener">
+          <span class="ic" data-logo="whatsapp"><svg class="ic" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M27 17.5c0 5-4.9 9-11 9a12.7 12.7 0 0 1-3.6-.5L6 28l1.6-4.6C5.9 21.8 5 19.8 5 17.5c0-5 4.9-9 11-9s11 4 11 9z"/><path d="M12 16h8M12 20h5" stroke-opacity=".45"/></svg></span>
+          <span class="tx">
+            <span class="k">WhatsApp<em>Fastest</em></span>
+            <strong>+91 94477 84143</strong>
+          </span>
+        </a>
+      <a class="cc" href="tel:+919447784143">
+          <span class="ic" data-logo="phone"><svg class="ic" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M11.5 5.5h-3A2.5 2.5 0 0 0 6 8c0 10 8 18 18 18a2.5 2.5 0 0 0 2.5-2.5v-3l-5-2-2.5 3A20 20 0 0 1 10.5 13l3-2.5z"/></svg></span>
+          <span class="tx">
+            <span class="k">Phone<em>IST hours</em></span>
+            <strong>+91 94477 84143</strong>
+          </span>
+        </a>
+      <div class="ccwrap">
+        <a class="cc" href="mailto:sijompeter@gmail.com">
+          <span class="ic" data-logo="email"><svg class="ic" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="7" width="24" height="18" rx="2.5"/><path d="M4.8 9.5L16 18l11.2-8.5"/></svg></span>
+          <span class="tx">
+            <span class="k">Email<em>With attachments</em></span>
+            <strong>sijompeter@gmail.com</strong>
+          </span>
+        </a>
+<button class="copybtn ccopy" type="button" data-copy="sijompeter@gmail.com" aria-label="Copy sijompeter@gmail.com"><span class="i-copy"><svg class="ic" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="11" y="4" width="17" height="17" rx="3"/><path d="M22 24.5v1A2.5 2.5 0 0 1 19.5 28h-13A2.5 2.5 0 0 1 4 25.5v-13A2.5 2.5 0 0 1 6.5 10h1"/></svg></span><span class="i-done"><svg class="ic" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 17l6.5 6.5L26 10"/></svg></span></button>
+      </div>
+      <a class="cc" href="https://www.linkedin.com/in/sillysijo/" target="_blank" rel="noopener">
+          <span class="ic" data-logo="linkedin"><svg class="ic" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="16" cy="11" r="4.6"/><path d="M6.5 27c0-4.8 4.3-7.7 9.5-7.7s9.5 2.9 9.5 7.7"/></svg></span>
+          <span class="tx">
+            <span class="k">LinkedIn<em>On the platform</em></span>
+            <strong>in/sillysijo</strong>
+          </span>
+        </a>
+    </div>
+    <div class="row thin">
+      <a class="lnk" href="https://dribbble.com/sillysijo" target="_blank" rel="noopener">Dribbble</a>
+      <a class="lnk" href="https://medium.com/@sijompeter" target="_blank" rel="noopener">Medium</a>
+      <a class="lnk" href="../assets/doc/Sijo-M-Peter-Senior-Product-Designer.pdf" download data-resume>R&eacute;sum&eacute; (PDF)</a>
+      <button class="themetgl foot" type="button" data-theme-toggle aria-label="Switch colour theme"><span class="i-moon"><svg class="ic" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M27 18.6A11.5 11.5 0 0 1 13.4 5 11.5 11.5 0 1 0 27 18.6z"/></svg></span><span class="i-sun"><svg class="ic" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="16" cy="16" r="6"/><path d="M16 3v3M16 26v3M3 16h3M26 16h3M7 7l2 2M23 23l2 2M25 7l-2 2M9 23l-2 2"/></svg></span><span class="lb lb-dark">Dark</span><span class="lb lb-light">Light</span></button><button class="themetgl notes foot" type="button" data-notes-toggle aria-label="Show or hide my working notes"><span class="i-moon"><svg class="ic" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 8h24M4 13h18M4 18h11" stroke-opacity=".32"/><path d="M4 25h24"/><circle cx="28" cy="25" r="2.2"/></svg></span><span class="lb lb-dark">Notes</span><span class="lb lb-light">Notes on</span></button>
+    </div>
+    <p class="fine">Every figure on this site comes from a product I worked on directly, and I can walk you through how each one was measured. Screens are from shipped work. &copy; 2026 Sijo M Peter, designed and built from scratch.</p>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

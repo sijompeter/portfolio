@@ -1,0 +1,1646 @@
+/* ============================================================
+   Sijo M Peter — portfolio
+   Direction: "Module". A cool grey canvas with a visible modular
+   grid; white cards float in it. Display type is large and light,
+   body copy is small and quiet, anything factual is mono.
+   ============================================================ */
+
+:root{
+  --paper:#f3f4f6;
+  --surface:#ffffff;
+  --ink:#121417;
+  --ink-2:#6a7181;          /* the second half of the headline */
+  --body:#575e6b;
+  --muted:#868e9c;
+  --line:#e3e6ea;
+  --line-2:#cccfd6;
+  --grid:#e9ebef;
+  --grid-lit:#dcdee3;
+  --fill:#e9ebef;
+  --lime:#cdee5c;           /* used twice on the page, on purpose */
+  --sage:#687870;
+  --inv-bg:#101114;
+  --inv-ink:#ffffff;
+  --inv-body:#9ca2b0;
+  --inv-line:#262931;
+  --maxw:1280px;
+  --gut:clamp(18px,3.4vw,52px);
+  --mod:calc(var(--maxw) / 12);
+  --card-r:10px;
+  --shadow:0 1px 2px rgba(0,0,0,.04), 0 10px 30px -22px rgba(0,0,0,.35);
+  color-scheme: light;
+}
+@media (max-width:1320px){ :root{ --mod:calc(100vw / 12) } }
+@media (max-width:880px){  :root{ --mod:calc(100vw / 6) } }
+@media (max-width:520px){  :root{ --mod:calc(100vw / 4) } }
+
+/* Light is the default, always — the system's dark setting does not flip it.
+   Dark is something the visitor opts into, and that choice is remembered. */
+:root[data-theme="dark"]{
+  --paper:#121417; --surface:#1c1e24; --ink:#f3f4f6; --body:#a2a8b4;
+  --muted:#788191; --line:#21252b; --line-2:#373d48; --fill:#1b1d23; --ink-2:#8f96a3;
+  --grid:#1a1c21; --grid-lit:#2a2e37; --lime:#cdee5c; --sage:#85998f;
+  --inv-bg:#f3f4f6; --inv-ink:#121417; --inv-body:#575e6b; --inv-line:#d2d5db;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -22px rgba(0,0,0,.8);
+  color-scheme: dark;
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--paper); color:var(--body);
+  font-family:Inter,-apple-system,"Segoe UI",sans-serif;
+  font-size:15px; line-height:1.6; letter-spacing:-0.006em;
+  overflow-x:hidden;
+}
+img{max-width:100%; display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--ink); outline-offset:3px; border-radius:2px}
+
+/* ---------- the grid itself ----------
+   Fixed, full-bleed, behind everything. Content and cards sit on top;
+   white cards read as modules lifted out of the grid. */
+.gridlines, .gridspot{
+  position:fixed; inset:-2px; z-index:0; pointer-events:none;
+  background-position:calc(50% + .5px) 0;
+}
+.gridlines{
+  background-image:
+    repeating-linear-gradient(to right, var(--grid) 0 1px, transparent 1px var(--mod)),
+    repeating-linear-gradient(to bottom, var(--grid) 0 1px, transparent 1px var(--mod));
+}
+/* The grid is a texture at rest. This second, slightly firmer copy is masked
+   to a soft pool around the pointer, so the page firms up where you look. */
+.gridspot{
+  opacity:0; transition:opacity .6s ease;
+  background-image:
+    repeating-linear-gradient(to right, var(--grid-lit) 0 1px, transparent 1px var(--mod)),
+    repeating-linear-gradient(to bottom, var(--grid-lit) 0 1px, transparent 1px var(--mod));
+  -webkit-mask-image:radial-gradient(330px circle at var(--mx,50%) var(--my,40%), #000 0%, rgba(0,0,0,.5) 42%, transparent 70%);
+  mask-image:radial-gradient(330px circle at var(--mx,50%) var(--my,40%), #000 0%, rgba(0,0,0,.5) 42%, transparent 70%);
+}
+html.spot .gridspot{opacity:1}
+main, .site-foot, .site-head, .dock, .sheet, .pre{position:relative; z-index:1}
+/* land a section flush with the top of the viewport, clear of any bar */
+[id]{scroll-margin-top:28px}
+@media (max-width:880px){ [id]{scroll-margin-top:74px} }
+
+.wrap{max-width:var(--maxw); margin:0 auto; padding-inline:var(--gut)}
+.rule{height:1px; background:var(--line-2); border:0; margin:0}
+
+/* ---------- type ---------- */
+h1,h2,h3,h4,.dsp{
+  font-family:"Plus Jakarta Sans","Inter Tight",Inter,Helvetica,sans-serif;
+  color:var(--ink); margin:0; text-wrap:balance;
+  font-weight:600; letter-spacing:-0.035em; line-height:1.04;
+}
+h1{font-size:clamp(38px,6.4vw,78px); letter-spacing:-0.042em; line-height:1.06}
+h2{font-size:clamp(27px,4.1vw,50px); letter-spacing:-0.038em; line-height:1.08}
+h3{font-size:clamp(18px,2vw,23px); letter-spacing:-0.028em; line-height:1.24}
+h4{font-size:16.5px; line-height:1.34; letter-spacing:-0.022em}
+p{margin:0}
+.lede{font-size:clamp(15px,1.2vw,17px); line-height:1.62; letter-spacing:-0.009em; color:var(--body)}
+.lede strong, .ink{color:var(--ink); font-weight:600}
+.dim{color:var(--muted)}
+small,.sm{font-size:13px; line-height:1.55; color:var(--muted)}
+
+.mono{
+  font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:10.5px; font-weight:500; letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--muted);
+}
+.mono.lead::before{content:""}
+
+/* ---------- surfaces ---------- */
+.panel{background:var(--surface); border-radius:var(--card-r); box-shadow:var(--shadow)}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex; align-items:center; gap:9px; text-decoration:none;
+  font-size:14px; font-weight:500; color:var(--inv-ink); background:var(--ink);
+  padding:12px 21px; border-radius:999px; border:1px solid var(--ink);
+  transition:transform .3s cubic-bezier(.2,.7,.3,1), background .2s, color .2s;
+  will-change:transform;
+}
+.btn:hover{background:transparent; color:var(--ink)}
+.btn.ghost{background:transparent; color:var(--ink); border-color:var(--line-2)}
+.btn.ghost:hover{border-color:var(--ink); background:var(--ink); color:var(--inv-ink)}
+.btn .arw{transition:transform .3s}
+.btn:hover .arw{transform:translateX(4px)}
+
+/* underlined text link, as in the reference */
+.rd{
+  display:inline-block; font-size:13.5px; color:var(--ink); text-decoration:none;
+  border-bottom:1px solid var(--line-2); padding-bottom:2px;
+  transition:border-color .3s;
+}
+.rd:hover{border-bottom-color:var(--ink)}
+
+/* ============================================================
+   NAVIGATION
+   Three parts, one model:
+   · top bar      — where everything is, on arrival
+   · position dock — where you are now; opens the map
+   · chapter rail  — what's above and below you on this page
+   ============================================================ */
+.site-head{
+  position:fixed; top:0; left:0; right:0; z-index:60;
+  padding-top:env(safe-area-inset-top, 0px);
+  background:color-mix(in srgb, var(--paper) 86%, transparent);
+  backdrop-filter:blur(10px) saturate(1.1);
+  border-bottom:1px solid transparent;
+  transition:border-color .3s, transform .5s cubic-bezier(.2,.75,.25,1), opacity .3s, visibility .3s;
+}
+.site-head.stuck{border-bottom-color:var(--line-2)}
+.site-head .bar{
+  max-width:var(--maxw); margin:0 auto; padding:13px var(--gut);
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+}
+.brand{
+  font-family:"Plus Jakarta Sans",sans-serif; font-weight:800; font-size:19px;
+  letter-spacing:-0.045em; color:var(--ink); text-decoration:none; white-space:nowrap;
+}
+.bar-div{width:1px; height:20px; background:var(--line-2); flex:none; margin-inline:6px}
+.talk{
+  display:inline-flex; align-items:center; gap:8px; white-space:nowrap; flex:none;
+  background:var(--ink); color:var(--inv-ink); font-size:13.5px; font-weight:500;
+  padding:11px 10px 11px 20px; border-radius:999px; text-decoration:none;
+  transition:opacity .2s, transform .3s cubic-bezier(.2,.75,.25,1);
+}
+.talk svg{width:15px; height:15px; background:rgba(255,255,255,.14); border-radius:50%; padding:4px; box-sizing:content-box}
+.talk:hover{opacity:.9; transform:translateY(-1px)}
+
+.topnav{display:flex; align-items:center; gap:2px; margin-right:auto}
+.topnav a{
+  font-size:13.5px; color:var(--body); text-decoration:none;
+  padding:8px 13px; border-radius:999px;
+  display:inline-flex; align-items:center; gap:7px; white-space:nowrap;
+  transition:background .25s, color .25s, opacity .25s;
+}
+.topnav a:hover{background:var(--surface); color:var(--ink)}
+.topnav a[aria-current="page"]{color:var(--ink); font-weight:500; background:var(--surface)}
+.topnav a.dl svg{width:14px; height:14px; opacity:.5; transition:opacity .25s}
+.topnav a.dl:hover svg{opacity:1}
+.topnav a.cta{background:var(--ink); color:var(--inv-ink); font-weight:500; padding:9px 17px; margin-left:8px}
+.topnav a.cta:hover{background:var(--ink); color:var(--inv-ink); opacity:.86}
+
+/* ---------- the dock ----------
+   One fixed zone holds the dock and the menu, so the menu can sit directly
+   above the dock, hover can be read across both, and nothing has to be
+   positioned twice. */
+.navzone{
+  position:fixed; z-index:80; left:50%; bottom:calc(26px + env(safe-area-inset-bottom, 0px));
+  transform:translateX(-50%); pointer-events:none;
+}
+.navzone > *{pointer-events:auto}
+
+.dock{
+  position:relative;
+  transform:translateY(190%); opacity:0; visibility:hidden; pointer-events:none;
+  display:flex; align-items:center; gap:1px;
+  padding:6px 7px; border-radius:999px;
+  background:color-mix(in srgb, var(--surface) 92%, transparent);
+  backdrop-filter:blur(18px) saturate(1.3);
+  border:1px solid var(--line);
+  box-shadow:0 1px 2px rgba(0,0,0,.05), 0 22px 50px -18px rgba(0,0,0,.32);
+  transition:transform .55s cubic-bezier(.2,.75,.25,1), opacity .3s, visibility .3s;
+}
+html.docked .dock{transform:none; opacity:1; visibility:visible; pointer-events:auto}
+html.docked .site-head{transform:translateY(-102%); opacity:0; visibility:hidden}
+
+/* ---- the locator: home and "you are here" as ONE control ----
+   They used to be two pills side by side, which read as a button next to an
+   unrelated label. One capsule, one hairline, two targets: the monogram goes
+   home, the readout opens the menu. */
+.dock-loc{
+  display:inline-flex; align-items:center; flex:none;
+  background:var(--fill); border-radius:999px; padding:2px;
+  transition:background .25s;
+}
+.dock-loc .loc-div{width:1px; height:17px; background:var(--line-2); flex:none; margin:0 2px; opacity:.85}
+
+.dock a.dock-home{
+  display:inline-flex; align-items:center; gap:7px; flex:none;
+  padding:5px 9px 5px 5px; border-radius:999px; text-decoration:none;
+  color:var(--ink); transition:background .22s;
+}
+.dock a.dock-home .sp{
+  width:25px; height:25px; border-radius:50%; background:var(--ink); color:var(--inv-ink);
+  display:inline-flex; align-items:center; justify-content:center; flex:none;
+  font-family:"Plus Jakarta Sans",sans-serif; font-weight:700; font-size:9.5px; letter-spacing:.02em;
+}
+.dock a.dock-home .lb{
+  font-size:12.5px; font-weight:500; letter-spacing:-0.004em;
+}
+.dock a.dock-home:hover{background:var(--surface)}
+.dock a.dock-home[aria-current="page"] .sp{box-shadow:0 0 0 2.5px var(--surface), 0 0 0 4px var(--lime)}
+
+/* the readout — the handle for the menu */
+.dock-now{
+  font:inherit; border:0; cursor:pointer; background:transparent; text-align:left;
+  display:inline-flex; align-items:center; gap:8px;
+  padding:5px 4px 5px 10px; border-radius:999px; color:var(--ink);
+  transition:background .22s, color .22s;
+}
+.dock-now:hover{background:var(--surface)}
+.dock-now .n{
+  font-family:"JetBrains Mono",monospace; font-size:9.5px; letter-spacing:.1em;
+  color:var(--muted); flex:none;
+}
+.dock-now .t{
+  font-size:12.5px; font-weight:450; white-space:nowrap; max-width:19ch;
+  overflow:hidden; text-overflow:ellipsis; color:var(--body);
+}
+.dock-now .cv{
+  width:20px; height:20px; display:grid; place-items:center; flex:none;
+  transition:transform .35s cubic-bezier(.2,.7,.3,1);
+}
+.dock-now .cv svg{width:11px; height:11px; opacity:.5}
+.dock-now[aria-expanded="true"]{background:var(--ink); color:var(--inv-ink)}
+.dock-now[aria-expanded="true"] .n{color:var(--inv-body)}
+.dock-now[aria-expanded="true"] .t{color:var(--inv-ink)}
+.dock-now[aria-expanded="true"] .cv{transform:rotate(180deg)}
+.dock-now[aria-expanded="true"] .cv svg{opacity:.85}
+
+.dock-sep{width:1px; height:18px; background:var(--line); margin:0 7px; flex:none}
+
+.dock a{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:9px 13px; border-radius:999px;
+  font-size:12.5px; font-weight:450; color:var(--body); text-decoration:none;
+  white-space:nowrap; transition:background .25s, color .25s, opacity .25s;
+}
+.dock a svg{width:15px; height:15px; flex:none; opacity:.5; transition:opacity .25s}
+.dock a:hover{background:var(--fill); color:var(--ink)}
+.dock a:hover svg{opacity:1}
+.dock a[aria-current="page"]{background:var(--fill); color:var(--ink); font-weight:500}
+.dock a[aria-current="page"] svg{opacity:1}
+.dock a.cta{background:var(--ink); color:var(--inv-ink); font-weight:500; margin-left:4px}
+.dock a.cta svg{opacity:.75}
+.dock a.cta:hover{background:var(--ink); color:var(--inv-ink); opacity:.86}
+
+/* ---------- the menu ----------
+   Grouped, not a bento. Four case rows that say what each is worth reading
+   for, then the two pages, then the ways to reach him. */
+.map{
+  position:absolute; left:50%; bottom:calc(100% + 11px);
+  transform:translate(-50%, 12px); opacity:0; visibility:hidden;
+  width:min(880px, calc(100vw - 28px));
+  background:var(--surface); border:1px solid var(--line); border-radius:17px;
+  box-shadow:0 1px 2px rgba(0,0,0,.05), 0 34px 74px -26px rgba(0,0,0,.42);
+  padding:15px; overflow:hidden;
+  transition:transform .4s cubic-bezier(.2,.75,.25,1), opacity .26s, visibility .26s;
+}
+.map.open{transform:translate(-50%, 0); opacity:1; visibility:visible}
+
+.mapgrid{display:grid; grid-template-columns:minmax(0,1.42fr) minmax(0,1fr); gap:11px; align-items:start}
+
+.map .h5{
+  display:flex; align-items:baseline; gap:9px; flex-wrap:wrap;
+  font-family:"JetBrains Mono",monospace; font-size:9px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--ink); padding:2px 4px 9px;
+}
+.map .h5 em{font-style:normal; font-family:"Inter",sans-serif; font-size:11px;
+  letter-spacing:0; text-transform:none; color:var(--muted)}
+
+.mg-cases{display:grid; gap:4px}
+.cs-row{
+  display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:12px;
+  padding:9px 11px 9px 9px; border-radius:11px; text-decoration:none;
+  background:var(--fill); transition:background .24s, transform .3s cubic-bezier(.2,.75,.25,1);
+}
+.cs-row:hover{background:var(--line-2); transform:translateX(2px)}
+.cs-row .mk{
+  width:34px; height:34px; border-radius:9px; background:var(--surface);
+  display:grid; place-items:center; flex:none; overflow:hidden; color:var(--ink); line-height:0;
+}
+.cs-row .mk svg{width:30px; height:auto}
+.cs-row .tx{display:grid; gap:1px; min-width:0}
+.cs-row .k{
+  display:flex; align-items:center; gap:8px;
+  font-family:"JetBrains Mono",monospace; font-size:9px; letter-spacing:.14em; color:var(--muted);
+}
+.cs-row .k .lead{
+  background:var(--lime); color:#161a08; border-radius:999px; padding:2px 7px;
+  font-size:8.5px; letter-spacing:.1em; text-transform:uppercase; font-weight:500;
+}
+.cs-row strong{
+  font-family:"Plus Jakarta Sans",sans-serif; font-weight:600; font-size:14px;
+  letter-spacing:-0.026em; color:var(--ink); line-height:1.2;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.cs-row .d{font-size:11.5px; color:var(--body); line-height:1.35;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.cs-row .go{width:18px; height:18px; flex:none; color:var(--muted); line-height:0;
+  opacity:0; transform:translateX(-4px); transition:opacity .24s, transform .24s}
+.cs-row .go svg{width:18px; height:18px}
+.cs-row:hover .go{opacity:1; transform:none}
+.cs-row[data-here="1"]{background:var(--ink)}
+.cs-row[data-here="1"] strong, .cs-row[data-here="1"] .go{color:var(--inv-ink)}
+.cs-row[data-here="1"] .d{color:var(--inv-body)}
+.cs-row[data-here="1"] .k{color:var(--inv-body)}
+.cs-row[data-here="1"] .mk{background:var(--inv-line); color:var(--inv-ink)}
+.cs-row[data-here="1"] .go{opacity:1; transform:none}
+
+.mg-side{display:grid; gap:11px}
+.mg-block{background:var(--fill); border-radius:12px; padding:9px 8px 8px}
+.mg-block .h5{padding:2px 6px 7px}
+.mg-block a{
+  display:grid; grid-template-columns:auto minmax(0,1fr); align-items:center; gap:10px;
+  padding:7px 9px; border-radius:9px; text-decoration:none;
+  color:var(--body); transition:background .2s, color .2s;
+}
+.mg-block a svg{width:15px; height:15px; flex:none; opacity:.5; transition:opacity .2s}
+.mg-block a > span{display:grid; gap:0; min-width:0}
+.mg-block a strong{
+  font-size:12.5px; font-weight:500; color:var(--ink); letter-spacing:-0.008em;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.mg-block a em{font-style:normal; font-size:10.5px; color:var(--muted);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.mg-block a:hover{background:var(--surface)}
+.mg-block a:hover svg{opacity:1}
+.mg-block a[data-here="1"]{background:var(--ink)}
+.mg-block a[data-here="1"] strong{color:var(--inv-ink)}
+.mg-block a[data-here="1"] em{color:var(--inv-body)}
+.mg-block a[data-here="1"] svg{opacity:.85; color:var(--inv-ink)}
+
+.map .foot{
+  margin-top:13px; padding-top:12px; border-top:1px solid var(--line);
+  display:flex; justify-content:space-between; gap:14px; align-items:center;
+  font-size:11.5px; color:var(--muted);
+}
+.map .foot .footright{display:inline-flex; align-items:center; gap:10px}
+.map .foot kbd{font-family:"JetBrains Mono",monospace; font-size:10px; background:var(--fill); border-radius:4px; padding:3px 6px; color:var(--body)}
+.mapscrim{position:fixed; inset:0; z-index:78; background:transparent; display:none}
+.mapscrim.on{display:block}
+
+/* ---------- the case-study sheet ----------
+   Opens over the work grid instead of replacing the page, so closing it
+   returns you to the card you clicked with your scroll position intact. */
+.sheet{position:fixed; inset:0; z-index:120; visibility:hidden}
+.sheet.open{visibility:visible}
+.sheet .scrim{
+  position:absolute; inset:0; background:rgba(10,10,10,.42);
+  opacity:0; transition:opacity .4s; backdrop-filter:blur(2px);
+}
+.sheet.in .scrim{opacity:1}
+.sheet .panel{
+  position:absolute; inset:clamp(0px,2vw,26px); display:flex; flex-direction:column;
+  background:var(--paper); border-radius:14px; overflow:hidden;
+  box-shadow:0 40px 100px -30px rgba(0,0,0,.5);
+  transform:translateY(26px) scale(.99); opacity:0;
+  transition:transform .5s cubic-bezier(.2,.75,.25,1), opacity .3s;
+}
+.sheet.in .panel{transform:none; opacity:1}
+.sheet-head{
+  flex:none; position:relative; display:flex; align-items:center; gap:14px;
+  padding:13px 16px; background:color-mix(in srgb, var(--paper) 90%, transparent);
+  backdrop-filter:blur(10px); border-bottom:1px solid var(--line-2);
+}
+.sheet-back{
+  font:inherit; cursor:pointer; border:0; background:var(--ink); color:var(--inv-ink);
+  font-size:13.5px; font-weight:500;
+  display:inline-flex; align-items:center; gap:8px; padding:10px 18px 10px 13px;
+  border-radius:999px; white-space:nowrap; flex:none;
+  box-shadow:0 1px 2px rgba(0,0,0,.14), 0 8px 20px -12px rgba(0,0,0,.5);
+  transition:opacity .2s, transform .25s cubic-bezier(.2,.75,.25,1);
+}
+.sheet-back svg{width:14px; height:14px; flex:none}
+.sheet-back:hover{opacity:.88; transform:translateX(-2px)}
+.sheet-close{
+  width:36px; height:36px; flex:none; border-radius:50%; cursor:pointer;
+  border:1px solid var(--line-2); background:var(--surface); color:var(--ink);
+  display:grid; place-items:center; transition:background .2s, color .2s, border-color .2s;
+}
+.sheet-close .ic{width:17px; height:17px}
+.sheet-close:hover{background:var(--ink); color:var(--inv-ink); border-color:var(--ink)}
+.sheet-where{display:flex; align-items:baseline; gap:10px; min-width:0; flex:1}
+.sheet-where .ct{font-family:"JetBrains Mono",monospace; font-size:10px; letter-spacing:.1em; color:var(--muted); flex:none}
+.sheet-where .tt{
+  font-family:"Plus Jakarta Sans",sans-serif; font-weight:600; font-size:15px; letter-spacing:-0.02em;
+  color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.sheet-steps{display:flex; gap:5px; flex:none}
+.sheet-steps button{
+  width:28px; height:28px; border-radius:50%; border:1px solid var(--line-2);
+  background:var(--surface); color:var(--ink); cursor:pointer; display:grid; place-items:center;
+  transition:background .2s, opacity .2s;
+}
+.sheet-steps button svg{width:13px; height:13px}
+.sheet-steps button:hover{background:var(--fill)}
+.sheet-steps button[disabled]{opacity:.3; cursor:default}
+.sheet-prog{position:absolute; left:0; bottom:-1px; height:1.5px; width:0; background:var(--ink); transition:width .12s linear}
+/* min-height:0 is what makes this scroll: without it a flex child refuses to
+   shrink below its content, so overflow-y never engages and the panel clips. */
+.sheet-body{flex:1 1 auto; min-height:0; overflow-y:auto; overscroll-behavior:contain; -webkit-overflow-scrolling:touch}
+.sheet-body > main{padding-top:0}
+.sheet-body .case-hero{padding-top:clamp(34px,5vw,60px)}
+/* the sheet supplies its own breadcrumb and its own handoff, so the page's
+   versions of both are redundant once the case study is open in here */
+.sheet-body .crumb, .sheet-body .next{display:none}
+.sheet-body .site-head,.sheet-body .dock,.sheet-body .pre,
+.sheet-body .gridlines,.sheet-body .gridspot{display:none}
+body.sheetopen{overflow:hidden}
+.sheet-load{display:grid; place-items:center; padding:90px 20px; color:var(--muted); font-size:13.5px}
+
+/* handoff to the next case study, inside the sheet */
+.sheet-next{
+  border-top:1px solid var(--line-2); background:var(--surface);
+  padding:clamp(26px,4vw,44px) var(--gut); display:flex; flex-wrap:wrap;
+  gap:16px 28px; align-items:center; justify-content:space-between;
+}
+.sheet-next .l{display:grid; gap:6px}
+.sheet-next .l .mono{display:block}
+.sheet-next h3{font-weight:300; font-size:clamp(22px,3vw,34px)}
+
+/* ---------- hero ---------- */
+.hero{position:relative; padding-top:clamp(92px,11vw,132px); padding-bottom:clamp(54px,7vw,92px)}
+.hero-grid{
+  display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.84fr);
+  gap:clamp(28px,4.5vw,72px); align-items:center;
+}
+.hero-copy{position:relative; z-index:2}
+.eyebrow{display:flex; flex-wrap:wrap; align-items:center; gap:10px 16px; margin-bottom:clamp(16px,2vw,24px)}
+.eyebrow .role{
+  font-family:"JetBrains Mono",monospace; font-size:11px; font-weight:500;
+  letter-spacing:.17em; text-transform:uppercase; color:var(--muted);
+}
+.eyebrow .avail{
+  display:inline-flex; align-items:center; gap:7px; font-size:11.5px; color:var(--ink);
+  background:var(--surface); border:1px solid var(--line-2); border-radius:999px; padding:4px 11px;
+}
+.eyebrow .avail i{width:6px; height:6px; border-radius:50%; background:var(--lime); box-shadow:0 0 0 2px rgba(205,238,92,.32)}
+.hero h1{max-width:13ch; margin-bottom:clamp(20px,2.4vw,30px)}
+.hero h1 .hl{position:relative; display:inline-block; color:var(--ink-2); white-space:nowrap}
+.hl-mark{
+  position:absolute; left:-2%; width:105%; bottom:-.16em; height:.40em;
+  color:var(--lime); z-index:-1; pointer-events:none;
+}
+.hero .lede{max-width:44ch}
+.hero-cta{display:flex; flex-wrap:wrap; gap:10px; margin-top:clamp(22px,2.8vw,32px)}
+.btn.dl{gap:10px; padding-left:18px}
+.btn.dl svg{width:16px; height:16px; flex:none}
+.btn.dl span{text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:1px}
+
+/* ---- the right-hand composition ---- */
+.hero-art{position:relative; min-height:clamp(340px,42vw,520px); color:var(--ink)}
+.hero-art .blob{
+  position:absolute; left:0; top:0; width:66%; height:88%;
+  background:var(--fill); border-radius:34% 34% 12% 12% / 26% 26% 10% 10%;
+}
+.hero-art .dot{
+  position:absolute; left:-1%; top:28%; width:15px; height:15px; border-radius:50%;
+  background:var(--lime);
+}
+.hero-art .wires{position:absolute; left:-3%; top:2%; width:46%; height:auto; opacity:.5}
+.hero-art .wires circle{fill:var(--paper)}
+.portrait{
+  position:absolute; left:9%; right:25%; bottom:0; top:6%; margin:0;
+  border-radius:30% 30% 10px 10px / 22% 22% 10px 10px; overflow:hidden;
+  display:grid; align-items:end;
+}
+.portrait{background:#121417}
+.portrait img{
+  width:100%; height:100%; object-fit:cover; object-position:52% 16%;
+  filter:grayscale(1) contrast(1.03);
+}
+/* the photograph carries its own dark ground, so the arch reads as the one
+   solid mass in the hero — it answers the black button on the other side. */
+.portrait::after{
+  content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+  background:linear-gradient(190deg, rgba(0,0,0,0) 52%, rgba(14,16,20,.58) 100%);
+}
+.portrait .slotframe{
+  width:100%; height:100%; display:grid; align-content:center; justify-items:center; gap:7px;
+  border:1px dashed var(--line-2); border-radius:inherit; background:var(--surface);
+  text-align:center; padding:22px;
+}
+.portrait .slotframe .hint{font-size:12px; color:var(--muted); max-width:22ch; line-height:1.45}
+.scriptnote{position:absolute; right:0; top:9%; width:min(118px,21%); display:grid; gap:2px; justify-items:start; color:var(--ink-2)}
+.scriptnote .sn{font-family:Caveat,cursive; font-size:clamp(19px,2vw,26px); line-height:1.16; transform:rotate(-4deg)}
+.sq-mark{width:clamp(78px,8vw,108px); height:auto; color:var(--ink-2); opacity:.5; margin-left:-4px}
+.floatcard{
+  position:absolute; right:-4%; bottom:9%; display:flex; align-items:flex-start; gap:12px;
+  background:var(--sage); color:#fff; border-radius:12px; padding:15px 18px; max-width:258px;
+  box-shadow:0 18px 40px -22px rgba(0,0,0,.6);
+}
+.floatcard .ic{flex:none; opacity:.85}
+.floatcard .ic svg{width:17px; height:17px; display:block}
+.floatcard .tx{font-size:13px; line-height:1.42}
+
+.scrollcue{
+  position:absolute; left:50%; bottom:clamp(10px,1.8vw,20px); transform:translateX(-50%);
+  display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--muted); font-size:13px;
+}
+.scrollcue .ring{
+  width:38px; height:38px; border-radius:50%; border:1px solid var(--line-2);
+  display:grid; place-items:center; color:var(--ink); background:var(--surface);
+  transition:transform .35s cubic-bezier(.2,.75,.25,1), background .25s, color .25s;
+}
+.scrollcue .ring svg{width:15px; height:15px}
+.scrollcue:hover .ring{transform:translateY(3px); background:var(--ink); color:var(--inv-ink)}
+
+@media (max-width:960px){
+  .hero-grid{grid-template-columns:1fr; gap:34px}
+  .hero-art{min-height:380px; max-width:450px}
+  .floatcard{right:0; max-width:232px}
+  .scriptnote{right:0}
+  .scrollcue{display:none}
+}
+@media (max-width:620px){
+  .hero{padding-top:84px; padding-bottom:40px}
+  .hero h1{max-width:none}
+  .hero h1 .hl{white-space:normal}
+  .hero .lede{max-width:none}
+  .hero-cta .btn{flex:1 1 auto; justify-content:center}
+  /* on a phone the composition stacks: photo, then the card under it.
+     Everything decorative steps out of the way. */
+  .hero-art{min-height:0; display:grid; gap:14px}
+  .portrait{
+    position:relative; inset:auto; aspect-ratio:1/1; width:100%;
+    border-radius:24% 24% 10px 10px / 22% 22% 10px 10px;
+  }
+  /* the backdrop shape only earns its place in the side-by-side layout */
+  .hero-art .blob, .hero-art .wires, .hero-art .dot{display:none}
+  .floatcard{position:relative; z-index:2; max-width:none; box-shadow:none}
+  .scriptnote{display:none}
+}
+
+/* breadcrumb — a direct visitor still knows where this page sits */
+.crumb{
+  display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-bottom:22px;
+  font-family:"JetBrains Mono",monospace; font-size:10px; letter-spacing:.11em;
+  text-transform:uppercase; color:var(--muted);
+}
+.crumb a{
+  color:var(--ink); text-decoration:none; display:inline-flex; align-items:center; gap:7px;
+  border:1px solid var(--line-2); background:var(--surface); border-radius:999px;
+  padding:6px 13px 6px 11px; transition:background .2s, color .2s, border-color .2s;
+}
+.crumb a:hover{background:var(--ink); color:var(--inv-ink); border-color:var(--ink)}
+
+/* ---------- sections & chapters ---------- */
+section{padding-block:clamp(46px,7vw,98px)}
+section.tight{padding-block:clamp(28px,4vw,52px)}
+.chap{
+  display:flex; align-items:baseline; gap:14px; margin-bottom:clamp(16px,2vw,24px);
+}
+.chap .no{
+  font-family:"JetBrains Mono",monospace; font-size:10.5px; letter-spacing:.12em;
+  color:var(--ink); background:var(--surface); border-radius:4px; padding:4px 7px;
+}
+.chap .ti{font-family:"JetBrains Mono",monospace; font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted)}
+.sec-head{
+  display:grid; grid-template-columns:1fr minmax(0,.46fr); gap:18px clamp(28px,5vw,64px);
+  align-items:start; margin-bottom:clamp(26px,3.6vw,44px);
+}
+.sec-head h2{max-width:14ch}
+.sec-head .t{max-width:none}
+.sec-head .aside{padding-top:8px}
+@media (max-width:860px){ .sec-head{grid-template-columns:1fr; gap:14px} .sec-head h2{max-width:18ch} }
+
+/* ---------- recruiter strip ---------- */
+.strip{border-top:1px solid var(--line-2)}
+.strip .grid{display:grid; grid-template-columns:repeat(4,1fr)}
+.strip .cell{padding:20px 0 22px 24px; border-left:1px solid var(--line-2)}
+.strip .cell:first-child{border-left:0; padding-left:0}
+.strip .v{
+  font-family:"Plus Jakarta Sans",sans-serif; font-weight:600; color:var(--ink);
+  font-size:clamp(19px,2.1vw,25px); letter-spacing:-0.035em; line-height:1.1;
+}
+.strip .k{display:block; margin-top:7px; font-size:12.5px; color:var(--muted); line-height:1.4}
+
+.trusted{border-top:1px solid var(--line-2); border-bottom:1px solid var(--line-2); background:var(--surface)}
+.trusted .row{display:flex; align-items:center; gap:clamp(16px,3vw,40px); padding-block:15px; flex-wrap:wrap}
+.trusted .lbl{flex:none; color:var(--muted)}
+.trusted .logos{display:flex; align-items:center; gap:clamp(16px,3vw,44px); flex-wrap:wrap; margin-right:auto}
+.trusted .co{
+  font-family:"Plus Jakarta Sans",sans-serif; font-weight:600; font-size:16px;
+  letter-spacing:-0.03em; color:var(--ink); opacity:.55;
+  transition:opacity .25s;
+}
+.trusted .co:hover{opacity:1}
+.trusted .sectors{flex:none; color:var(--muted)}
+.trusted .sectors i{font-style:normal; color:var(--line-2); margin-inline:5px}
+@media (max-width:860px){
+  .trusted .row{gap:12px 22px; padding-block:14px}
+  .trusted .sectors{display:none}
+  .trusted .co{font-size:14.5px}
+}
+@media (max-width:760px){
+  .strip .grid{grid-template-columns:repeat(2,1fr)}
+  .strip .cell{padding-left:16px}
+  .strip .cell:nth-child(3){border-left:0; padding-left:0}
+  .strip .cell:nth-child(n+3){border-top:1px solid var(--line-2)}
+}
+
+/* ============================================================
+   SELECTED WORK — one lead, three supporting
+   ============================================================ */
+.worknote{
+  display:flex; flex-wrap:wrap; gap:8px 18px; align-items:center;
+  margin-bottom:16px; font-size:12.5px; color:var(--muted);
+}
+.worknote .key{display:inline-flex; align-items:center; gap:7px}
+.worknote .key i{width:7px; height:7px; border-radius:50%; background:var(--ink); display:inline-block}
+.worknote .key.soft i{background:transparent; border:1px solid var(--line-2)}
+
+.workgrid{display:grid; gap:12px}
+.wcard{
+  position:relative; display:block; text-decoration:none;
+  background:var(--surface); border-radius:var(--card-r); box-shadow:var(--shadow);
+  overflow:hidden; transition:transform .45s cubic-bezier(.2,.75,.25,1), box-shadow .45s;
+}
+.wcard:hover{transform:translateY(-3px); box-shadow:0 1px 2px rgba(0,0,0,.05), 0 26px 50px -24px rgba(0,0,0,.45)}
+.wcard .flag{
+  position:absolute; top:0; left:0; z-index:3;
+  font-family:"JetBrains Mono",monospace; font-size:9.5px; letter-spacing:.13em; text-transform:uppercase;
+  background:var(--ink); color:var(--inv-ink); padding:7px 13px; border-radius:0 0 var(--card-r) 0;
+}
+
+/* the lead */
+.wcard.lead{display:grid; grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr); align-items:stretch}
+.wcard.lead .meat{padding:clamp(44px,4.6vw,62px) clamp(26px,3.2vw,46px) clamp(28px,3vw,42px)}
+.wcard.lead .idx{
+  font-family:"JetBrains Mono",monospace; font-size:10.5px; letter-spacing:.14em;
+  color:var(--muted); display:block; margin-bottom:clamp(14px,2vw,22px);
+}
+.wcard.lead h3{
+  font-size:clamp(25px,3.1vw,40px); font-weight:600; letter-spacing:-0.04em;
+  line-height:1.04; max-width:15ch; margin-bottom:14px;
+}
+.wcard.lead .say{font-size:14.5px; line-height:1.55; color:var(--body); max-width:42ch}
+.wcard .art{
+  position:relative; display:grid; place-items:center; padding:clamp(20px,2.4vw,34px);
+  min-height:260px; color:var(--ink);
+}
+.wcard .art svg{width:100%; height:auto; max-width:330px}
+.wcard.lead .art{border-left:1px solid var(--line)}
+@media (max-width:900px){
+  .wcard.lead{grid-template-columns:1fr}
+  .wcard.lead .art{border-left:0; border-top:1px solid var(--line); min-height:0; order:-1; padding-top:44px}
+  .wcard.lead .art svg{max-width:230px}
+  .wcard.lead .meat{padding-top:clamp(26px,4vw,36px)}
+}
+
+/* the facts row — three chips a recruiter can read in one pass */
+.facts{display:flex; flex-wrap:wrap; gap:7px; margin-top:clamp(18px,2.3vw,26px)}
+.fct{
+  display:inline-flex; align-items:baseline; gap:7px;
+  border:1px solid var(--line); border-radius:999px; padding:6px 13px;
+  font-size:12px; color:var(--ink); white-space:nowrap; background:var(--paper);
+}
+.fct b{font-weight:500}
+.fct .k{font-family:"JetBrains Mono",monospace; font-size:9px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted)}
+.wcard .foot{
+  display:flex; align-items:center; justify-content:space-between; gap:14px;
+  margin-top:clamp(20px,2.6vw,30px); padding-top:16px; border-top:1px solid var(--line);
+}
+.wcard .state{display:inline-flex; align-items:center; gap:8px; font-size:11.5px; color:var(--muted);
+  font-family:"JetBrains Mono",monospace; letter-spacing:.08em; text-transform:uppercase}
+.wcard .state i{width:7px; height:7px; border-radius:50%; background:var(--ink); display:inline-block; flex:none}
+.wcard .state.soft i{background:transparent; border:1px solid var(--line-2)}
+.wcard .go{display:inline-flex; align-items:center; gap:9px; font-size:13.5px; font-weight:500; color:var(--ink); white-space:nowrap}
+.wcard .go .arw{transition:transform .35s cubic-bezier(.2,.7,.3,1)}
+.wcard:hover .go .arw{transform:translateX(5px)}
+
+/* the supporting three */
+.workrow3{display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
+.wcard.sm{display:flex; flex-direction:column}
+.wcard.sm .art{min-height:170px; padding-top:34px}
+.wcard.sm .art svg{max-width:190px}
+.wcard.sm .meat{padding:0 clamp(20px,2vw,26px) clamp(20px,2vw,26px); display:flex; flex-direction:column; flex:1}
+.wcard.sm .idx{font-family:"JetBrains Mono",monospace; font-size:10px; letter-spacing:.14em; color:var(--muted); display:block; margin-bottom:9px}
+.wcard.sm h3{font-size:18px; font-weight:600; letter-spacing:-0.028em; line-height:1.18; margin-bottom:9px}
+.wcard.sm .say{font-size:13px; line-height:1.5; color:var(--body)}
+.wcard.sm .facts{margin-top:14px; gap:6px}
+.wcard.sm .fct{font-size:11px; padding:5px 10px}
+.wcard.sm .foot{margin-top:auto; padding-top:15px}
+.wcard.sm .go{font-size:12.5px}
+.wcard.sm .state{font-size:10px}
+@media (max-width:980px){ .workrow3{grid-template-columns:1fr 1fr} }
+@media (max-width:640px){ .workrow3{grid-template-columns:1fr} .wcard.sm .art{min-height:140px; padding-top:28px} .wcard.sm .art svg{max-width:160px} }
+
+/* ---------- metrics ---------- */
+.metrics{display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:clamp(20px,2.6vw,36px)}
+.metric{min-width:0}
+.metric .n{
+  font-family:"Plus Jakarta Sans",sans-serif; font-weight:600; color:var(--ink);
+  font-size:clamp(38px,4.8vw,66px); line-height:1; letter-spacing:-0.045em;
+  font-variant-numeric:tabular-nums; display:flex; align-items:baseline; gap:1px; white-space:nowrap;
+}
+.metric .n .u{font-size:0.46em; font-weight:400; letter-spacing:-0.02em; color:inherit}
+.metric .lbl{margin-top:12px; font-size:13.5px; color:var(--ink); font-weight:450; line-height:1.4}
+.metric .sub{margin-top:5px; font-size:12.5px; color:var(--muted); line-height:1.5}
+
+/* ---------- values ---------- */
+.approach{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:12px}
+.approach .app{
+  background:var(--surface); border-radius:var(--card-r); box-shadow:var(--shadow);
+  padding:clamp(22px,2.4vw,30px); display:grid; gap:10px; align-content:start;
+}
+.approach .app h3{font-size:18px; font-weight:600; letter-spacing:-0.028em}
+.approach .app p{font-size:13.5px; line-height:1.6}
+.approach .app .mono{letter-spacing:.12em}
+
+ul.plain{margin:0; padding:0; list-style:none; display:grid; gap:11px}
+ul.plain li{position:relative; padding-left:20px; font-size:14px; line-height:1.55}
+ul.plain li::before{
+  content:""; position:absolute; left:0; top:8px; width:7px; height:7px;
+  border-radius:50%; background:var(--ink);
+}
+ul.plain.open li::before{background:transparent; border:1px solid var(--line-2)}
+
+/* ---------- timeline ---------- */
+.tl{border-top:1px solid var(--line-2)}
+.tl .row{display:grid; grid-template-columns:160px 1fr; gap:clamp(16px,3.4vw,44px); padding:clamp(20px,2.6vw,30px) 0; border-bottom:1px solid var(--line-2)}
+.tl .row .when{padding-top:3px}
+.tl .row h4{margin-bottom:4px}
+.tl .row .co{font-size:13.5px; color:var(--muted); margin-bottom:11px}
+.tl .row p{font-size:14px; max-width:62ch}
+@media (max-width:640px){ .tl .row{grid-template-columns:1fr; gap:10px} }
+.tl .when-col{display:grid; gap:12px; align-content:start}
+.colog{display:block}
+.colog[hidden]{display:none}
+.colog img{
+  height:22px; width:auto; max-width:128px; object-fit:contain; object-position:left center;
+  filter:grayscale(1) contrast(.92); opacity:.7;
+  transition:filter .35s cubic-bezier(.2,.7,.3,1), opacity .35s;
+}
+.tl .row:hover .colog img, .tl .row:focus-within .colog img{filter:none; opacity:1}
+:root[data-theme="dark"] .colog img{filter:grayscale(1) invert(1) brightness(1.7) contrast(.9)}
+:root[data-theme="dark"] .tl .row:hover .colog img{filter:none}
+
+/* ---------- inverse band ---------- */
+.band{background:var(--inv-bg); color:var(--inv-body); border-radius:var(--card-r)}
+.band h2,.band h3,.band .ink,.band .metric .n,.band .metric .lbl,.band .metric .n .u{color:var(--inv-ink)}
+.band .mono,.band .lede,.band .metric .sub{color:var(--inv-body)}
+.band .btn{background:var(--inv-ink); color:var(--inv-bg); border-color:var(--inv-ink)}
+.band .btn:hover{background:transparent; color:var(--inv-ink)}
+.band .rule,.band .tl{border-color:var(--inv-line)}
+.band .chap .no{background:var(--inv-line); color:var(--inv-ink)}
+.bandwrap{padding-block:clamp(30px,4vw,56px)}
+.band .inset{padding:clamp(32px,4.4vw,64px) clamp(24px,3.4vw,52px)}
+
+/* ---------- case study page ---------- */
+.case-hero{padding-top:clamp(96px,12vw,150px); padding-bottom:clamp(26px,3.4vw,42px)}
+.case-hero .mono{margin-bottom:16px}
+.case-hero h1{font-size:clamp(34px,6vw,76px); margin-bottom:20px; max-width:17ch}
+.case-hero .lede{max-width:48ch}
+.casemeta{display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:20px; margin-top:clamp(28px,4vw,46px); padding-top:22px; border-top:1px solid var(--line-2)}
+.casemeta .k{display:block; margin-bottom:7px}
+.casemeta .v{font-size:13.5px; color:var(--ink); font-weight:450; line-height:1.45}
+
+.cs{padding-block:clamp(36px,5.4vw,72px); border-bottom:1px solid var(--line-2)}
+.cs:last-of-type{border-bottom:0}
+.cs > .mono{display:block; margin-bottom:14px}
+.cs h2{margin-bottom:16px; max-width:20ch}
+.cs .lede{max-width:58ch}
+.prose{max-width:66ch; display:grid; gap:17px; margin-top:24px}
+.prose p{font-size:15.5px; line-height:1.65}
+.prose h3{margin-top:12px}
+
+.two{display:grid; grid-template-columns:1fr 1fr; gap:clamp(24px,3.6vw,52px); align-items:start}
+.two.sideways{grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr)}
+@media (max-width:860px){ .two,.two.sideways{grid-template-columns:1fr} }
+
+.cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:12px}
+.card{background:var(--surface); border-radius:var(--card-r); box-shadow:var(--shadow); padding:24px 22px; display:grid; gap:9px; align-content:start}
+.card .big{font-family:"Plus Jakarta Sans",sans-serif; font-weight:600; font-size:27px; letter-spacing:-0.035em; color:var(--ink); line-height:1.1; overflow-wrap:break-word}
+.card p{font-size:13.5px; line-height:1.55}
+
+figure{margin:0; display:grid; gap:13px}
+.shot{width:100%; height:auto; border-radius:10px; background:#fff; box-shadow:var(--shadow)}
+figcaption{font-size:13px; line-height:1.5; color:var(--muted)}
+figcaption b{color:var(--ink); font-weight:500; display:block; margin-bottom:3px}
+.shotgrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:22px}
+
+.chips{display:flex; flex-wrap:wrap; gap:8px}
+.chip{font-size:13px; font-weight:450; padding:7px 14px; border-radius:999px; background:var(--fill); color:var(--muted); white-space:nowrap}
+.chip.hot{background:var(--line-2); color:var(--ink); font-weight:500}
+.chip.on{background:var(--ink); color:var(--paper); font-weight:500}
+.tag{font-family:"JetBrains Mono",monospace; font-size:10px; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--muted); border:1px solid var(--line); border-radius:3px; padding:4px 8px}
+.tag.draft{border-color:var(--line-2); color:var(--ink)}
+
+.pull{border-left:2px solid var(--lime); padding:2px 0 2px 22px; font-family:"Plus Jakarta Sans",sans-serif;
+  font-size:clamp(19px,2.4vw,28px); font-weight:600; line-height:1.28; letter-spacing:-0.03em; color:var(--ink)}
+.note{background:var(--surface); border-radius:var(--card-r); box-shadow:var(--shadow); padding:20px 22px; font-size:14px; line-height:1.6}
+.note b{color:var(--ink); font-weight:500}
+
+.bars{display:grid; gap:12px}
+.bars .cap{display:flex; justify-content:space-between; gap:16px; font-size:13.5px; margin-bottom:8px}
+.bars .cap b{color:var(--ink); font-weight:500}
+.track{display:flex; height:50px; border-radius:6px; overflow:hidden; background:var(--fill)}
+.seg{display:flex; align-items:center; padding-inline:15px; font-size:13px; font-weight:500; white-space:nowrap; overflow:hidden}
+.seg.dark{background:var(--ink); color:var(--surface)}
+.seg.mid{background:var(--line-2); color:var(--ink)}
+
+.opts{border-top:1px solid var(--line-2)}
+.opts .r{display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); gap:18px; padding-block:16px; border-bottom:1px solid var(--line-2); align-items:baseline}
+.opts .o{font-size:16px; color:var(--muted); text-decoration:line-through}
+.opts .w{font-size:14px; color:var(--muted); line-height:1.5}
+.opts .r.keep{border-top:1px solid var(--ink); border-bottom:1px solid var(--ink); background:var(--surface); padding-inline:18px; border-radius:6px}
+.opts .r.keep .o{color:var(--ink); text-decoration:none; font-weight:500}
+.opts .r.keep .w{color:var(--ink); font-weight:450}
+.opts .r.flag .w{color:var(--ink); font-weight:450}
+@media (max-width:620px){ .opts .r{grid-template-columns:1fr; gap:5px} }
+
+ol.steps{margin:0; padding:0; display:grid; gap:15px; counter-reset:s}
+ol.steps li{list-style:none; display:grid; grid-template-columns:30px 1fr; gap:13px; font-size:15px; line-height:1.6}
+ol.steps li::before{counter-increment:s; content:counter(s,decimal-leading-zero);
+  font-family:"JetBrains Mono",monospace; font-size:11px; color:var(--muted); padding-top:5px}
+ol.steps b{color:var(--ink); font-weight:500}
+
+/* draft / placeholder system */
+.draftbar{background:var(--ink); color:var(--paper); border-radius:var(--card-r); padding:20px 22px; display:grid; gap:8px; margin-top:26px}
+.draftbar .h{font-family:"Plus Jakarta Sans",sans-serif; font-weight:600; font-size:17px; letter-spacing:-0.02em; color:var(--surface)}
+.draftbar p{font-size:13.5px; line-height:1.55; color:#b5bac4; max-width:70ch}
+.slot{border:1px dashed var(--line-2); border-radius:var(--card-r); padding:20px 22px; display:grid; gap:9px; background:transparent}
+.slot .lbl{font-family:"JetBrains Mono",monospace; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink); font-weight:500}
+.slot p{font-size:13.5px; line-height:1.55; color:var(--muted)}
+.slot ul{margin:0; padding-left:18px; display:grid; gap:5px; font-size:13.5px; color:var(--muted)}
+.slotgrid{display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); margin-top:24px}
+
+.next{display:block; text-decoration:none; padding-block:clamp(40px,6vw,76px); border-top:1px solid var(--line-2)}
+.next .mono{display:block; margin-bottom:13px}
+.next h2{display:flex; align-items:center; gap:18px; flex-wrap:wrap}
+.next .arw{transition:transform .4s cubic-bezier(.2,.7,.3,1); display:inline-block}
+.next:hover .arw{transform:translateX(14px)}
+
+/* ---------- footer ---------- */
+.site-foot{background:var(--inv-bg); color:var(--inv-body); margin-top:clamp(30px,4vw,56px)}
+.site-foot .in{padding-block:clamp(50px,7vw,88px); display:grid; gap:36px}
+.site-foot h2{color:var(--inv-ink); max-width:15ch}
+.site-foot .row{display:flex; flex-wrap:wrap; gap:14px 36px; align-items:center}
+.site-foot a.lnk{color:var(--inv-ink); font-size:15px; font-weight:450; text-decoration:none; border-bottom:1px solid var(--inv-line); padding-bottom:2px}
+.site-foot a.lnk:hover{border-bottom-color:var(--inv-ink)}
+.site-foot .fine{font-size:12.5px; color:var(--inv-body); line-height:1.6; max-width:76ch; border-top:1px solid var(--inv-line); padding-top:20px}
+@media (min-width:881px){ .site-foot .in{padding-bottom:clamp(92px,8vw,124px)} }
+
+/* ---------- forms ---------- */
+.form{display:grid; gap:17px; max-width:540px}
+.field{display:grid; gap:7px}
+.field label{font-size:13.5px; font-weight:500; color:var(--ink)}
+.field input,.field textarea{
+  font:inherit; font-size:15px; color:var(--ink); background:var(--surface);
+  border:1px solid var(--line-2); border-radius:8px; padding:12px 14px; width:100%;
+}
+.field textarea{min-height:140px; resize:vertical}
+.formnote{font-size:13px; color:var(--muted)}
+
+.fill{
+  font-family:"JetBrains Mono",monospace; font-size:.86em; letter-spacing:.02em;
+  color:var(--ink); background:var(--fill); border-bottom:1px dashed var(--line-2);
+  padding:1px 5px; border-radius:2px; white-space:nowrap;
+}
+
+/* ---------- cursor & preloader ---------- */
+
+
+.pre{position:fixed; inset:0; z-index:300; background:var(--paper); display:grid; place-items:center; transition:opacity .6s ease, visibility .6s}
+.pre.done{opacity:0; visibility:hidden}
+.pre .pct{font-family:"Plus Jakarta Sans",sans-serif; font-weight:600; font-size:clamp(52px,11vw,130px); color:var(--ink); letter-spacing:-0.05em; font-variant-numeric:tabular-nums}
+
+.rv{opacity:1; transform:none}
+html.anim .rv{opacity:0; transform:translateY(18px)}
+
+/* ============================================================
+   Phone
+   ============================================================ */
+@media (max-width:620px){
+  body{font-size:14.5px}
+  .hero{padding-top:92px}
+  .hero h1{max-width:none}
+  .hero .lede{max-width:none}
+  .hero-cta .btn{flex:1 1 auto; justify-content:center; padding:12px 16px; font-size:14px}
+
+  .metrics{grid-template-columns:repeat(2,1fr); gap:22px 16px}
+  .metric .n{font-size:clamp(30px,8.4vw,42px)}
+  .metric .lbl{font-size:13px; margin-top:9px}
+  .metric .sub{font-size:12px}
+
+  .approach{grid-template-columns:1fr}
+  .cards{grid-template-columns:1fr}
+  .shotgrid{grid-template-columns:repeat(2,1fr); gap:16px}
+  .casemeta{grid-template-columns:repeat(2,1fr); gap:16px 14px}
+  .track{height:44px}
+  .seg{padding-inline:11px; font-size:12.5px}
+  .bars .cap{flex-direction:column; gap:3px; font-size:13px}
+  .prose p{font-size:15px}
+  .pull{padding-left:16px}
+  .next{padding-block:36px}
+}
+@media (max-width:359px){
+  .metrics{grid-template-columns:1fr}
+  .shotgrid{grid-template-columns:1fr}
+  .casemeta{grid-template-columns:1fr}
+  .strip .grid{grid-template-columns:1fr}
+  .strip .cell{border-left:0; padding-left:0; border-top:1px solid var(--line-2)}
+  .strip .cell:first-child{border-top:0}
+}
+
+/* ============================================================
+   Mobile navigation — top bar and tab bar are both permanent.
+   The locator becomes a full-width strip above the tabs: home on the left,
+   where-you-are in the middle, the menu handle on the right. Same object as
+   on desktop, laid out for a thumb.
+   ============================================================ */
+@media (max-width:880px){
+  html.docked .site-head{transform:none; opacity:1; visibility:visible}
+  .site-head .bar{padding:10px var(--gut)}
+  .topnav a{display:none}
+  .topnav a.dl{
+    display:inline-flex; font-size:12.5px; font-weight:500; color:var(--ink);
+    border:1px solid var(--line-2); background:var(--surface); padding:7px 13px; margin:0;
+  }
+  .topnav a.dl svg{width:13px; height:13px; opacity:.6}
+
+  .navzone{left:0; right:0; bottom:0; transform:none; width:100%}
+
+  .dock, html.docked .dock{
+    width:100%;
+    transform:none; opacity:1; visibility:visible; pointer-events:auto;
+    border-radius:0; border:0; border-top:1px solid var(--line-2);
+    background:color-mix(in srgb, var(--paper) 96%, transparent);
+    box-shadow:0 -10px 28px -22px rgba(0,0,0,.45);
+    padding:0 0 env(safe-area-inset-bottom, 0px);
+    gap:0; flex-wrap:wrap; justify-content:space-between;
+  }
+
+  .dock-loc{
+    order:-1; width:100%; border-radius:0; background:var(--surface);
+    padding:0 var(--gut); border-bottom:1px solid var(--line);
+  }
+  .dock-loc .loc-div{height:20px; margin:0 10px 0 4px}
+  .dock a.dock-home{padding:9px 0 9px 0; gap:8px}
+  .dock a.dock-home .sp{width:23px; height:23px; font-size:9px}
+  .dock a.dock-home .lb{font-size:12.5px}
+  .dock a.dock-home:hover{background:transparent}
+  .dock-now{flex:1; min-width:0; padding:9px 0; border-radius:0; background:transparent}
+  .dock-now .t{flex:1; max-width:none}
+  .dock-now .cv{margin-left:auto}
+  .dock-now[aria-expanded="true"]{background:transparent; color:var(--ink)}
+  .dock-now[aria-expanded="true"] .t{color:var(--ink)}
+  .dock-now[aria-expanded="true"] .n{color:var(--muted)}
+  .dock-now[aria-expanded="true"] .cv svg{opacity:1}
+
+  .dock-sep{display:none}
+  .dock a[data-resume]{display:none}
+  .dock a{
+    flex:1 1 0; min-width:0; flex-direction:column; justify-content:center; gap:4px;
+    padding:7px 2px 6px; border-radius:0; margin:4px 0;
+    font-family:"JetBrains Mono",ui-monospace,monospace;
+    font-size:9.5px; font-weight:500; letter-spacing:.045em; text-transform:uppercase;
+  }
+  .dock a > span{max-width:100%; overflow:hidden; text-overflow:ellipsis}
+  .dock a svg{width:20px; height:20px; opacity:.45}
+  .dock a[aria-current="page"], .dock a.cta{background:transparent; color:var(--body); font-weight:500; margin-left:0}
+  .dock a[aria-current="page"]{color:var(--ink); font-weight:700}
+  .dock a[aria-current="page"] svg, .dock a:hover svg{opacity:1}
+  .dock a:hover{background:transparent}
+  .dock a.cta svg{opacity:.45}
+  .dock a.cta[aria-current="page"]{color:var(--ink); font-weight:700}
+
+  /* the menu: a sheet from the bottom, big enough to read with a thumb */
+  .map{
+    left:0; right:0; bottom:100%; transform:translateY(14px);
+    width:auto; margin-inline:10px; margin-bottom:11px; border-radius:15px;
+    max-height:min(66vh, 560px); overflow-y:auto; padding:14px;
+  }
+  .map.open{transform:none}
+  .mapgrid{grid-template-columns:1fr; gap:12px}
+  .cs-row{padding:10px 12px 10px 10px; gap:12px}
+  .cs-row .mk{width:38px; height:38px}
+  .cs-row .mk svg{width:33px}
+  .cs-row strong{font-size:14.5px}
+  .mg-side{grid-template-columns:1fr; gap:10px}
+  .mg-block a{padding:9px 10px}
+  .map .foot{display:none}
+
+  body{padding-bottom:calc(124px + env(safe-area-inset-bottom, 0px))}
+
+  .sheet .panel{inset:0; border-radius:0; transform:translateY(100%)}
+  .sheet-head{padding:10px 12px}
+  .sheet-back{padding:7px 12px 7px 10px; font-size:12.5px}
+  .sheet-where .tt{display:none}
+}
+
+/* a narrow phone: the readout keeps the word "Home" but drops its own label */
+@media (max-width:420px){
+  .dock-now .n{display:none}
+  .dock-loc{padding:0 var(--gut)}
+}
+
+/* ---- hover opens the menu, on a real pointer only ----
+   Touch keeps the tap, because hover on touch means "first tap does nothing",
+   which is the single most annoying menu bug on the web. */
+@media (hover:hover) and (pointer:fine){
+  .navzone::after{
+    content:""; position:absolute; left:50%; bottom:100%; width:min(880px, calc(100vw - 28px));
+    height:14px; transform:translateX(-50%); pointer-events:none;
+  }
+  html.mapopen .navzone::after{pointer-events:auto}
+}
+@media (max-width:360px){
+  .dock a,.dock a.dock-home{font-size:8.5px; letter-spacing:.02em}
+  .dock a svg{width:19px; height:19px}
+}
+@media (max-width:480px){ .brand span{display:none} }
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important}
+  .rv{opacity:1 !important; transform:none !important}
+  #gl{display:none}
+  .pre{display:none}
+}
+
+/* ============================================================
+   MICRO-INTERACTIONS
+   The marks are drawings of the work, so on hover they do what the
+   work did: the funnel drains, the field compounds, the rooms fill,
+   the system wires itself up. Hover-capable pointers only, and all
+   of it is switched off under prefers-reduced-motion.
+   ============================================================ */
+.wcard{isolation:isolate}
+.wcard::after{
+  content:""; position:absolute; left:0; bottom:0; height:1px; width:0; z-index:4;
+  background:var(--ink); transition:width .6s cubic-bezier(.2,.75,.25,1);
+}
+.wcard .art, .wcard .meat{position:relative; z-index:2}
+.mk{overflow:visible}
+.mk .r, .mk .n, .mk .e, .mk .fillcell, .mk .fld{transform-box:fill-box; transform-origin:center}
+
+@media (hover:hover) and (pointer:fine){
+  .wcard:hover::after{width:100%}
+  .wcard:hover{box-shadow:inset 0 0 0 1px var(--line-2), 0 1px 2px rgba(0,0,0,.05), 0 26px 50px -24px rgba(0,0,0,.45)}
+
+  /* 01 — the funnel drains, top ring to bottom */
+  .wcard:hover .mk-funnel .r{animation:mk-drain 1.9s ease-in-out infinite; animation-delay:calc(var(--i) * -0.085s)}
+  /* 02 — the field breathes outward */
+  .wcard:hover .mk-burst .fld{animation:mk-breathe 3s ease-in-out infinite}
+  /* 03 — taken rooms fill in sequence; the one you picked keeps moving */
+  .wcard:hover .mk-lattice .fillcell{animation:mk-fill 2.8s ease-in-out infinite; animation-delay:calc(var(--i) * 0.04s)}
+  .wcard:hover .mk-lattice .pick{animation:mk-ants 1.6s linear infinite}
+  /* 04 — the connections draw themselves, then the nodes land */
+  .wcard:hover .mk-graph .e{animation:mk-trace 2.6s ease-in-out infinite; animation-delay:calc(var(--i) * 0.045s)}
+  .wcard:hover .mk-graph .n{animation:mk-pop 2.6s ease-in-out infinite; animation-delay:calc(var(--i) * 0.055s)}
+
+  .approach .app:hover .ic{transform:translateY(-2px)}
+  .approach .app:hover .ic path:last-of-type{stroke-width:1.7}
+}
+@keyframes mk-drain{0%,62%,100%{opacity:1} 31%{opacity:.18}}
+@keyframes mk-breathe{0%,100%{transform:scale(.95) rotate(0deg)} 50%{transform:scale(1.045) rotate(3.5deg)}}
+@keyframes mk-fill{0%,100%{fill-opacity:.10} 42%{fill-opacity:.52}}
+@keyframes mk-ants{to{stroke-dashoffset:-24}}
+@keyframes mk-trace{0%{stroke-dashoffset:1} 48%,100%{stroke-dashoffset:0}}
+@keyframes mk-pop{0%,100%{transform:scale(1)} 50%{transform:scale(1.28)}}
+.mk-graph .e{stroke-dasharray:1}
+
+/* ---------- value cards get a line-art mark ---------- */
+.approach .app .ico{display:block; color:var(--ink); line-height:0; margin-bottom:2px}
+.ic{width:30px; height:30px; transition:transform .4s cubic-bezier(.2,.75,.25,1)}
+.approach .app{gap:9px}
+
+/* ---------- fit matrix: the same message, readable at a glance ---------- */
+.matrix{
+  margin-top:clamp(24px,3.2vw,38px); background:var(--surface);
+  border-radius:var(--card-r); box-shadow:var(--shadow); overflow:hidden;
+}
+.mx-head, .mx-row{
+  display:grid; grid-template-columns:116px minmax(0,1fr) minmax(0,1fr);
+  gap:14px clamp(18px,2.4vw,34px); padding:14px clamp(18px,2.2vw,26px); align-items:start;
+}
+.mx-head{padding-block:11px; background:var(--fill)}
+.mx-row{border-top:1px solid var(--line); transition:background .25s}
+.mx-row:hover{background:var(--fill)}
+.mx-row .k{
+  font-family:"JetBrains Mono",monospace; font-size:10px; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--muted); padding-top:3px;
+}
+.mx-row .y, .mx-row .n{display:flex; gap:10px; align-items:flex-start; font-size:14px; line-height:1.45}
+.mx-row .y{color:var(--ink)}
+.mx-row .n{color:var(--muted)}
+.tick{width:16px; height:16px; flex:none; margin-top:2px}
+.mx-row .y .tick{color:var(--ink)}
+.mx-row .n .tick{color:var(--line-2)}
+.mx-head .y .mono, .mx-head .n .mono{color:var(--ink)}
+.mx-head .n .mono{color:var(--muted)}
+.mx-row .lb{display:none}
+@media (max-width:760px){
+  .mx-head{display:none}
+  .mx-row{grid-template-columns:1fr; gap:10px; padding-block:17px}
+  .mx-row .k{padding-top:0}
+  .mx-row .lb{
+    display:block; font-family:"JetBrains Mono",monospace; font-size:9.5px;
+    letter-spacing:.11em; text-transform:uppercase; color:var(--muted); margin-bottom:3px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .mk *{animation:none !important}
+  .gridspot{display:none}
+  .wcard::after{display:none}
+}
+
+/* ============================================================
+   CONTEXTUAL TOUCHPOINTS
+   Dribbble and Medium are not buttons bolted to the page: each one
+   closes the chapter it belongs to. Outlined rather than filled, so
+   they read as a next step and never compete with a case study.
+   ============================================================ */
+.touch{
+  display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center;
+  gap:clamp(16px,2.4vw,30px); margin-top:12px; padding:clamp(20px,2.4vw,28px);
+  border:1px solid var(--line-2); border-radius:var(--card-r);
+  text-decoration:none; background:transparent;
+  transition:background .3s, border-color .3s, transform .4s cubic-bezier(.2,.75,.25,1);
+}
+.touch:hover{background:var(--surface); border-color:var(--ink); transform:translateY(-2px)}
+.touch .mk{color:var(--ink); line-height:0; opacity:.75; transition:opacity .3s}
+.touch:hover .mk{opacity:1}
+.touch .mk .ic{width:36px; height:36px}
+.touch .tx{display:grid; gap:6px}
+.touch .tx .mono{color:var(--muted)}
+.touch h3{font-size:clamp(18px,1.9vw,21px); font-weight:600; letter-spacing:-0.028em}
+.touch .tx p{font-size:13.5px; color:var(--body); line-height:1.5; max-width:56ch}
+.touch .go{
+  display:inline-flex; align-items:center; gap:9px; white-space:nowrap;
+  font-size:13.5px; font-weight:500; color:var(--ink);
+}
+.touch .go .ic{width:15px; height:15px; opacity:.55; transition:transform .3s, opacity .3s}
+.touch:hover .go .ic{transform:translate(2px,-2px); opacity:1}
+ul.pieces{margin:2px 0 0; padding:0; list-style:none; display:grid; gap:5px}
+ul.pieces li{
+  position:relative; padding-left:16px; font-size:13.5px; color:var(--body); line-height:1.45;
+}
+ul.pieces li::before{content:""; position:absolute; left:0; top:9px; width:7px; height:1px; background:var(--line-2)}
+@media (max-width:720px){
+  .touch{grid-template-columns:auto minmax(0,1fr); gap:14px}
+  .touch .go{grid-column:1 / -1; margin-top:2px}
+  .touch .mk .ic{width:28px; height:28px}
+}
+
+/* ---------- contact: four real ways in ---------- */
+.chans{display:grid; grid-template-columns:repeat(2,1fr); gap:12px}
+.chan{
+  display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:16px;
+  padding:clamp(18px,2.2vw,24px); border-radius:var(--card-r); text-decoration:none;
+  background:var(--surface); box-shadow:var(--shadow);
+  transition:transform .4s cubic-bezier(.2,.75,.25,1), box-shadow .4s;
+}
+.chan:hover{transform:translateY(-3px); box-shadow:0 1px 2px rgba(0,0,0,.05), 0 24px 46px -24px rgba(0,0,0,.45)}
+.chan .ic-wrap{
+  width:44px; height:44px; border-radius:50%; display:grid; place-items:center; flex:none;
+  background:var(--fill); color:var(--ink);
+}
+.chan .ic-wrap .ic{width:21px; height:21px}
+.chan .tx{display:grid; gap:3px; min-width:0}
+.chan .k{font-family:"JetBrains Mono",monospace; font-size:9.5px; letter-spacing:.13em; text-transform:uppercase; color:var(--muted)}
+.chan strong{
+  font-family:"Plus Jakarta Sans",sans-serif; font-weight:600; font-size:clamp(17px,1.9vw,21px);
+  letter-spacing:-0.03em; color:var(--ink); overflow-wrap:anywhere;
+}
+.chan .d{font-size:12.5px; color:var(--body); line-height:1.45}
+.chan .arw{color:var(--ink); opacity:.4; transition:transform .3s, opacity .3s}
+.chan:hover .arw{transform:translateX(4px); opacity:1}
+.chan.hot{background:var(--ink)}
+.chan.hot .k{color:var(--inv-body)}
+.chan.hot strong{color:var(--inv-ink)}
+.chan.hot .d{color:var(--inv-body)}
+.chan.hot .ic-wrap{background:rgba(255,255,255,.12); color:var(--inv-ink)}
+.chan.hot .arw{color:var(--inv-ink); opacity:.65}
+@media (max-width:760px){ .chans{grid-template-columns:1fr} }
+
+.elsewhere{margin-top:clamp(34px,4.6vw,58px); padding-top:24px; border-top:1px solid var(--line-2)}
+.elsewhere .mono{display:block; margin-bottom:14px}
+.els-row{display:grid; grid-template-columns:repeat(3,1fr); gap:10px}
+.els{
+  display:grid; grid-template-columns:auto minmax(0,1fr); align-items:center; gap:13px;
+  padding:16px 18px; border:1px solid var(--line-2); border-radius:var(--card-r);
+  text-decoration:none; transition:background .25s, border-color .25s;
+}
+.els:hover{background:var(--surface); border-color:var(--ink)}
+.els .mk{color:var(--ink); line-height:0; opacity:.7}
+.els .mk .ic{width:24px; height:24px}
+.els .tx{display:grid; gap:2px; min-width:0}
+.els strong{font-family:"Plus Jakarta Sans",sans-serif; font-weight:600; font-size:15px; letter-spacing:-0.025em; color:var(--ink)}
+.els .d{font-size:12.5px; color:var(--muted); line-height:1.4}
+@media (max-width:760px){ .els-row{grid-template-columns:1fr} }
+
+/* phone number under the talk band's buttons */
+.callme{margin-top:14px; font-family:"JetBrains Mono",monospace; font-size:12px; letter-spacing:.06em; color:var(--inv-body)}
+.callme a{color:var(--inv-ink); text-decoration:none; border-bottom:1px solid var(--inv-line); padding-bottom:2px}
+.callme a:hover{border-bottom-color:var(--inv-ink)}
+
+@media (max-width:880px){
+  /* the label stays — the point is that the way out is obvious. The prev/next
+     arrows go instead: the handoff at the end of each study already offers the
+     next one, and that buys the back button its full width. */
+  .sheet-steps{display:none}
+  .sheet-close{width:34px; height:34px}
+  .sheet-back{padding:10px 16px 10px 12px; font-size:13px}
+}
+
+/* ---- the lime, echoed where it carries meaning ----
+   Only where "this one is finished / this one is a yes" is the message:
+   the availability pill in the hero, the completeness dots, the matrix ticks.
+   Four places on the whole site, which is what keeps it an accent. */
+.worknote .key i{background:var(--lime); box-shadow:0 0 0 2px rgba(205,238,92,.3)}
+.wcard .state i{background:var(--lime); box-shadow:0 0 0 2px rgba(205,238,92,.3)}
+.wcard .state.soft i{background:transparent; box-shadow:none}
+.mx-row .y .tick{color:#8fb525; stroke-width:1.7}
+
+/* ============================================================
+   COPY TO CLIPBOARD + THEME
+   ============================================================ */
+.copybtn{
+  font:inherit; cursor:pointer; flex:none; display:inline-grid; place-items:center;
+  width:30px; height:30px; border-radius:8px; border:1px solid var(--line-2);
+  background:var(--surface); color:var(--ink); padding:0;
+  transition:background .2s, color .2s, border-color .2s;
+}
+.copybtn .ic{width:15px; height:15px}
+.copybtn .i-done{display:none; color:#8ab52a}
+.copybtn:hover{background:var(--ink); color:var(--inv-ink); border-color:var(--ink)}
+.copybtn.is-done{background:var(--surface); color:var(--ink); border-color:var(--line-2)}
+.copybtn.is-done .i-copy{display:none}
+.copybtn.is-done .i-done{display:block}
+.copybtn.sm{width:26px; height:26px; border-radius:7px}
+.copybtn.sm .ic{width:13px; height:13px}
+.copybtn.float{
+  position:absolute; right:clamp(14px,1.8vw,20px); top:50%; transform:translateY(-50%);
+  width:34px; height:34px;
+}
+.chanwrap{position:relative; display:grid}
+
+/* the footer's email keeps its copy control beside it */
+.lnkwrap{display:inline-flex; align-items:center; gap:9px}
+.site-foot .lnkwrap .copybtn{
+  background:transparent; border-color:var(--inv-line); color:var(--inv-ink);
+}
+.site-foot .lnkwrap .copybtn:hover{background:var(--inv-ink); color:var(--inv-bg); border-color:var(--inv-ink)}
+.site-foot .lnkwrap .copybtn.is-done{background:transparent; color:var(--inv-ink)}
+.site-foot .lnkwrap .copybtn .i-done{color:var(--lime)}
+
+/* a quiet, out-of-the-way theme switch */
+.themetgl{
+  font:inherit; cursor:pointer; display:inline-flex; align-items:center; gap:7px;
+  padding:7px 13px 7px 11px; border-radius:999px; font-size:12.5px;
+  border:1px solid var(--line-2); background:transparent; color:var(--muted);
+  transition:color .2s, border-color .2s;
+}
+.themetgl .ic{width:14px; height:14px}
+.themetgl:hover{color:var(--ink); border-color:var(--ink)}
+.themetgl .i-sun, .themetgl .lb-light{display:none}
+:root[data-theme="dark"] .themetgl .i-sun, :root[data-theme="dark"] .themetgl .lb-light{display:inline-flex}
+:root[data-theme="dark"] .themetgl .i-moon, :root[data-theme="dark"] .themetgl .lb-dark{display:none}
+.themetgl.foot{
+  border-color:var(--inv-line); color:var(--inv-body); margin-left:auto;
+}
+.themetgl.foot:hover{color:var(--inv-ink); border-color:var(--inv-ink)}
+.themetgl.menu{border:0; padding:5px 8px; font-size:12px}
+.site-foot .row{align-items:center}
+@media (max-width:620px){ .themetgl.foot{margin-left:0} }
+
+/* the live region that announces a copy, kept off-screen */
+.sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+
+/* ============================================================
+   THE ACCENT, USED ON PURPOSE
+   One rule: lime marks what is live, finished, or the single next
+   thing to do. It is never decoration, and it never carries text on
+   a light ground — its contrast is too low. It fills behind ink, or
+   it is a mark. Roughly a dozen places on the whole site.
+   ============================================================ */
+
+/* 1. the one thing he wants read first */
+.wcard .flag{background:var(--lime); color:#141608}
+:root[data-theme="dark"] .wcard .flag{color:#141608}
+
+/* 2. live progress through a case study */
+.sheet-prog{background:var(--lime); height:2px}
+
+/* 3. where you are, in the dock */
+.dock > a[aria-current="page"]{position:relative}
+.dock > a[aria-current="page"]::after{
+  content:""; position:absolute; left:50%; bottom:3px; width:14px; height:2px;
+  border-radius:2px; background:var(--lime); transform:translateX(-50%);
+}
+
+/* 4. the chapter you are reading */
+.chap{position:relative; padding-left:13px}
+.chap::before{
+  content:""; position:absolute; left:0; top:2px; bottom:2px; width:3px;
+  border-radius:2px; background:var(--lime);
+}
+.band .chap .no{background:rgba(205,238,92,.16); color:var(--lime)}
+
+/* 5. a link coming alive under the pointer */
+.rd{border-bottom-color:var(--line-2)}
+.rd:hover{border-bottom-color:var(--lime); border-bottom-width:2px; padding-bottom:1px}
+.site-foot a.lnk:hover{border-bottom-color:var(--lime)}
+.topnav a:hover{background:transparent; color:var(--ink); box-shadow:inset 0 -2px 0 var(--lime)}
+.topnav a[aria-current="page"]{background:transparent; box-shadow:inset 0 -2px 0 var(--lime)}
+
+/* 6. the small affirmatives — availability, completeness, a yes in the matrix —
+      are already lime from the previous pass */
+
+/* 7. selection and focus: the two states every page has and nobody styles */
+::selection{background:var(--lime); color:#141608}
+:focus-visible{outline:2px solid var(--lime); outline-offset:3px}
+
+/* 8. the scroll cue, the one invitation in the hero */
+.scrollcue:hover .ring{background:var(--lime); color:#141608; border-color:var(--lime)}
+
+/* the header's icon-only switch */
+.themetgl.head{
+  width:38px; height:38px; padding:0; border-radius:50%; justify-content:center;
+  border-color:var(--line-2); color:var(--muted); flex:none; margin-left:4px;
+}
+.themetgl.head .ic{width:16px; height:16px}
+.themetgl.head:hover{color:var(--ink); border-color:var(--ink)}
+
+/* ============================================================
+   CURSOR
+   A precise dot that tracks the pointer with no easing at all, and a
+   small label that names the action beside it. Nothing lags: position
+   is written straight to the transform on every move, and only size,
+   colour and opacity are ever transitioned.
+   ============================================================ */
+.cur-dot, .cur-tag{
+  position:fixed; top:0; left:0; pointer-events:none; z-index:400;
+  opacity:0; will-change:transform;
+}
+.cur-dot{
+  width:9px; height:9px; margin:-4.5px 0 0 -4.5px; border-radius:50%;
+  background:var(--ink);
+  /* a faint counter-coloured halo, so the dot still reads over a photograph
+     or a mid-grey where simple light/dark inversion is not enough on its own */
+  box-shadow:0 0 0 1.5px rgba(255,255,255,.5);
+  transition:opacity .2s, width .22s cubic-bezier(.2,.75,.25,1),
+             height .22s cubic-bezier(.2,.75,.25,1), margin .22s cubic-bezier(.2,.75,.25,1),
+             background .18s, box-shadow .18s;
+}
+.cur-tag{
+  display:flex; align-items:center; height:26px; padding:0 13px; border-radius:999px;
+  background:var(--lime); color:#161a08;
+  font-family:"JetBrains Mono",ui-monospace,monospace; font-size:10px; font-weight:500;
+  letter-spacing:.1em; text-transform:uppercase; white-space:nowrap;
+  box-shadow:0 0 0 1px rgba(0,0,0,.07), 0 4px 14px -6px rgba(0,0,0,.35);
+  transition:opacity .18s;
+}
+html.cursor-on .cur-dot{opacity:1}
+html.cursor-on{cursor:none}
+html.cursor-on a, html.cursor-on button, html.cursor-on .wcard, html.cursor-on label{cursor:none}
+html.cursor-on input, html.cursor-on textarea, html.cursor-on [contenteditable]{cursor:text}
+
+/* over something clickable that needs no explaining */
+html.cur-hot .cur-dot{
+  width:28px; height:28px; margin:-14px 0 0 -14px;
+  background:color-mix(in srgb, var(--ink) 10%, transparent);
+  box-shadow:inset 0 0 0 1px var(--ink), 0 0 0 1px rgba(255,255,255,.4);
+}
+/* over something whose action is worth naming */
+html.cur-tagged .cur-dot{
+  width:7px; height:7px; margin:-3.5px 0 0 -3.5px; background:var(--ink);
+  box-shadow:0 0 0 1.5px rgba(255,255,255,.5);
+}
+
+/* ---- the cursor flips when the thing underneath it is dark ----
+   The ink dot disappears on the dark band, the footer, the portrait and the
+   black buttons. JS reads the backdrop under the pointer and sets this. */
+html.cur-dark .cur-dot{background:#fff; box-shadow:0 0 0 1.5px rgba(0,0,0,.45)}
+html.cur-dark.cur-hot .cur-dot{
+  background:rgba(255,255,255,.12);
+  box-shadow:inset 0 0 0 1px #fff, 0 0 0 1px rgba(0,0,0,.4);
+}
+html.cur-dark.cur-tagged .cur-dot{background:#fff; box-shadow:0 0 0 1.5px rgba(0,0,0,.45)}
+html.cursor-on.cur-tagged .cur-tag{opacity:1}
+
+@media (hover:none),(pointer:coarse){ .cur-dot,.cur-tag{display:none} }
+@media (prefers-reduced-motion: reduce){
+  .cur-dot,.cur-tag{display:none}
+  html.cursor-on, html.cursor-on a, html.cursor-on button, html.cursor-on .wcard{cursor:auto}
+}
+
+/* ---- working notes ----
+   Sijo's own markers for evidence he still has to write. Hidden for everyone
+   by default, including him, and revealed by the switch in the footer. Hiding
+   only — never forcing a display value — so each element keeps its own layout
+   when the notes are on. */
+html:not(.notes) [data-note]{display:none !important}
+.themetgl.notes .i-moon{opacity:.75}
+html.notes .themetgl.notes{
+  color:var(--ink); border-color:var(--lime); background:color-mix(in srgb, var(--lime) 18%, transparent);
+}
+html.notes .site-foot .themetgl.notes{color:var(--inv-ink); border-color:var(--lime)}
+html.notes .themetgl.notes .lb-dark{display:none}
+html.notes .themetgl.notes .lb-light{display:inline-flex}
+.themetgl.notes .lb-light{display:none}
+
+/* ============================================================
+   THE FOOTER'S CONTACT BLOCK (V28)
+   The flat row treated a phone number and a Dribbble link as the same kind
+   of thing. Four cards now carry the ways to actually reach him, each with
+   an icon and a reason to pick it; the rest drops to a quieter line below.
+   .ic[data-logo] is the slot for the real brand files when they arrive.
+   ============================================================ */
+.chancards{
+  display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:10px;
+}
+.ccwrap{position:relative; display:grid}
+.site-foot .cc{
+  display:grid; grid-template-columns:auto minmax(0,1fr); align-items:center; gap:13px;
+  padding:14px 15px; border-radius:13px; text-decoration:none;
+  background:color-mix(in srgb, var(--inv-ink) 5%, transparent);
+  border:1px solid var(--inv-line);
+  transition:background .26s, border-color .26s, transform .34s cubic-bezier(.2,.75,.25,1);
+}
+.site-foot .cc:hover{
+  background:color-mix(in srgb, var(--inv-ink) 9%, transparent);
+  border-color:color-mix(in srgb, var(--inv-ink) 26%, transparent);
+  transform:translateY(-2px);
+}
+.site-foot .cc .ic{
+  width:38px; height:38px; border-radius:10px; flex:none; display:grid; place-items:center;
+  background:color-mix(in srgb, var(--inv-ink) 9%, transparent); color:var(--inv-ink);
+  line-height:0; overflow:hidden;
+}
+.site-foot .cc .ic svg{width:18px; height:18px}
+.site-foot .cc .ic img{width:22px; height:22px; object-fit:contain}
+.site-foot .cc .ic.has-logo svg{display:none}
+.site-foot .cc .tx{display:grid; gap:3px; min-width:0}
+.site-foot .cc .k{
+  display:flex; align-items:baseline; gap:7px;
+  font-family:"JetBrains Mono",monospace; font-size:9px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--inv-ink);
+}
+.site-foot .cc .k em{
+  font-style:normal; font-family:"Inter",sans-serif; font-size:10px; letter-spacing:0;
+  text-transform:none; color:var(--inv-body);
+}
+.site-foot .cc strong{
+  font-size:13.5px; font-weight:450; color:var(--inv-ink); letter-spacing:-0.008em;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.site-foot .cc.hot{
+  background:var(--lime); border-color:var(--lime);
+}
+.site-foot .cc.hot .ic{background:rgba(22,26,8,.12); color:#161a08}
+.site-foot .cc.hot .k, .site-foot .cc.hot strong{color:#161a08}
+.site-foot .cc.hot .k em{color:rgba(22,26,8,.62)}
+.site-foot .cc.hot:hover{background:var(--lime); border-color:var(--lime); opacity:.92}
+
+.site-foot .copybtn.ccopy{
+  position:absolute; right:11px; top:11px; width:26px; height:26px;
+  background:transparent; border:1px solid var(--inv-line); color:var(--inv-body);
+}
+.site-foot .copybtn.ccopy:hover{background:var(--inv-ink); color:var(--inv-bg); border-color:var(--inv-ink)}
+.site-foot .copybtn.ccopy.is-done{background:transparent; color:var(--inv-ink)}
+.site-foot .copybtn.ccopy .i-done{color:var(--lime)}
+
+.site-foot .row.thin{gap:12px 26px}
+.site-foot .row.thin a.lnk{font-size:13.5px; color:var(--inv-body)}
+.site-foot .row.thin a.lnk:hover{color:var(--inv-ink)}
+
+@media (max-width:980px){ .chancards{grid-template-columns:repeat(2, minmax(0,1fr))} }
+@media (max-width:480px){ .chancards{grid-template-columns:1fr} }
+
+/* an icon inside a button: the channel before the verb */
+.btn .bic{width:17px; height:17px; flex:none; display:grid; place-items:center; line-height:0; margin-right:-2px}
+.btn .bic svg{width:17px; height:17px}
+.btn .bic img{width:17px; height:17px; object-fit:contain}
+.btn .bic.has-logo svg{display:none}
+
+/* ============================================================
+   ABOUT, THE SHORT VERSION (V28)
+   Three paragraphs became three dated blocks with bullets, because a
+   recruiter scans this page and paragraphs are the one shape that defeats
+   scanning. Same timeline grammar as the home page, so the two read as the
+   same system rather than two takes on a CV.
+   ============================================================ */
+.sv{border-top:1px solid var(--line-2); margin-top:clamp(26px,3.4vw,40px)}
+.sv-row{
+  display:grid; grid-template-columns:160px minmax(0,1fr); gap:clamp(16px,3.4vw,44px);
+  padding:clamp(22px,2.8vw,32px) 0; border-bottom:1px solid var(--line);
+}
+.sv-row .when-col{display:grid; gap:12px; align-content:start}
+.sv-row .when{padding-top:4px}
+.sv-body h3{
+  font-family:"Plus Jakarta Sans",sans-serif; font-weight:600; font-size:clamp(19px,2.1vw,23px);
+  letter-spacing:-0.03em; color:var(--ink); line-height:1.15; margin-bottom:4px;
+}
+.sv-body .co{font-size:13px; color:var(--muted); margin-bottom:14px}
+.sv-list{list-style:none; display:grid; gap:9px; max-width:66ch}
+.sv-list li{
+  position:relative; padding-left:19px; font-size:14.5px; line-height:1.56; color:var(--body);
+}
+.sv-list li::before{
+  content:""; position:absolute; left:0; top:.62em; width:7px; height:1.5px;
+  border-radius:1px; background:var(--line-2);
+}
+.sv-list li b{color:var(--ink); font-weight:600}
+.sv-habit{
+  margin-top:clamp(24px,3vw,36px); font-size:clamp(16px,1.8vw,19px); line-height:1.5;
+  color:var(--body); max-width:58ch;
+}
+.sv-habit b{color:var(--ink); font-weight:600}
+@media (max-width:680px){
+  .sv-row{grid-template-columns:1fr; gap:12px}
+  .sv-row .when{padding-top:0}
+}
+
+/* ---- the AI block ----
+   It leads with the team rather than the tool, because "I use Figma's AI" is
+   not what is being screened for; "I set up the workflow the team now uses"
+   is. The one number is left as a working note rather than guessed at. */
+.aiblock{
+  margin-top:clamp(28px,3.6vw,44px); padding:clamp(20px,2.6vw,30px);
+  border:1px solid var(--line-2); border-radius:16px; background:var(--surface);
+}
+.ai-head{display:flex; align-items:flex-start; gap:14px; margin-bottom:clamp(18px,2.2vw,26px)}
+.ai-head .ic{
+  width:38px; height:38px; border-radius:10px; flex:none; display:grid; place-items:center;
+  background:var(--lime); color:#161a08; line-height:0;
+}
+.ai-head .ic svg{width:19px; height:19px}
+.ai-head .mono{font-family:"JetBrains Mono",monospace; font-size:9px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--muted); margin-bottom:5px}
+.ai-head h3{
+  font-family:"Plus Jakarta Sans",sans-serif; font-weight:600; font-size:clamp(20px,2.3vw,26px);
+  letter-spacing:-0.034em; color:var(--ink); line-height:1.12;
+}
+.ai-cols{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:clamp(18px,2.4vw,32px)}
+.ai-cols .mono{
+  font-family:"JetBrains Mono",monospace; font-size:9px; letter-spacing:.13em;
+  text-transform:uppercase; color:var(--ink); margin-bottom:8px;
+  padding-top:11px; border-top:1px solid var(--line);
+}
+.ai-cols p:not(.mono){font-size:14px; line-height:1.56; color:var(--body)}
+@media (max-width:860px){ .ai-cols{grid-template-columns:1fr; gap:20px} }
+
+/* ---- menu refinements (V28.1) ----
+   The case marks were drawn on a 300px canvas with hairline strokes, so at
+   30px they read as a grey smudge. Each chip now shows a magnified crop of
+   its mark on an ink ground: the same four marks as the cards, used as a
+   stamp rather than a miniature. And the two columns are balanced, so the
+   left one no longer ends in 200px of nothing. */
+.mapgrid{align-items:stretch}
+.mg-cases{grid-template-rows:auto repeat(4, minmax(60px, 1fr)) auto}
+.cs-row .mk{
+  width:38px; height:38px; border-radius:10px; background:var(--ink);
+  color:var(--inv-ink); display:grid; place-items:center; overflow:hidden;
+}
+.cs-row .mk svg{width:52px; height:52px; opacity:.9}
+.cs-row:hover .mk{background:var(--ink)}
+.cs-row[data-here="1"] .mk{background:var(--lime); color:#161a08}
+
+.mg-else{
+  display:grid; grid-template-columns:1fr 1fr; gap:4px; margin-top:4px;
+}
+.mg-else a{
+  display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:10px;
+  padding:9px 11px; border-radius:11px; text-decoration:none;
+  border:1px solid var(--line); background:transparent;
+  transition:background .22s, border-color .22s;
+}
+.mg-else a:hover{background:var(--fill); border-color:var(--line-2)}
+.mg-else .ic{width:17px; height:17px; flex:none; color:var(--ink); line-height:0; opacity:.6}
+.mg-else .ic svg{width:17px; height:17px}
+.mg-else .ic img{width:17px; height:17px; object-fit:contain}
+.mg-else .ic.has-logo svg{display:none}
+.mg-else a:hover .ic{opacity:1}
+.mg-else .tx{display:grid; min-width:0}
+.mg-else strong{font-size:12.5px; font-weight:500; color:var(--ink); letter-spacing:-0.008em}
+.mg-else em{font-style:normal; font-size:10.5px; color:var(--muted);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.mg-else .go{width:13px; height:13px; flex:none; color:var(--muted); line-height:0}
+.mg-else .go svg{width:13px; height:13px}
+
+@media (max-width:880px){
+  .mg-cases{grid-template-rows:none}
+  .mg-else{grid-template-columns:1fr}
+}
+
+/* an empty chapter number should not leave a gap in the readout */
+.dock-now .n:empty{display:none}
+/* the case rows need a touch more separation on the dark ground */
+:root[data-theme="dark"] .cs-row{background:color-mix(in srgb, var(--inv-ink) 7%, transparent)}
+:root[data-theme="dark"] .cs-row:hover{background:color-mix(in srgb, var(--inv-ink) 12%, transparent)}
+
+/* the two switches belong together on the right, not scattered across the row */
+.site-foot .row.thin .themetgl.foot{margin-left:0}
+.site-foot .row.thin .themetgl.foot:first-of-type{margin-left:auto}
+.site-foot .row.thin .themetgl.foot + .themetgl.foot{margin-left:8px}
+
+/* the mobile tab rule turned the locator's home link into a stacked tab too */
+@media (max-width:880px){
+  .dock .dock-loc a.dock-home{
+    flex-direction:row; align-items:center; margin:0;
+    font-family:"Inter",sans-serif; font-size:12.5px; font-weight:500;
+    letter-spacing:-0.004em; text-transform:none; color:var(--ink);
+  }
+  .dock .dock-loc a.dock-home .lb{max-width:none; overflow:visible}
+}
