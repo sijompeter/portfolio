@@ -3,7 +3,7 @@
 Senior Product Designer, Bangalore. Eleven years across fintech, proptech and
 enterprise SaaS, mostly 0→1 and mostly as the only designer in the room.
 
-**Live site:** https://sijo143.github.io
+**Live site:** https://sijo143.github.io/portfolio/
 
 ## What this is
 
