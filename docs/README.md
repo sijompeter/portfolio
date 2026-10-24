@@ -3,13 +3,13 @@
 Senior Product Designer, Bangalore. Eleven years across fintech, proptech and
 enterprise SaaS, mostly 0→1 and mostly as the only designer in the room.
 
-**Live site:** https://sijo143.github.io/portfolio/
+**Live site:** https://sijompeter.github.io/portfolio/
 
 ## What this is
 
 A static site, hand-built. No framework, no build step, no bundler — four HTML
-pages, four case studies, one stylesheet and one script. Deployed straight from
-`main` by GitHub Pages.
+pages, four case studies, one stylesheet and one script. GitHub Pages serves it
+from the `docs/` folder on `main`.
 
 ```
 index.html          home: the work, proof, fit, contact
@@ -19,12 +19,30 @@ contact.html        four ways in
 work/               the four case studies
 assets/site.css     one stylesheet, light and dark
 assets/site.js      navigation, theme, the case-study sheet, cursor
+assets/logo/        the logo, the favicon and the share image
 assets/img/         case-study screens and the portrait
 assets/doc/         the résumé, as a PDF
 ```
 
-GSAP, ScrollTrigger and Lenis are loaded from a CDN; everything else is in
-this repository.
+GSAP, ScrollTrigger and Lenis are loaded from a CDN; everything else is here.
+
+## The logo
+
+`sijo-full.svg` and `sijo-symbol.svg` are the two the site uses. Their
+letterforms are `fill="currentColor"`, so each takes the colour of whatever it
+sits on; the dot stays brand lime `#C5EF35` in every case. That is why there is
+no light/dark switching logic anywhere: the dark footer inside the light theme
+gets a white mark automatically.
+
+The four files as delivered (`*-logo-dark.svg`, `*-logo-light.svg`) are kept
+here unchanged for use outside this site.
+
+`favicon.svg` carries its own `prefers-color-scheme` rule so the tab mark flips
+with the browser's theme. It is inlined into each page as a data URI, because
+the case-study overlay rewrites the URL and a relative icon path would be
+re-resolved against the new path.
+
+`og-image.png` (1200×630) is the card shown when the link is shared.
 
 ## Contact
 

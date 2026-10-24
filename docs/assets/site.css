@@ -17,7 +17,7 @@
   --grid:#e9ebef;
   --grid-lit:#dcdee3;
   --fill:#e9ebef;
-  --lime:#cdee5c;           /* used twice on the page, on purpose */
+  --lime:#c5ef35;           /* used twice on the page, on purpose */
   --sage:#687870;
   --inv-bg:#101114;
   --inv-ink:#ffffff;
@@ -39,7 +39,7 @@
 :root[data-theme="dark"]{
   --paper:#121417; --surface:#1c1e24; --ink:#f3f4f6; --body:#a2a8b4;
   --muted:#788191; --line:#21252b; --line-2:#373d48; --fill:#1b1d23; --ink-2:#8f96a3;
-  --grid:#1a1c21; --grid-lit:#2a2e37; --lime:#cdee5c; --sage:#85998f;
+  --grid:#1a1c21; --grid-lit:#2a2e37; --lime:#c5ef35; --sage:#85998f;
   --inv-bg:#f3f4f6; --inv-ink:#121417; --inv-body:#575e6b; --inv-line:#d2d5db;
   --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -22px rgba(0,0,0,.8);
   color-scheme: dark;
@@ -470,7 +470,7 @@ body.sheetopen{overflow:hidden}
   display:inline-flex; align-items:center; gap:7px; font-size:11.5px; color:var(--ink);
   background:var(--surface); border:1px solid var(--line-2); border-radius:999px; padding:4px 11px;
 }
-.eyebrow .avail i{width:6px; height:6px; border-radius:50%; background:var(--lime); box-shadow:0 0 0 2px rgba(205,238,92,.32)}
+.eyebrow .avail i{width:6px; height:6px; border-radius:50%; background:var(--lime); box-shadow:0 0 0 2px rgba(197,239,53,.32)}
 .hero h1{max-width:13ch; margin-bottom:clamp(20px,2.4vw,30px)}
 .hero h1 .hl{position:relative; display:inline-block; color:var(--ink-2); white-space:nowrap}
 .hl-mark{
@@ -1247,8 +1247,8 @@ ul.pieces li::before{content:""; position:absolute; left:0; top:9px; width:7px; 
    Only where "this one is finished / this one is a yes" is the message:
    the availability pill in the hero, the completeness dots, the matrix ticks.
    Four places on the whole site, which is what keeps it an accent. */
-.worknote .key i{background:var(--lime); box-shadow:0 0 0 2px rgba(205,238,92,.3)}
-.wcard .state i{background:var(--lime); box-shadow:0 0 0 2px rgba(205,238,92,.3)}
+.worknote .key i{background:var(--lime); box-shadow:0 0 0 2px rgba(197,239,53,.3)}
+.wcard .state i{background:var(--lime); box-shadow:0 0 0 2px rgba(197,239,53,.3)}
 .wcard .state.soft i{background:transparent; box-shadow:none}
 .mx-row .y .tick{color:#8fb525; stroke-width:1.7}
 
@@ -1335,7 +1335,7 @@ ul.pieces li::before{content:""; position:absolute; left:0; top:9px; width:7px; 
   content:""; position:absolute; left:0; top:2px; bottom:2px; width:3px;
   border-radius:2px; background:var(--lime);
 }
-.band .chap .no{background:rgba(205,238,92,.16); color:var(--lime)}
+.band .chap .no{background:rgba(197,239,53,.16); color:var(--lime)}
 
 /* 5. a link coming alive under the pointer */
 .rd{border-bottom-color:var(--line-2)}
@@ -1644,3 +1644,48 @@ html.notes .themetgl.notes .lb-light{display:inline-flex}
   }
   .dock .dock-loc a.dock-home .lb{max-width:none; overflow:visible}
 }
+
+/* ============================================================
+   THE LOGO (V30)
+   One file per logo, letterforms on currentColor, the dot fixed lime. The
+   site puts dark bands inside the light theme (the footer, the Talk
+   section), so a logo that switched on the THEME would be black on the
+   black footer. Inheriting the surrounding colour is right in every case
+   and needs no switching logic at all.
+   ============================================================ */
+.lg{display:block; width:auto; height:100%}
+.lg path{transition:fill .3s}
+
+/* --- top bar: the full wordmark, the symbol when there is no room --- */
+.brand{
+  display:inline-flex; align-items:center; height:23px; flex:none;
+  color:var(--ink); text-decoration:none; transition:opacity .25s;
+}
+.brand:hover{opacity:.7}
+.brand .lg-full{height:23px}
+.brand .lg-sym{height:25px; display:none}
+@media (max-width:520px){
+  .brand{height:25px}
+  .brand .lg-full{display:none}
+  .brand .lg-sym{display:block}
+}
+
+/* --- the dock: the symbol alone, because the dock is a thumb-sized row --- */
+.dock a.dock-home .sp{
+  width:26px; height:26px; border-radius:50%; background:var(--ink);
+  display:inline-flex; align-items:center; justify-content:center; flex:none;
+  padding:6px 6px 5px; color:var(--inv-ink);
+}
+.dock a.dock-home .sp .lg{height:100%; width:auto}
+.dock a.dock-home[aria-current="page"] .sp{
+  box-shadow:0 0 0 2.5px var(--surface), 0 0 0 4px var(--lime);
+}
+
+/* --- the footer sign-off: the full mark, in the inverted ink --- */
+.footmark{
+  display:inline-flex; height:30px; color:var(--inv-ink);
+  text-decoration:none; margin-bottom:6px; transition:opacity .25s;
+}
+.footmark:hover{opacity:.72}
+.footmark .lg{height:30px}
+@media (max-width:620px){ .footmark{height:26px} .footmark .lg{height:26px} }
