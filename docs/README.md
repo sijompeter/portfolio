@@ -44,6 +44,17 @@ re-resolved against the new path.
 
 `og-image.png` (1200×630) is the card shown when the link is shared.
 
+## Analytics
+
+Microsoft Clarity (project `z2o1cdt5c8`) is in the `<head>` of every page:
+heatmaps, session recordings, and traffic by device, browser, country and
+referrer. It records anonymous sessions, not identities.
+
+`assets/site.js` also fires named Clarity events so the things worth counting
+are filterable: `resume_download`, `contact_whatsapp`, `contact_email`,
+`contact_phone`, `visit_linkedin`, `visit_dribbble`, `visit_medium`,
+`case_open_01`…`case_open_04`, and `reached_footer`.
+
 ## Contact
 
 - WhatsApp / phone: +91 94477 84143

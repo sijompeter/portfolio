@@ -115,6 +115,46 @@
     });
   }
 
+
+  /* ---------- Clarity custom events ----------
+     The tag records sessions and heatmaps on its own. It cannot know what a
+     click MEANT, so the handful of actions worth counting are named here and
+     show up in Clarity as filterable events. track() is a no-op when the tag
+     is blocked or still loading, so nothing here can break the page. */
+  function track(name) {
+    try { if (typeof window.clarity === 'function') window.clarity('event', name); } catch (e) {}
+  }
+  window.__track = track;
+
+  function events() {
+    document.addEventListener('click', function (e) {
+      var t = e.target.closest ? e.target : null;
+      if (!t || !t.closest) return;
+      if (t.closest('a[data-resume]'))            track('resume_download');
+      else if (t.closest('a[href*="wa.me"]'))     track('contact_whatsapp');
+      else if (t.closest('a[href^="mailto:"]'))   track('contact_email');
+      else if (t.closest('a[href^="tel:"]'))      track('contact_phone');
+      else if (t.closest('a[href*="linkedin.com"]'))  track('visit_linkedin');
+      else if (t.closest('a[href*="dribbble.com"]'))  track('visit_dribbble');
+      else if (t.closest('a[href*="medium.com"]'))    track('visit_medium');
+      else {
+        var c = t.closest('[data-case]');
+        if (c) track('case_open_' + c.getAttribute('data-case'));
+      }
+    }, true);
+
+    /* a visitor who reaches the footer has read the page, not bounced */
+    var foot = document.querySelector('.site-foot');
+    if (foot && 'IntersectionObserver' in window) {
+      var seen = false;
+      new IntersectionObserver(function (es) {
+        if (!seen && es.some(function (x) { return x.isIntersecting; })) {
+          seen = true; track('reached_footer');
+        }
+      }, { threshold: 0.2 }).observe(foot);
+    }
+  }
+
   function theme() {
     var saved = null;
     try { saved = localStorage.getItem(THEME_KEY); } catch (e) {}
@@ -773,7 +813,7 @@
   }
 
   function boot() {
-    theme(); notes(); copy(); header(); smooth(); arriveAtTop(); nav(); sheet(); reveals(); counters(); cursor(); spotlight(); transitions(); intro();
+    theme(); notes(); events(); copy(); header(); smooth(); arriveAtTop(); nav(); sheet(); reveals(); counters(); cursor(); spotlight(); transitions(); intro();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
