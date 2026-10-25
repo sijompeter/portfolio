@@ -1689,3 +1689,103 @@ html.notes .themetgl.notes .lb-light{display:inline-flex}
 .footmark:hover{opacity:.72}
 .footmark .lg{height:30px}
 @media (max-width:620px){ .footmark{height:26px} .footmark .lg{height:26px} }
+
+/* ============================================================
+   V31
+   ============================================================ */
+
+/* ---- 1. the case marks in the menu were inverted ----
+   The chip was painted with --ink and the mark with --inv-ink, which put a
+   black stamp on the light theme and a white one on dark: the opposite of
+   every other mark on the site, and the thing Sijo flagged as ugly. The chip
+   now sits on the page's own surface with the mark in ink, so light stays
+   light and dark stays dark, like the thumbnails. */
+.cs-row .mk{
+  background:var(--surface); color:var(--ink);
+  box-shadow:inset 0 0 0 1px var(--line);
+}
+.cs-row:hover .mk{background:var(--surface); box-shadow:inset 0 0 0 1px var(--line-2)}
+.cs-row[data-here="1"] .mk{background:var(--lime); color:#161a08; box-shadow:none}
+:root[data-theme="dark"] .cs-row .mk{background:var(--paper); color:var(--ink)}
+:root[data-theme="dark"] .cs-row[data-here="1"] .mk{background:var(--lime); color:#161a08}
+
+/* ---- 2. the CTA fill ----
+   A colour swap alone reads as a state change, not as an interaction. The
+   fill is a pseudo-element that wipes in from the left, so the button has a
+   direction and a duration. No new colours: the lime and the ink are both
+   already on the page. */
+.btn{position:relative; overflow:hidden; isolation:isolate; z-index:0}
+.btn::before{
+  content:""; position:absolute; inset:0; z-index:-1; border-radius:inherit;
+  background:var(--lime); transform:translateX(-101%);
+  transition:transform .46s cubic-bezier(.22,.75,.24,1);
+}
+.btn:hover{background:var(--ink); color:#161a08; transform:translateY(-1px)}
+.btn:hover::before{transform:none}
+.btn.ghost::before{background:var(--ink)}
+.btn.ghost:hover{background:transparent; color:var(--inv-ink); border-color:var(--ink)}
+.btn:hover .arw{transform:translateX(3px) rotate(-45deg)}
+.btn .arw{transition:transform .4s cubic-bezier(.22,.75,.24,1)}
+.btn:active{transform:translateY(0)}
+
+/* the header CTA and the dock CTA are the same object at another size */
+.talk, .dock a.cta{position:relative; overflow:hidden; isolation:isolate; z-index:0}
+.talk::before, .dock a.cta::before{
+  content:""; position:absolute; inset:0; z-index:-1; border-radius:inherit;
+  background:var(--lime); transform:translateX(-101%);
+  transition:transform .46s cubic-bezier(.22,.75,.24,1);
+}
+.talk:hover, .dock a.cta:hover{color:#161a08; opacity:1; transform:translateY(-1px)}
+.talk:hover::before, .dock a.cta:hover::before{transform:none}
+.talk:hover svg{background:rgba(22,26,8,.16); color:#161a08}
+.dock a.cta:hover svg{opacity:1}
+
+/* the footer cards and the menu rows get the same wipe, quieter */
+.site-foot .cc:not(.hot){position:relative; overflow:hidden; isolation:isolate; z-index:0}
+.site-foot .cc:not(.hot)::before{
+  content:""; position:absolute; inset:0; z-index:-1; border-radius:inherit;
+  background:color-mix(in srgb, var(--inv-ink) 10%, transparent);
+  transform:translateX(-101%); transition:transform .44s cubic-bezier(.22,.75,.24,1);
+}
+.site-foot .cc:not(.hot):hover::before{transform:none}
+
+@media (prefers-reduced-motion: reduce){
+  .btn::before, .talk::before, .dock a.cta::before, .site-foot .cc::before{display:none}
+  .btn:hover{background:transparent; color:var(--ink)}
+}
+
+/* ---- 3. mobile: the tab bar gets out of the way while reading ----
+   It is pinned over the content on a phone, so it costs ~60px of a small
+   screen on every scroll. It now slides away as you read forward and comes
+   back the moment you scroll back, which is the pattern every reading app
+   uses. The locator strip goes with it. */
+@media (max-width:880px){
+  .navzone{
+    transition:transform .34s cubic-bezier(.22,.75,.24,1);
+    will-change:transform;
+  }
+  html.navhide .navzone{transform:translateY(100%)}
+  html.navhide.mapopen .navzone{transform:none}
+}
+
+/* ---- 4. the cursor can no longer disappear ----
+   It used to pick its colour by walking the DOM for a painted background.
+   Over a photograph, or any element whose colour comes from an ancestor the
+   walk stopped short of, the guess was wrong and a white dot landed on a
+   white card. Difference blending removes the guess: the dot inverts against
+   whatever pixels are actually beneath it, so it is visible on white, on
+   black, on the portrait and on the lime. */
+@supports (mix-blend-mode: difference){
+  .cur-dot{
+    background:#fff !important;
+    mix-blend-mode:difference;
+    box-shadow:none !important;
+  }
+  html.cur-dark .cur-dot{background:#fff !important}
+  html.cur-hot .cur-dot{
+    background:transparent !important;
+    box-shadow:inset 0 0 0 2px #fff !important;
+  }
+}
+/* the label is a solid lime pill, which needs no blending to stay legible */
+.cur-tag{mix-blend-mode:normal}

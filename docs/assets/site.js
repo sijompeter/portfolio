@@ -155,10 +155,32 @@
     }
   }
 
+  /* The device preference is the starting point; an explicit choice outranks
+     it and is remembered. Light is still the answer when the device says
+     nothing, which is most desktops. */
+  function prefersDark() {
+    try { return window.matchMedia('(prefers-color-scheme: dark)').matches; }
+    catch (e) { return false; }
+  }
+
   function theme() {
     var saved = null;
     try { saved = localStorage.getItem(THEME_KEY); } catch (e) {}
-    applyTheme(saved === 'dark' ? 'dark' : 'light');
+    if (saved === 'dark' || saved === 'light') applyTheme(saved);
+    else applyTheme(prefersDark() ? 'dark' : 'light');
+
+    /* follow the device if it changes while the page is open, but never
+       override a choice the visitor has already made */
+    try {
+      var mq = window.matchMedia('(prefers-color-scheme: dark)');
+      var onChange = function (e) {
+        var pick = null;
+        try { pick = localStorage.getItem(THEME_KEY); } catch (err) {}
+        if (pick !== 'dark' && pick !== 'light') applyTheme(e.matches ? 'dark' : 'light');
+      };
+      if (mq.addEventListener) mq.addEventListener('change', onChange);
+      else if (mq.addListener) mq.addListener(onChange);
+    } catch (e) {}
 
     document.addEventListener('click', function (e) {
       var b = e.target.closest ? e.target.closest('[data-theme-toggle]') : null;
@@ -386,7 +408,12 @@
       if (wantTag && tag.textContent !== text) tag.textContent = text;
       if (wantTag !== tagged) { tagged = wantTag; root.classList.toggle('cur-tagged', wantTag); }
       if (wantHot !== hot) { hot = wantHot; root.classList.toggle('cur-hot', wantHot); }
-      /* only re-read the backdrop when the pointer crosses onto a new element */
+      /* The dot itself is painted with mix-blend-mode: difference, so it
+         inverts against whatever is actually under it and cannot disappear
+         on any background, photographs included. The DOM walk below is only
+         for the label and for browsers without blend support: guessing the
+         backdrop from the element tree is what used to put a white dot on a
+         white card whenever the guess was wrong. */
       if (e.target !== lastEl) {
         lastEl = e.target;
         var d = backdropIsDark(e.target);
@@ -583,6 +610,42 @@
       scrollToEl(t);
       try { history.replaceState(history.state, '', u.hash); } catch (err) {}
     }, true);
+
+    /* --- the tab bar slides away while you read forward (phones only) ---
+       It is pinned over the content there, so it costs real screen height on
+       every scroll. Reading forward hides it; scrolling back, or reaching the
+       very bottom, brings it straight back. The threshold stops it twitching
+       on small scrolls and on iOS rubber-banding. */
+    (function tabbar() {
+      var narrow = window.matchMedia('(max-width:880px)');
+      var last = window.scrollY || 0, hidden = false, ticking = false;
+
+      function clear() { if (hidden) { hidden = false; root.classList.remove('navhide'); } }
+
+      function onScroll() {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(function () {
+          ticking = false;
+          if (!narrow.matches) { clear(); last = window.scrollY || 0; return; }
+          var y = window.scrollY || 0;
+          var max = (document.documentElement.scrollHeight || 0) - window.innerHeight;
+          var delta = y - last;
+          if (Math.abs(delta) < 8) return;          /* ignore jitter */
+          last = y;
+          if (mapOn) { clear(); return; }           /* never hide under an open menu */
+          if (y < 90 || y >= max - 4) { clear(); return; }  /* top and very bottom */
+          var want = delta > 0;                      /* reading forward */
+          if (want !== hidden) { hidden = want; root.classList.toggle('navhide', want); }
+        });
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', function () { clear(); last = window.scrollY || 0; },
+                              { passive: true });
+      /* a tap anywhere on the bar area should bring it back */
+      window.addEventListener('touchstart', function () { clear(); }, { passive: true });
+    })();
 
     window.__setNow = setNow;
     window.__markMap = markMap;
