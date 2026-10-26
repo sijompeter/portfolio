@@ -1789,3 +1789,165 @@ html.notes .themetgl.notes .lb-light{display:inline-flex}
 }
 /* the label is a solid lime pill, which needs no blending to stay legible */
 .cur-tag{mix-blend-mode:normal}
+
+/* ============================================================
+   MOBILE NAVIGATION, V32
+   Desktop is untouched. On a phone the old arrangement asked for three
+   things at once: a top bar, a locator strip and a tab row, plus a mega
+   menu behind them. That is a lot of chrome on a 390px screen for a site
+   with five destinations. It is now one floating pill with five tabs.
+   ============================================================ */
+@media (max-width:880px){
+
+  /* --- the top bar goes entirely --- */
+  .site-head{display:none !important}
+  body{padding-top:0}
+
+  /* --- so does the mega menu and the locator that opened it --- */
+  .map{display:none !important}
+  .dock-loc{display:none !important}
+  .dock-sep{display:none !important}
+
+  /* --- the bar itself: floating, rounded, five tabs --- */
+  .navzone{
+    left:0; right:0; bottom:0; width:100%; transform:none;
+    padding:0 12px calc(12px + env(safe-area-inset-bottom, 0px));
+    pointer-events:none;
+  }
+  .dock, html.docked .dock{
+    width:100%; margin:0; padding:7px 8px;
+    transform:none; opacity:1; visibility:visible; pointer-events:auto;
+    display:grid; grid-template-columns:repeat(5, 1fr); gap:2px;
+    border-radius:22px;
+    border:1px solid var(--line);
+    background:color-mix(in srgb, var(--surface) 88%, transparent);
+    backdrop-filter:blur(20px) saturate(1.35);
+    -webkit-backdrop-filter:blur(20px) saturate(1.35);
+    box-shadow:0 1px 2px rgba(0,0,0,.05), 0 18px 40px -16px rgba(0,0,0,.42);
+  }
+  :root[data-theme="dark"] .dock{
+    border-color:var(--inv-line);
+    background:color-mix(in srgb, #15171c 90%, transparent);
+    box-shadow:0 18px 44px -18px rgba(0,0,0,.8);
+  }
+
+  /* every tab is the same object: icon over label, nothing special-cased */
+  .dock a, .dock a.cta, .dock a.tab-home{
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:4px; min-width:0; margin:0; padding:9px 2px 7px; border-radius:16px;
+    background:transparent; color:var(--muted); font-weight:500;
+    font-family:"Inter",sans-serif; font-size:10.5px; letter-spacing:-0.004em;
+    text-transform:none; transition:color .2s, background .2s;
+  }
+  .dock a svg{width:21px; height:21px; opacity:1; color:inherit}
+  .dock a > span{max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+  .dock a:hover, .dock a.cta:hover{background:transparent; color:var(--body)}
+
+  /* the current tab is the only thing that gets weight */
+  .dock a[aria-current="page"],
+  .dock a.cta[aria-current="page"],
+  .dock a.tab-home[aria-current="page"]{
+    color:var(--ink); font-weight:600; background:var(--fill);
+  }
+  .dock > a[aria-current="page"]::after{display:none}
+  .dock a.cta{color:var(--muted)}
+  .dock a.cta::before{display:none}
+  .dock a[data-resume]{display:none}
+
+  /* the locator's home link is gone; the tab takes over */
+  .dock a.tab-home{display:flex}
+
+  /* content no longer sits under a top bar, only above the pill */
+  body{padding-bottom:calc(96px + env(safe-area-inset-bottom, 0px))}
+  .hero{padding-top:clamp(28px,7vw,52px)}
+  [id]{scroll-margin-top:16px}
+}
+
+/* desktop keeps the locator and hides the extra Home tab */
+@media (min-width:881px){
+  .dock a.tab-home{display:none}
+}
+
+@media (max-width:360px){
+  .dock a, .dock a.cta, .dock a.tab-home{font-size:9.5px; padding:8px 1px 6px}
+  .dock a svg{width:20px; height:20px}
+}
+
+/* ============================================================
+   EMPLOYER LOGOS ON HOVER (V32)
+   The page is unchanged at rest. Hovering a company name lifts a small card
+   under the pointer with that company's mark, so a recruiter who skims the
+   names can still recognise them. Pointer devices only: on touch there is no
+   hover, and a tap should follow the link, not pop a card.
+   ============================================================ */
+.cologo{
+  position:fixed; left:0; top:0; z-index:140; pointer-events:none;
+  opacity:0; visibility:hidden;
+  transform:translate3d(0,0,0) scale(.94);
+  transform-origin:0 0;
+  transition:opacity .2s, visibility .2s, scale .28s cubic-bezier(.2,.8,.3,1);
+  background:var(--surface); color:var(--ink);
+  border:1px solid var(--line-2); border-radius:12px;
+  box-shadow:0 1px 2px rgba(0,0,0,.05), 0 20px 44px -18px rgba(0,0,0,.42);
+  padding:13px 17px; line-height:0;
+}
+html.cologo-on .cologo{opacity:1; visibility:visible; scale:1}
+.cologo .cl-item{display:none}
+.cologo .cl-item.on{display:block}
+.cologo svg{width:112px; height:auto; display:block}
+:root[data-theme="dark"] .cologo{background:#15171c; border-color:var(--inv-line); color:var(--inv-ink)}
+
+/* the name itself gets the faintest hint that it is worth hovering */
+[data-colog]{cursor:inherit}
+@media (hover:hover) and (pointer:fine){
+  [data-colog]{transition:color .22s}
+  [data-colog]:hover{color:var(--ink)}
+}
+@media (hover:none),(pointer:coarse){ .cologo{display:none} }
+@media (prefers-reduced-motion: reduce){ .cologo{transition:none} }
+
+/* ---- side projects: shipped alone, end to end ----
+   Deliberately quieter than a case-study card. These are proof of range and
+   of the AI claim, not a fifth study, and the section still has to end on
+   the four. */
+.sidework{
+  margin-top:clamp(14px,2vw,22px); padding:clamp(22px,2.8vw,32px);
+  border:1px solid var(--line-2); border-radius:16px; background:var(--surface);
+}
+.ss-head{max-width:62ch}
+.ss-head .mono{
+  font-family:"JetBrains Mono",monospace; font-size:9px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--muted); display:block; margin-bottom:9px;
+}
+.ss-head h3{
+  font-family:"Plus Jakarta Sans",sans-serif; font-weight:600;
+  font-size:clamp(19px,2.2vw,25px); letter-spacing:-0.032em; color:var(--ink);
+  line-height:1.14; margin-bottom:10px;
+}
+.ss-head p{font-size:14px; line-height:1.55; color:var(--body)}
+.ss-row{
+  display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px;
+  margin-top:clamp(18px,2.2vw,26px);
+}
+.ss{
+  display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:10px;
+  padding:13px 15px; border-radius:11px; text-decoration:none;
+  background:var(--fill); position:relative; overflow:hidden; isolation:isolate; z-index:0;
+  transition:transform .3s cubic-bezier(.2,.75,.25,1);
+}
+.ss::before{
+  content:""; position:absolute; inset:0; z-index:-1; border-radius:inherit;
+  background:var(--line-2); transform:translateX(-101%);
+  transition:transform .42s cubic-bezier(.22,.75,.24,1);
+}
+.ss:hover::before{transform:none}
+.ss:hover{transform:translateY(-2px)}
+.ss .tx{display:grid; gap:2px; min-width:0}
+.ss strong{
+  font-size:13.5px; font-weight:500; color:var(--ink); letter-spacing:-0.012em;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.ss em{font-style:normal; font-size:11px; color:var(--muted)}
+.ss .go{width:15px; height:15px; flex:none; color:var(--muted); line-height:0}
+.ss .go svg{width:15px; height:15px}
+@media (max-width:760px){ .ss-row{grid-template-columns:1fr} }

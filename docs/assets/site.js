@@ -163,6 +163,87 @@
     catch (e) { return false; }
   }
 
+
+  /* ---------- employer logos, on hover ----------
+     No markup changes anywhere: this finds the company names by reading the
+     text of the places they already appear (the hero strip, the timeline
+     rows, the About blocks) and matches them against the five keys. That way
+     a page I do not regenerate, experience.html among them, picks it up too.
+     Pointer devices only, and never over a link's own hover target. */
+  var COMPANIES = [
+    ['marketfeed', /marketfeed/i],
+    ['zolostays',  /zolo(stays)?/i],
+    ['hashedin',   /hashed\s*in/i],
+    ['dimoda',     /dimoda/i],
+    ['greenwich',  /greenwich/i]
+  ];
+
+  function cologo() {
+    var card = document.getElementById('cologo');
+    if (!card) return;
+    if (!window.matchMedia || !window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+
+    var root = document.documentElement;
+    var items = {};
+    Array.prototype.slice.call(card.querySelectorAll('.cl-item')).forEach(function (el) {
+      items[el.getAttribute('data-for')] = el;
+    });
+
+    function keyFor(text) {
+      if (!text) return null;
+      for (var i = 0; i < COMPANIES.length; i++) {
+        if (COMPANIES[i][1].test(text)) return COMPANIES[i][0];
+      }
+      return null;
+    }
+
+    /* the places a company name is written */
+    var candidates = []
+      .concat(Array.prototype.slice.call(document.querySelectorAll('[data-co]')))
+      .concat(Array.prototype.slice.call(document.querySelectorAll('p.co')))
+      .concat(Array.prototype.slice.call(document.querySelectorAll('.sv-body h3')));
+
+    var marked = 0;
+    candidates.forEach(function (el) {
+      if (el.hasAttribute('data-colog')) return;
+      var key = el.getAttribute('data-co') || keyFor(el.textContent);
+      if (!key || !items[key]) return;
+      el.setAttribute('data-colog', key);
+      marked++;
+    });
+    if (!marked) return;
+
+    var shown = null, raf = null, px = 0, py = 0;
+
+    function move() {
+      raf = null;
+      var w = card.offsetWidth || 150, h = card.offsetHeight || 60;
+      var x = px + 20, y = py + 20;
+      if (x + w > window.innerWidth - 10) x = px - 20 - w;
+      if (y + h > window.innerHeight - 10) y = py - 20 - h;
+      card.style.transform = 'translate3d(' + x + 'px,' + y + 'px,0)';
+    }
+
+    document.addEventListener('mousemove', function (e) {
+      var el = e.target.closest ? e.target.closest('[data-colog]') : null;
+      var key = el ? el.getAttribute('data-colog') : null;
+      if (key !== shown) {
+        if (shown && items[shown]) items[shown].classList.remove('on');
+        shown = key;
+        if (key && items[key]) items[key].classList.add('on');
+        root.classList.toggle('cologo-on', !!key);
+      }
+      if (!key) return;
+      px = e.clientX; py = e.clientY;
+      if (!raf) raf = window.requestAnimationFrame(move);
+    }, { passive: true });
+
+    window.addEventListener('blur', function () {
+      if (shown && items[shown]) items[shown].classList.remove('on');
+      shown = null; root.classList.remove('cologo-on');
+    });
+  }
+
   function theme() {
     var saved = null;
     try { saved = localStorage.getItem(THEME_KEY); } catch (e) {}
@@ -534,6 +615,8 @@
     var mapOn = false;
     function openMap(on) {
       if (!map || !btn) return;
+      /* the mega menu is not part of the mobile layout at all */
+      if (getComputedStyle(map).display === 'none') { mapOn = false; return; }
       mapOn = !!on;
       map.classList.toggle('open', mapOn);
       root.classList.toggle('mapopen', mapOn);
@@ -617,6 +700,7 @@
        very bottom, brings it straight back. The threshold stops it twitching
        on small scrolls and on iOS rubber-banding. */
     (function tabbar() {
+      var HIDE_ON = 'up';   /* 'up' = hide when scrolling back up */
       var narrow = window.matchMedia('(max-width:880px)');
       var last = window.scrollY || 0, hidden = false, ticking = false;
 
@@ -635,7 +719,11 @@
           last = y;
           if (mapOn) { clear(); return; }           /* never hide under an open menu */
           if (y < 90 || y >= max - 4) { clear(); return; }  /* top and very bottom */
-          var want = delta > 0;                      /* reading forward */
+          /* Sijo's spec, in his words: scrolling down brings the bar up,
+             scrolling back up hides it. That is the inverse of the usual
+             pattern, so it lives in one place: flip HIDE_ON to 'down' to get
+             the conventional behaviour back. */
+          var want = (HIDE_ON === 'down') ? (delta > 0) : (delta < 0);
           if (want !== hidden) { hidden = want; root.classList.toggle('navhide', want); }
         });
       }
@@ -876,7 +964,7 @@
   }
 
   function boot() {
-    theme(); notes(); events(); copy(); header(); smooth(); arriveAtTop(); nav(); sheet(); reveals(); counters(); cursor(); spotlight(); transitions(); intro();
+    theme(); notes(); events(); copy(); cologo(); header(); smooth(); arriveAtTop(); nav(); sheet(); reveals(); counters(); cursor(); spotlight(); transitions(); intro();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
