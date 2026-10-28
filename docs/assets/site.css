@@ -1895,7 +1895,12 @@ html.cologo-on .cologo{opacity:1; visibility:visible; scale:1}
 .cologo .cl-item{display:none}
 .cologo .cl-item.on{display:block}
 .cologo svg{width:112px; height:auto; display:block}
-:root[data-theme="dark"] .cologo{background:#15171c; border-color:var(--inv-line); color:var(--inv-ink)}
+/* The marks are filled with currentColor, so the card's colour IS the logo.
+   --inv-ink is the ink of the OPPOSITE theme, which in dark mode is the dark
+   ink: that painted every logo near-black on a near-black card, which is why
+   dark mode showed an empty box. The card wants the reading ink of the theme
+   it is in, which is what --ink always is. */
+:root[data-theme="dark"] .cologo{background:#15171c; border-color:var(--inv-line); color:var(--ink)}
 
 /* the name itself gets the faintest hint that it is worth hovering */
 [data-colog]{cursor:inherit}
@@ -1951,3 +1956,32 @@ html.cologo-on .cologo{opacity:1; visibility:visible; scale:1}
 .ss .go{width:15px; height:15px; flex:none; color:var(--muted); line-height:0}
 .ss .go svg{width:15px; height:15px}
 @media (max-width:760px){ .ss-row{grid-template-columns:1fr} }
+
+/* ============================================================
+   V33 — the icon, and nothing behind it
+   ------------------------------------------------------------
+   Sijo's note: the card's own rounded rectangle is right, the little tinted
+   shape sitting behind each icon inside it is not. It read as a second,
+   competing container in a colour of its own, and because it carried
+   overflow:hidden it also clipped the drawing it was meant to hold.
+
+   So the tile loses its fill and its clip and keeps only its job as a
+   fixed-size box that centres the icon. The icon grows a little, since it
+   is now carrying the weight on its own.
+   ============================================================ */
+.site-foot .cc .ic{
+  background:none;
+  overflow:visible;
+  width:34px; height:34px;
+}
+.site-foot .cc .ic svg{width:21px; height:21px}
+.site-foot .cc .ic img{width:21px; height:21px}
+.site-foot .cc.hot .ic{background:none}
+
+.chan .ic-wrap{
+  background:none;
+  overflow:visible;
+  width:40px; height:40px;
+}
+.chan .ic-wrap .ic{width:25px; height:25px}
+.chan.hot .ic-wrap{background:none}

@@ -131,7 +131,7 @@
       var t = e.target.closest ? e.target : null;
       if (!t || !t.closest) return;
       if (t.closest('a[data-resume]'))            track('resume_download');
-      else if (t.closest('a[href*="wa.me"]'))     track('contact_whatsapp');
+      else if (t.closest('a[href*="whatsapp"]'))     track('contact_whatsapp');
       else if (t.closest('a[href^="mailto:"]'))   track('contact_email');
       else if (t.closest('a[href^="tel:"]'))      track('contact_phone');
       else if (t.closest('a[href*="linkedin.com"]'))  track('visit_linkedin');
@@ -416,7 +416,7 @@
     ['.scrollcue', 'Scroll'],
     ['a[href^="mailto:"]', 'Mail'],
     ['a[href^="tel:"]', 'Call'],
-    ['a[href*="wa.me"]', 'Message'],
+    ['a[href*="whatsapp"]', 'Message'],
     ['.m-feat, .m-tile', 'Open'],
     ['.touch', 'Visit'],
     ['a[target="_blank"]', 'Visit']
