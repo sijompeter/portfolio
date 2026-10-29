@@ -2237,3 +2237,70 @@ ol.jsteps li.gone b{text-decoration:line-through; text-decoration-thickness:1px;
 
 .fine.small{font-size:12.5px; color:var(--muted); line-height:1.6; max-width:76ch; margin-top:18px}
 .fine.small a{color:var(--body)}
+
+/* ============================================================
+   V39 — case 01, built against the reference Sijo chose
+   ------------------------------------------------------------
+   The portfolio he pointed at does four things this page was not doing: it
+   opens with a row of figures, it gives each important change a section of
+   its own with one screen beside it, it bolds exactly three sentences on the
+   whole page, and it shows the failure states.
+
+   .spotlight is that per-change section. The bold line in it, .why, is the
+   only bold sentence in each one — the device works because the rest of the
+   page does not use it.
+   ============================================================ */
+.statrow{
+  display:grid; grid-template-columns:repeat(4, minmax(0,1fr));
+  gap:clamp(16px,2.4vw,34px); padding-bottom:clamp(24px,3vw,34px);
+  margin-bottom:clamp(24px,3vw,34px); border-bottom:1px solid var(--inv-line);
+}
+.statrow div{display:grid; gap:5px; min-width:0}
+.statrow b{
+  font-family:"Plus Jakarta Sans",sans-serif; font-weight:700;
+  font-size:clamp(26px,3.4vw,40px); letter-spacing:-0.04em; line-height:1;
+  color:var(--inv-ink); font-variant-numeric:tabular-nums;
+}
+.statrow span{font-size:12.5px; line-height:1.4; color:var(--inv-body)}
+@media (max-width:620px){
+  .statrow{grid-template-columns:1fr 1fr; gap:20px}
+  .statrow b{font-size:28px}
+}
+
+.spotlight .two.spot{
+  grid-template-columns:minmax(0,1fr) minmax(0,.76fr);
+  gap:clamp(26px,4vw,58px); align-items:center;
+}
+.spotlight .tx{display:grid; gap:12px; align-content:center}
+.spotlight h2{margin-bottom:0; max-width:17ch}
+.spotlight .lede{max-width:46ch}
+.spotlight .why{
+  margin-top:6px; padding:14px 18px; border-radius:10px;
+  background:var(--fill); box-shadow:inset 2px 0 0 var(--lime);
+  font-size:14.5px; line-height:1.6; color:var(--body); max-width:48ch;
+}
+.spotlight .why b{color:var(--ink); font-weight:650}
+.spotlight figure{margin:0; display:grid; gap:12px; min-width:0}
+/* a spotlight screen is sized by the screen, not cropped to a box: these
+   three are different shapes and clipping one of them loses its call to
+   action, which is the part being pointed at */
+.spotlight .phone{height:auto; max-height:none; padding:0;
+  width:min(100%, 330px); margin-inline:auto; place-items:stretch}
+.spotlight .phone img{max-width:100%; width:100%}
+@media (max-width:860px){
+  .spotlight .two.spot{grid-template-columns:1fr; gap:24px}
+  .spotlight .phone{width:min(100%, 300px)}
+  .spotlight .why{padding:12px 15px; font-size:14px}
+}
+
+/* the whole home screen, once, as the overview the five moves add up to */
+.wholehome figure{margin:0; display:grid; gap:12px; justify-items:center}
+.wholehome .phone{width:min(100%, 330px); height:min(62vh, 520px)}
+
+/* the states a happy-path case study leaves out */
+.fails{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:1px;
+  background:var(--line); border:1px solid var(--line); border-radius:12px; overflow:hidden}
+.fails div{background:var(--surface); padding:16px 18px; display:grid; gap:5px; min-width:0}
+.fails b{color:var(--ink); font-weight:600; font-size:14.5px; letter-spacing:-0.012em}
+.fails span{font-size:13.5px; line-height:1.55; color:var(--body)}
+@media (max-width:620px){ .fails{grid-template-columns:1fr} }

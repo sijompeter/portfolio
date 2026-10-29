@@ -203,6 +203,12 @@ if(u.searchParams.has('t')){u.searchParams.delete('t');history.replaceState(hist
 
   <div class="band">
     <div class="wrap" style="padding-block:clamp(38px,5vw,60px)">
+      <div class="statrow">
+        <div><b>9,617</b><span>installs in the quarter</span></div>
+        <div><b>80</b><span>reached a broker account</span></div>
+        <div><b>&#8377;5L</b><span>minimum to start</span></div>
+        <div><b>3</b><span>months live</span></div>
+      </div>
       <div class="glance">
         <div><span class="mono k">The problem</span><p>Every new user waited for a scheduled session before they could start.</p></div>
         <div><span class="mono k">What I did</span><p>Made the app explain itself, and kept the webinar as a choice rather than a gate.</p></div>
@@ -283,10 +289,7 @@ if(u.searchParams.has('t')){u.searchParams.delete('t');history.replaceState(hist
           <div>
             <h3>Say what it is before asking who you are</h3>
             <p class="d-only">The app used to open on a dashboard you could browse without an account, a product you did not yet understand. Now it opens on what marketfeed does, what you get, and why to trust it.</p>
-        <div data-note class="slot">
-          <p class="lbl">Screen slot</p>
-          <p>Screen: the pre-login pitch. Already in place.</p>
-        </div>
+
           </div>
         </div>
         <div class="move">
@@ -305,10 +308,7 @@ if(u.searchParams.has('t')){u.searchParams.delete('t');history.replaceState(hist
           <div>
             <h3>One obvious thing to press</h3>
             <p class="d-only"><b>Start Investing</b> sits at the top, above the education. Someone who already knows what they want should not have to read past three sections to find the button.</p>
-        <div data-note class="slot">
-          <p class="lbl">Screen slot</p>
-          <p>Screen: the top of the home screen. Already in place.</p>
-        </div>
+
           </div>
         </div>
         <div class="move">
@@ -327,34 +327,77 @@ if(u.searchParams.has('t')){u.searchParams.delete('t');history.replaceState(hist
           <div>
             <h3>Leave the webinar where someone would reach for it</h3>
             <p class="d-only">Under a heading that says <b>still confused?</b>, with the next session and the time on it. It stopped being the first step everybody takes.</p>
-        <div data-note class="slot">
-          <p class="lbl">Screen slot</p>
-          <p>Screen: the webinar card near the bottom of the home screen.</p>
-        </div>
+
           </div>
         </div>
       </div>
-      <div class="two screens d-only" style="margin-top:clamp(36px,5vw,56px)">
-        <figure>
-          <div class="phone">
-            <img src="../assets/img/12-new-entry.png" alt="The redesigned marketfeed entry screen: Invest, Trade, Automate, All in One Place, with two next-step cards and a Get Started button" loading="lazy">
-          </div>
-          <figcaption><b>Before you sign in</b>The pitch arrives before the ask.</figcaption>
-        </figure>
+      <div class="wholehome" style="margin-top:clamp(32px,4.4vw,48px)">
         <figure>
           <div class="phone scroller" data-lenis-prevent tabindex="0" aria-label="The redesigned home screen, scrollable">
             <img src="../assets/img/11-new-home.png" alt="The redesigned marketfeed home screen: Start Investing at the top, then What is marketfeed, What we offer, Your benefits, a Still confused section offering a 30 minute webinar, and FAQs" loading="lazy">
             <span class="hint" aria-hidden="true">scroll</span>
           </div>
-          <figcaption><b>After you sign in</b>Start Investing first. Then everything the webinar used to say. Scroll it, the length is the point.</figcaption>
+          <figcaption><b>All five, on one screen</b>Scroll it, the length is the point. Everything the webinar used to say, in the order someone needs it.</figcaption>
         </figure>
       </div>
-      <div class="m-only" style="margin-top:28px">
+    </div>
+  </section>
+
+  <section class="cs spotlight">
+    <div class="wrap">
+      <div class="two spot">
+        <div class="tx">
+          <p class="mono lead">Before you sign in</p>
+          <h2 data-split>Say what it is before asking who you are</h2>
+          <p class="lede d-only">The app used to open on a dashboard. Now it opens on what marketfeed does, what you get, and why to trust it, the pitch the webinar used to deliver, delivered on arrival.</p>
+          <p class="lede m-only">The app used to open on a dashboard. Now it opens on what the product does, and why to trust it.</p>
+          <p class="why d-only"><b>Why this matters.</b> Asking for a phone number before a person knows what they are signing up for is the cheapest place in the whole journey to lose them.</p>
+        </div>
         <figure>
           <div class="phone">
-            <img src="../assets/img/11-new-home.png" alt="The redesigned marketfeed home screen with Start Investing at the top, product education below it, and the webinar near the bottom" loading="lazy">
+            <img src="../assets/img/12-new-entry.png" alt="The redesigned marketfeed entry screen: Invest, Trade, Automate, All in One Place, with two next-step cards and a Get Started button" loading="lazy">
           </div>
-          <figcaption><b>The new home screen</b>Start Investing first, then everything the webinar used to say.</figcaption>
+          <figcaption class="d-only"><b>The entry screen</b>Two steps named before a single field is asked for.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs spotlight">
+    <div class="wrap">
+      <div class="two spot">
+        <div class="tx">
+          <p class="mono lead">The first thing you see</p>
+          <h2 data-split>One obvious thing to press</h2>
+          <p class="lede d-only"><b>Start Investing</b> sits at the top of the home screen, above all the education. The people who already know what they want are not made to read past it.</p>
+          <p class="lede m-only"><b>Start Investing</b> sits above all the education, for people who already know what they want.</p>
+          <p class="why d-only"><b>Why this matters.</b> The old journey treated every new user as someone who needed teaching. Some of them had been watching this company on YouTube for a year.</p>
+        </div>
+        <figure>
+          <div class="phone">
+            <img src="../assets/img/13-home-top.png" alt="The top of the redesigned home screen: a greeting, the line Ready to change the way you Invest, three reassurances, and a Start Investing button" loading="lazy">
+          </div>
+          <figcaption class="d-only"><b>Top of the home screen</b>Set it up once, track it anytime, always in control, then the button.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs spotlight">
+    <div class="wrap">
+      <div class="two spot">
+        <div class="tx">
+          <p class="mono lead">Still confused?</p>
+          <h2 data-split>The webinar, one level down</h2>
+          <p class="lede d-only">It did not go anywhere. It sits near the bottom of the home screen under a heading that asks whether you are still unsure, with the next session, the time, and who is running it.</p>
+          <p class="lede m-only">It did not go anywhere. It sits near the bottom, with the next session on it.</p>
+          <p class="why d-only"><b>Why this matters.</b> This is the part that makes the redesign a trade rather than a deletion. The trust mechanism survived; only its position in the queue changed.</p>
+        </div>
+        <figure>
+          <div class="phone">
+            <img src="../assets/img/14-webinar-card.png" alt="A card on the home screen headed Still confused, offering a 30 minute webinar with the date, time and the CEO who runs it" loading="lazy">
+          </div>
+          <figcaption class="d-only"><b>Near the bottom</b>Same session, same person. Now a choice rather than a gate.</figcaption>
         </figure>
       </div>
     </div>
@@ -395,6 +438,26 @@ if(u.searchParams.has('t')){u.searchParams.delete('t');history.replaceState(hist
 
   <section class="cs">
     <div class="wrap">
+      <p class="mono lead">When it goes wrong</p>
+      <h2 data-split>The half nobody screenshots</h2>
+      <p class="lede d-only">Making sign-in mandatory means every new user now
+         meets a form, and a form is mostly its failures. The handoff covered them.</p>
+      <p class="lede m-only">Sign-in means a form, and a form is mostly its failures.</p>
+      <div class="fails" style="margin-top:26px">
+        <div><b>Wrong OTP</b><span class="d-only">Said so in place, kept the number, did not restart the flow.</span></div>
+        <div><b>Empty or invalid email</b><span class="d-only">Caught at the field, named in plain words.</span></div>
+        <div><b>Profile creation failed</b><span class="d-only">A technical failure the user did not cause, said as such, with a way forward.</span></div>
+        <div class="d-only"><b>No video</b><span>The explainer is a video. When it will not load, the screen still has to say what the product does.</span></div>
+      </div>
+        <div data-note class="slot">
+          <p class="lbl">Screen slot</p>
+          <p>Two or three of the error states from the handoff board, wrong OTP, invalid email, profile-creation failure. These are the screens most portfolios leave out, which is exactly why showing them reads as senior. Small ones, side by side, are enough.</p>
+        </div>
+    </div>
+  </section>
+
+  <section class="cs">
+    <div class="wrap">
       <p class="mono lead">What happened</p>
       <h2 data-split>A smaller share of a much bigger number</h2>
       <div class="outcome" style="margin-top:28px">
@@ -415,16 +478,13 @@ if(u.searchParams.has('t')){u.searchParams.delete('t');history.replaceState(hist
   <section class="cs">
     <div class="wrap">
       <p class="mono lead">What I took from it</p>
-      <h2 data-split>Three things</h2>
+      <h2 data-split>Four things</h2>
       <ol class="steps" style="margin-top:26px; max-width:70ch">
-        <li><span><b>The best-converting path can be the reason the funnel is small.</b> <span class="d-only">The webinar had the best numbers in it. Both of those were true at once, and the second only shows up if you look at totals next to rates.</span></span></li>
+        <li><span><b>The best-converting path can be the reason the funnel is small.</b> <span class="d-only">The webinar had the best numbers in it. Both were true at once, and the second only shows up if you read totals next to rates.</span></span></li>
         <li><span><b>Don&rsquo;t ask people to sort themselves at the door.</b> <span class="d-only">They cannot answer that before they know what the product is. Hierarchy answers it for free.</span></span></li>
         <li><span><b>Knowing who someone is, is a design decision.</b> <span class="d-only">Mandatory sign-in reads like a tracking requirement. It is what lets a returning user land where they left off.</span></span></li>
+        <li><span><b>Define the measurement before the release, not after.</b> <span class="d-only">Both routes ran for three months, but not as a comparison. That is why the strongest claim I can make here is a direction rather than a number, and it is the first thing I would change.</span></span></li>
       </ol>
-      <div class="d-only" style="margin-top:30px">
-        <h3 style="margin-bottom:12px">What I&rsquo;d do differently</h3>
-        <p class="prose" style="margin-top:0; max-width:66ch">Define the measurement before the release, not after, and hold a slice of traffic on the old route for the same window. Both routes ran, but not as a comparison, which is why the strongest claim I can make here is a direction rather than a number.</p>
-      </div>
     </div>
   </section>
 
