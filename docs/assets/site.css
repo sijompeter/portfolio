@@ -1985,3 +1985,125 @@ html.cologo-on .cologo{opacity:1; visibility:visible; scale:1}
 }
 .chan .ic-wrap .ic{width:25px; height:25px}
 .chan.hot .ic-wrap{background:none}
+
+/* ============================================================
+   V34 — one contract for every call to action
+   ------------------------------------------------------------
+   Sijo's rule, in his words: on white the label is black, on the lime it is
+   black, and in dark mode it is white. The label is always the readable one,
+   whatever the fill underneath it happens to be.
+
+   Two things were breaking it.
+
+   1. The inverse band kept its own hover rule from before the lime wipe
+      existed, and that rule is more specific than the wipe's. So "Message on
+      WhatsApp" turned white at the same moment the lime slid underneath it:
+      white on lime, a contrast ratio of 1.6, in the one section of the site
+      whose whole job is to be acted on.
+
+   2. Even where the colours were right, they were not right at the same time.
+      The fill travels for 460ms, the label changed colour in 200ms. For the
+      quarter-second in between, the new label colour sat on the old fill, so
+      every button on the site went briefly unreadable on hover. A thing you
+      see for 260ms every single time is not an edge case.
+
+   The fix for both: the fill and the label change together, at zero seconds,
+   and the travelling edge becomes a lighter tint of the same colour rather
+   than the whole fill. The sweep still reads left to right, it is just no
+   longer the thing carrying the contrast. No new colours.
+   ============================================================ */
+
+/* the fill lands at once; only the movement is animated */
+.btn, .talk, .dock a.cta{
+  transition:transform .3s cubic-bezier(.2,.7,.3,1), border-color .2s;
+}
+.btn::before, .talk::before, .dock a.cta::before{
+  background:color-mix(in srgb, var(--lime) 76%, #ffffff);
+}
+
+/* primary: lime fill, near-black label. The band gets the same, which is the
+   override that was missing. */
+.btn:hover, .band .btn:hover, .talk:hover, .dock a.cta:hover{
+  background:var(--lime); border-color:var(--lime); color:#161a08;
+}
+.band .btn:hover{transform:translateY(-1px)}
+.talk:hover svg, .btn:hover .bic{color:#161a08}
+
+/* secondary: ink fill, the ink of the other theme as the label */
+.btn.ghost::before{background:color-mix(in srgb, var(--ink) 82%, var(--surface))}
+.btn.ghost:hover{
+  background:var(--ink); border-color:var(--ink); color:var(--inv-ink);
+}
+.band .btn.ghost:hover{background:var(--inv-ink); border-color:var(--inv-ink); color:var(--inv-bg)}
+
+/* the scroll cue and the theme toggle were muted text on the page: 3.0:1,
+   under the 4.5 that small text needs */
+.scrollcue{color:var(--body)}
+.themetgl, .themetgl.head, .themetgl.menu{color:var(--body)}
+.scrollcue:hover .ring{background:var(--lime); border-color:var(--lime); color:#161a08}
+
+/* these two cards style their own children, so the colour on the card itself
+   is never painted — but anything added inside them later would inherit it */
+.site-foot .cc.hot{color:#161a08}
+.chan.hot{color:var(--inv-body)}
+
+@media (prefers-reduced-motion: reduce){
+  .btn::before, .talk::before, .dock a.cta::before{transition:none}
+}
+
+/* ============================================================
+   V35 — case 01: the decision list and the before/after journey
+   ------------------------------------------------------------
+   Two blocks the other case studies did not need. The numbered decision list
+   carries five changes that are each one idea, so they want to be scannable
+   rather than read; and the journey comparison has to show a step being
+   removed, not just two lists of different lengths.
+   ============================================================ */
+.decs{display:grid; gap:clamp(20px,2.6vw,30px)}
+.dec{display:grid; grid-template-columns:42px minmax(0,1fr); gap:clamp(14px,2vw,22px); align-items:start}
+.dec .n{color:var(--muted); font-size:12px; padding-top:5px; letter-spacing:.08em}
+.dec h3{margin-bottom:9px; max-width:30ch}
+.dec p{color:var(--body); font-size:15px; line-height:1.66; max-width:62ch}
+@media (min-width:900px){ .decs{grid-template-columns:1fr 1fr; gap:clamp(24px,3vw,40px) clamp(30px,4vw,56px)} }
+@media (max-width:520px){ .dec{grid-template-columns:30px minmax(0,1fr); gap:12px} }
+
+ol.jsteps{margin:0; padding:0; display:grid; gap:2px; list-style:none; counter-reset:j}
+ol.jsteps li{
+  display:grid; grid-template-columns:30px minmax(0,1fr); gap:13px;
+  padding:13px 15px; border-radius:9px; background:var(--fill); align-items:baseline;
+}
+ol.jsteps li::before{
+  counter-increment:j; content:counter(j,decimal-leading-zero);
+  font-family:"JetBrains Mono",monospace; font-size:11px; color:var(--muted);
+}
+ol.jsteps b{display:block; color:var(--ink); font-weight:550; font-size:14.5px; letter-spacing:-0.01em}
+ol.jsteps span{font-size:13px; color:var(--body); line-height:1.5}
+/* a step the redesign took out: still listed, visibly gone */
+ol.jsteps li.gone{background:transparent; box-shadow:inset 0 0 0 1px var(--line); opacity:.62}
+ol.jsteps li.gone b{text-decoration:line-through; text-decoration-thickness:1px;
+  text-decoration-color:var(--line-2); color:var(--body); font-weight:450}
+.jrny .jnote{margin-top:16px; font-size:13px; color:var(--muted); line-height:1.6; max-width:46ch}
+
+/* The two screens sit side by side in frames of the same height. The home
+   screen is five times taller than it is wide, because it carries everything
+   the webinar used to say; shrinking it to fit would hide the one property
+   that matters. It scrolls inside its frame instead, which is also how a
+   visitor met it. */
+.screens figure{display:grid; gap:14px; min-width:0}
+.phone{
+  position:relative; height:min(64vh, 560px); border-radius:16px;
+  border:1px solid var(--line-2); background:var(--surface); overflow:hidden;
+  display:grid; place-items:start center;
+}
+.phone img{width:100%; max-width:300px; display:block}
+.phone.scroller{overflow-y:auto; scrollbar-width:thin; overscroll-behavior:contain}
+.phone.scroller:focus-visible{outline:2px solid var(--ink); outline-offset:2px}
+.phone .hint{
+  position:sticky; bottom:10px; justify-self:center; z-index:2;
+  font-family:"JetBrains Mono",monospace; font-size:9.5px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--inv-ink); background:var(--ink);
+  padding:5px 11px; border-radius:999px; opacity:.72; pointer-events:none;
+  transition:opacity .3s;
+}
+.phone.scroller:hover .hint{opacity:0}
+@media (max-width:860px){ .phone{height:min(70vh, 480px)} }

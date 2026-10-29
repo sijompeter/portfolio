@@ -388,12 +388,19 @@
     ns.forEach(function (el) {
       var to = parseFloat(el.getAttribute('data-count'));
       var pre = el.getAttribute('data-pre') || '';
+      /* data-post was in the markup from the start and never read, so every
+         counted figure lost its unit the moment the animation ran: 70%+ became
+         70. And a figure below 1 needs its decimal kept, or 0.8% counts up to
+         a rounded 1%, which is a different and wronger number. */
+      var post = el.getAttribute('data-post') || '';
+      var dp = (String(to).split('.')[1] || '').length;
+      var fmt = function (v) { return dp ? v.toFixed(dp) : String(Math.round(v)); };
       var o = { v: 0 };
       window.gsap.to(o, {
         v: to, duration: 1.5, ease: 'power2.out',
         scrollTrigger: { trigger: el, start: 'top 90%' },
-        onUpdate: function () { el.textContent = pre + Math.round(o.v); },
-        onComplete: function () { el.textContent = pre + to; }
+        onUpdate: function () { el.textContent = pre + fmt(o.v) + post; },
+        onComplete: function () { el.textContent = pre + fmt(to) + post; }
       });
     });
   }
@@ -743,9 +750,9 @@
      THE SHEET — a case study over the work grid, not instead of it
      ============================================================ */
   var CASES = [
-    { n: '01', href: 'work/fund-allocation.html', t: 'Capital that already existed' },
-    { n: '02', href: 'work/trading-app.html', t: 'Watching your money work' },
-    { n: '03', href: 'work/zolo-booking.html', t: 'Availability, discovered too late' },
+    { n: '01', href: 'work/fresh-journey.html', t: 'Trust you had to wait for' },
+    { n: '02', href: 'work/fund-allocation.html', t: 'Capital that already existed' },
+    { n: '03', href: 'work/trading-app.html', t: 'Watching your money work' },
     { n: '04', href: 'work/design-system.html', t: 'Keystone' }
   ];
 
