@@ -405,6 +405,33 @@
     });
   }
 
+  /* ---------- call-to-action fill speed ----------
+     A fixed duration makes a wide button look slower than a narrow one: the
+     fill has further to travel in the same time. Sijo asked for them to feel
+     the same, so the duration comes from the width — one speed in pixels per
+     second, clamped so a small button is not a blink and a very wide one does
+     not drag. It is written as a custom property, which the fill and the
+     label's clip both already read, so one value drives both and they cannot
+     fall out of step. */
+  function ctaSpeed() {
+    /* px per second. Sijo's note: the fill arriving was far too quick
+       while the fill leaving looked right, and the one that looked right
+       travelled a ~190px button in about 460ms. That is the velocity
+       below, and both directions use it, so a narrow dock pill and a
+       wide hero button now move at the same speed rather than taking
+       the same time. */
+    var SPEED = 430, MIN = 0.32, MAX = 0.68;
+    Array.prototype.forEach.call(
+      document.querySelectorAll('.btn, .talk, .dock a.cta'),
+      function (el) {
+        var w = el.offsetWidth;
+        if (!w) return;
+        el.style.setProperty(
+          '--cta-dur',
+          Math.min(MAX, Math.max(MIN, w / SPEED)).toFixed(3) + 's');
+      });
+  }
+
   /* ---------- cursor ----------
      A dot that sits exactly under the pointer — the transform is written on
      every mousemove with no easing, so there is nothing to lag behind — plus
@@ -971,7 +998,11 @@
   }
 
   function boot() {
-    theme(); notes(); events(); copy(); cologo(); header(); smooth(); arriveAtTop(); nav(); sheet(); reveals(); counters(); cursor(); spotlight(); transitions(); intro();
+    theme(); notes(); events(); copy(); cologo(); header(); smooth(); arriveAtTop(); nav(); sheet(); reveals(); counters(); cursor(); spotlight(); transitions(); intro(); ctaSpeed();
+    /* fonts change the width, and so does a resize */
+    window.addEventListener('load', ctaSpeed);
+    window.addEventListener('resize', ctaSpeed, { passive: true });
+    if (document.fonts && document.fonts.ready) { document.fonts.ready.then(ctaSpeed); }
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
