@@ -777,10 +777,10 @@
      THE SHEET — a case study over the work grid, not instead of it
      ============================================================ */
   var CASES = [
-    { n: '01', href: 'work/fresh-journey.html', t: 'Trust you had to wait for' },
-    { n: '02', href: 'work/fund-allocation.html', t: 'Capital that already existed' },
-    { n: '03', href: 'work/trading-app.html', t: 'Watching your money work' },
-    { n: '04', href: 'work/design-system.html', t: 'Keystone' }
+    { n: '01', href: 'work/fresh-journey.html', t: 'The signup that needed a calendar invite' },
+    { n: '02', href: 'work/keystone.html', t: 'One designer, four squads' },
+    { n: '03', href: 'work/direct-purchase.html', t: 'A catalogue, not a shop' },
+    { n: '04', href: 'work/audio-rooms.html', t: 'A trading floor with no floor' }
   ];
 
   function sheet() {

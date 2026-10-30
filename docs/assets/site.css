@@ -2304,3 +2304,57 @@ ol.jsteps li.gone b{text-decoration:line-through; text-decoration-thickness:1px;
 .fails b{color:var(--ink); font-weight:600; font-size:14.5px; letter-spacing:-0.012em}
 .fails span{font-size:13.5px; line-height:1.55; color:var(--body)}
 @media (max-width:620px){ .fails{grid-template-columns:1fr} }
+
+/* ---------------------------------------------------------------- V40
+   One measured number, given the room a measured number deserves.
+
+   Case 01 used to carry two percentages from memory, hedged in small
+   print. They are gone; what replaces them is a single sourced figure,
+   so it gets the opposite treatment — stated large, with where it came
+   from printed underneath rather than apologised for below the fold.
+
+   The floatcard fix at the end is the bug Sijo reported from his phone:
+   the fixed dock sat on top of the "Evidence-led design" card. Padding
+   the hero by the dock's own height keeps them apart at every size
+   instead of at the one size that was tested. */
+.bignum{
+  display:grid; grid-template-columns:auto auto auto; justify-content:start;
+  align-items:center; gap:clamp(14px,2.4vw,28px);
+  padding:clamp(22px,3vw,32px) clamp(24px,3.4vw,38px);
+  background:var(--surface); border:1px solid var(--line); border-radius:4px;
+}
+.bignum div{display:grid; gap:4px; justify-items:start}
+.bignum b{
+  font-family:var(--display,inherit); font-weight:650; letter-spacing:-0.03em;
+  font-size:clamp(38px,6.4vw,64px); line-height:0.95; font-variant-numeric:tabular-nums;
+}
+.bignum .bn-was b{color:var(--muted)}
+.bignum .bn-now b{color:var(--ink)}
+.bignum span{font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted)}
+.bignum .bn-arw{font-size:clamp(20px,3vw,30px); color:var(--muted); line-height:1}
+.bignum .bn-k{
+  grid-column:1/-1; margin:14px 0 0; padding-top:14px; border-top:1px solid var(--line);
+  font-size:13.5px; color:var(--body); display:flex; flex-wrap:wrap; gap:10px; align-items:baseline;
+}
+.bignum .bn-k em{font-style:normal; font-size:11.5px; letter-spacing:0.06em;
+  text-transform:uppercase; color:var(--muted)}
+@media (max-width:560px){
+  .bignum{padding:20px 18px; gap:10px}
+  .bignum .bn-k{font-size:12.5px}
+}
+
+/* the dock is fixed; the hero has to know how tall it is */
+@media (max-width:880px){
+  .hero{padding-bottom:calc(var(--dockh,64px) + 28px)}
+  .hero-art .floatcard{bottom:auto}
+}
+
+/* V40b — the phone has to show the claim, the number and the availability
+   before anything is scrolled. The portrait was taking roughly 60% of that
+   first screen, so it is capped and the art column loses its decoration;
+   none of that furniture is doing work at 390px wide. */
+@media (max-width:860px){
+  .hero-art .portrait{max-width:min(190px, 44vw); margin-inline:auto}
+  .hero-art .blob, .hero-art .wires, .hero-art .dot, .hero-art .scriptnote{display:none}
+  .hero .lede{max-width:34ch}
+}
