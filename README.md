@@ -18,15 +18,15 @@ docs/
 
 ## Version history
 
-Old versions are not on the website. They live in Git, so nothing is ever lost:
+Old versions are not on the website. They are saved as branches, so nothing is ever lost:
 
-| Saved version | What it is |
+| Saved version (branch) | What it is |
 |---|---|
-| tag `v1` (also branch `version-1`) | the original site, before the redesign |
-| tag `v2` | the first launch of the redesign |
-| tag `release-2026-11-05` | the current site |
+| `version-1` | the original site, before the redesign |
+| `version-2-launch` | the first launch of the redesign |
+| `release-2026-11-05` | the current site |
 
-See every saved version: `git tag`
+See every saved version: `git branch -r`
 
 ## Restoring an older version
 
@@ -34,8 +34,9 @@ Put any saved version back on the live site (one commit, fully reversible):
 
 ```sh
 git checkout main && git pull
-git checkout v1 -- docs        # or any tag name from `git tag`
-git commit -m "Restore v1" && git push
+git fetch origin
+git checkout origin/version-1 -- docs   # or any branch from `git branch -r`
+git commit -m "Restore version-1" && git push
 ```
 
 Undo that and return to the latest:
@@ -48,8 +49,8 @@ GitHub Pages republishes within a minute or two after each push.
 
 ## Saving a new version
 
-After publishing an update, tag it so it can be restored later:
+After publishing an update, save it as a branch so it can be restored later:
 
 ```sh
-git tag -a release-YYYY-MM-DD -m "What changed" && git push --tags
+git branch release-YYYY-MM-DD && git push origin release-YYYY-MM-DD
 ```
