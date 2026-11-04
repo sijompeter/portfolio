@@ -10,7 +10,8 @@
 <meta name="theme-color" content="#ffffff">
 <link rel="canonical" href="https://sijompeter.github.io/portfolio/">
 <link rel="icon" href="assets/v2/favicon.svg" type="image/svg+xml">
-<link rel="icon" href="assets/v2/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="assets/v2/favicon-32.png" sizes="32x32" type="image/png" media="(prefers-color-scheme: light)">
+<link rel="icon" href="assets/v2/favicon-32-dark.png" sizes="32x32" type="image/png" media="(prefers-color-scheme: dark)">
 <link rel="apple-touch-icon" href="assets/v2/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Sijo M Peter">
@@ -400,6 +401,13 @@ h1,h2,h3{text-wrap:balance}
 .based .pin,.portrait .cap .pin{box-shadow:none!important}
 @keyframes breathe{0%{transform:scale(1);opacity:.45}70%{transform:scale(2.8);opacity:0}100%{transform:scale(2.8);opacity:0}}
 @media (prefers-reduced-motion:reduce){.based .pin::after,.portrait .cap .pin::after{animation:none;transform:scale(1.9);opacity:.18}}
+
+/* case card thumbnails (real artwork) */
+.case-vis.has-img{background:#F3F1FA}
+.case-vis.has-img picture,.case-vis.has-img img{position:absolute;inset:0;width:100%;height:100%;display:block}
+.case-vis.has-img img{object-fit:cover;object-position:50% 50%;transition:transform .9s var(--ease)}
+.case:hover .case-vis.has-img img{transform:scale(1.03)}
+@media (max-width:900px){.case-vis.has-img{min-height:0;aspect-ratio:968/880;height:auto}}
 @media (max-width:1199px){
   .statement{max-width:min(100%,18em)}
   .case{padding:44px;gap:32px}
@@ -517,29 +525,7 @@ h1,h2,h3{text-wrap:balance}
           <p>A simpler mobile journey that helps users understand Marketfeed, explore investment options and start onboarding on their own.</p>
           <a class="btn btn-ink case-go" href="work/fresh-journey.html"><span class="bi"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></span><span class="bt"><span>View case study</span><span aria-hidden="true">View case study</span></span></a>
         </div>
-        <div class="case-vis v1" aria-hidden="true">
-          <div class="phone ph-a" style="left:12%;top:48px;transform:rotate(-5deg)">
-            <div class="scr">
-              <span class="chip2">SEBI-registered</span>
-              <h6>Let your money work, without watching the market</h6>
-              <small>See how it works before you share a thing.</small>
-              <div class="stories"><i></i><i></i><i></i></div>
-              <div class="blk"><small>How it works</small><div class="bar" style="margin-top:6px;width:90%"></div><div class="bar" style="margin-top:5px;width:70%"></div></div>
-              <div class="blk"><small>Strategies</small><div class="bar" style="margin-top:6px;width:80%"></div></div>
-              <div class="pb">Start investing</div>
-            </div>
-          </div>
-          <div class="phone ph-b" style="right:10%;top:96px;transform:rotate(4deg)">
-            <div class="scr">
-              <h6>Verify your number</h6>
-              <small>We sent a 6-digit code to +91 ••••• •4143</small>
-              <div class="otp" style="margin-top:6px"><span>4</span><span>8</span><span>1</span><span class="f">2</span><span></span><span></span></div>
-              <small style="color:var(--accent-ink);font-weight:600">Resend in 0:24</small>
-              <div class="blk" style="margin-top:6px"><small>Full name</small><div class="bar" style="margin-top:6px;width:60%"></div></div>
-              <div class="blk"><small>Email</small><div class="bar" style="margin-top:6px;width:75%"></div></div>
-              <div class="pb acc">Continue</div>
-            </div>
-          </div>
+        <div class="case-vis v1 has-img"><picture><source srcset="assets/v2/card-01.webp" type="image/webp"><img src="assets/v2/card-01.jpg" alt="Marketfeed app screens: the new dashboard pitch and the Ready to change the way you invest home screen" width="968" height="880" loading="eager" decoding="async"></picture>
         </div>
       </article>
 
@@ -552,22 +538,7 @@ h1,h2,h3{text-wrap:balance}
           <p>Bringing live audio discussions into Marketfeed, so traders could hear experts explain their trading decisions, ask questions in real time and take part in community discussions, without switching to another platform.</p>
           <span class="soon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>Coming Soon</span>
         </div>
-        <div class="case-vis v2" aria-hidden="true">
-          <div class="phone ph-a" style="left:50%;top:44px;margin-left:-106px">
-            <div class="scr dark">
-              <div class="lrow"><small>Community · Swing trades</small><span class="live">LIVE</span></div>
-              <h6>Why I exited before results day</h6>
-              <small>1.2k listening</small>
-              <div class="spk">
-                <div><span class="av talk" style="background:linear-gradient(135deg,#7350FF,#B9A8FF)"></span>Host</div>
-                <div><span class="av" style="background:linear-gradient(135deg,#FFBE4C,#FFE0A6)"></span>Speaker</div>
-                <div><span class="av" style="background:linear-gradient(135deg,#40C4AA,#A7EBDD)"></span>Speaker</div>
-              </div>
-              <div class="lrow" style="margin-top:4px"><small>Speaking now</small><span class="wv"><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
-              <div class="req"><span class="av" style="background:linear-gradient(135deg,#3381FF,#A9C9FF)"></span><div style="flex:1"><b style="font-weight:600">Hand raised</b><br><small>3 listeners waiting</small></div></div>
-              <div class="ctrl"><span>✋</span><span>🎙</span><span class="leave">Leave</span></div>
-            </div>
-          </div>
+        <div class="case-vis v2 has-img"><picture><source srcset="assets/v2/card-02.webp" type="image/webp"><img src="assets/v2/card-02.jpg" alt="Marketfeed live audio room screens: live trade rooms with speakers, audience and join controls" width="968" height="880" loading="lazy" decoding="async"></picture>
         </div>
       </article>
 
@@ -581,14 +552,7 @@ h1,h2,h3{text-wrap:balance}
           <p class="short">Built Keystone from scratch as Marketfeed evolved, creating reusable components, design tokens and clear specifications for developers</p>
           <span class="soon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>Coming Soon</span>
         </div>
-        <div class="case-vis v3" aria-hidden="true">
-          <div class="board">
-            <div class="tile"><h6>Colour <small>tokens</small></h6><div class="sw"><i style="background:#0C0C0C"></i><i style="background:#7350FF"></i><i style="background:#A08BFF"></i><i style="background:#EEEAFF"></i><i style="background:#F6F6F9;box-shadow:inset 0 0 0 1px #E8E8EE"></i><i style="background:#22C55E"></i><i style="background:#FFBE4C"></i><i style="background:#F0565B"></i><i style="background:#3381FF"></i><i style="background:#40C4AA"></i></div></div>
-            <div class="tile"><h6>Layers <small>3 tiers</small></h6><div class="layer"><b>1</b>Primitive</div><div class="layer"><b>2</b>Semantic</div><div class="layer"><b>3</b>Component</div></div>
-            <div class="tile"><h6>Buttons <small>variants</small></h6><div class="btnrow"><span style="background:#0C0C0C;color:#fff">Primary</span><span style="box-shadow:inset 0 0 0 1px #D9D9E2">Secondary</span><span style="background:#EEEAFF;color:#5531EB">Tonal</span></div><div class="lrow"><small style="color:var(--muted)">Toggle</small><span class="toggle-ui"></span></div></div>
-            <div class="tile"><h6>Inputs <small>states</small></h6><div class="inp">Amount <span>₹</span></div><div class="inp err">₹0 <span style="color:var(--red)">!</span></div></div>
-            <div class="tile" style="grid-column:1/-1"><h6>Flutter spec <small>handoff</small></h6><div class="spec">KsButton(<em>variant</em>: primary, <em>size</em>: lg, <em>state</em>: loading)</div></div>
-          </div>
+        <div class="case-vis v3 has-img"><picture><source srcset="assets/v2/card-03.webp" type="image/webp"><img src="assets/v2/card-03.jpg" alt="Keystone design system: typography, colour tokens, buttons and components" width="968" height="880" loading="lazy" decoding="async"></picture>
         </div>
       </article>
     </div>
