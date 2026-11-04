@@ -35,14 +35,14 @@ is saved as the tag `v1` and the branch `version-1`.
 
 ```sh
 git checkout main && git pull
-git revert --no-edit v2      # undoes the V2 launch commit
+git revert --no-edit v1..HEAD   # undoes every V2 commit, newest first
 git push
 ```
 
 **Bring V2 back** after a rollback:
 
 ```sh
-git revert --no-edit HEAD    # reverts the rollback
+git revert --no-edit HEAD~N..HEAD   # N = number of revert commits the rollback made (2 today)
 git push
 ```
 
