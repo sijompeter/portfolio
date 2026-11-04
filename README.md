@@ -8,23 +8,27 @@ GitHub Pages serves the `docs/` folder on `main`.
 
 | Version | Where it lives | URL |
 |---|---|---|
-| **V2** (live by default) | `docs/` | https://sijompeter.github.io/portfolio/ |
+| **V2** (live by default) | `docs/v2/` | https://sijompeter.github.io/portfolio/v2/ |
 | V1 (archived, still online) | `docs/v1/`, tag `v1`, branch `version-1` | https://sijompeter.github.io/portfolio/v1/ |
+
+`https://sijompeter.github.io/portfolio/` forwards to `/v2/` and carries V2's
+share image, so links to the main address still preview and land correctly.
 
 ```
 docs/
-  index.html                 V2 home
-  work/fresh-journey.html    V2 case study: The webinar experience, rebuilt as a mobile app
-  work/*.html                old V1 case study URLs, forwarding to docs/v1/work/
+  index.html                 forwards to v2/ (keeps any #section)
   about.html, contact.html,
   experience.html            old V1 URLs, forwarding to the matching V2 section
-  assets/v2/                 logo, favicons, share image, portrait, footer graphic
-  v1/                        the complete V1 site, untouched apart from noindex
-                             and its own share image path
+  work/fresh-journey.html    forwards to v2/work/fresh-journey.html
+  work/{keystone,direct-purchase,audio-rooms}.html
+                             old V1 case study URLs, forwarding to v1/work/
+  v2/                        the V2 site (index.html, work/, assets/v2/)
+  v1/                        the complete V1 site (noindex)
 ```
 
-Old links people already have keep working: V1 case study URLs forward to their
-archived copies, and V1 page URLs forward to the matching V2 section.
+**Change which version the main address opens:** edit the three `v2/`
+targets in `docs/index.html` (canonical, refresh and `location.replace`)
+to `v1/`, commit and push. Both versions stay online either way.
 
 ## Rolling back
 
