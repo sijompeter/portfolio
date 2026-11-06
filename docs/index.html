@@ -437,6 +437,26 @@ h1,h2,h3{text-wrap:balance}
 .portrait img{inset:-3px!important;width:calc(100% + 6px)!important;height:calc(100% + 6px)!important}
 .portrait .cap .pin{margin-right:var(--pinr,12px)}
 @media (max-width:767px){.career{padding-bottom:72px}}
+
+/* case cards: whole card is the link, custom cursor shows where it leads */
+.case:has(.case-go:focus-visible){box-shadow:0 0 0 3px var(--accent),0 -20px 48px -30px rgba(20,10,60,.35)}
+.case:has(.soon) .case-vis.has-img img{transition:transform .9s var(--ease),filter .5s var(--ease)}
+.case:has(.soon):hover .case-vis.has-img img{transform:none;filter:saturate(.85)}
+.case .case-go svg{transition:transform .4s var(--ease)}
+.case:has(.case-go):hover .case-go svg{transform:translateX(3px)}
+.ccur{position:fixed;left:0;top:0;z-index:70;pointer-events:none;transform:translate3d(-200px,-200px,0);will-change:transform}
+.ccur-in{position:absolute;left:-48px;top:-48px;width:96px;height:96px;border-radius:50%;display:grid;place-items:center;color:#fff;background:var(--accent);box-shadow:0 18px 40px -14px rgba(60,40,170,.55);opacity:0;transform:scale(.3);transition:opacity .3s var(--ease),transform .45s var(--ease),background .35s var(--ease),box-shadow .35s var(--ease)}
+.ccur.on .ccur-in{opacity:1;transform:scale(1)}
+.ccur.down .ccur-in{transform:scale(.88)}
+.ccur.is-lock .ccur-in{background:rgba(12,12,12,.86);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 18px 40px -16px rgba(12,12,12,.5)}
+.ccur .cc{grid-area:1/1;display:flex;flex-direction:column;align-items:center;gap:5px;opacity:0;transform:translateY(8px) scale(.85);transition:opacity .25s var(--ease),transform .4s var(--ease)}
+.ccur .cc svg{width:22px;height:22px}
+.ccur .cc b{font:600 13px/1 var(--text);letter-spacing:.01em}
+.ccur:not(.is-lock) .go,.ccur.is-lock .lock{opacity:1;transform:none}
+.ccur.on:not(.is-lock) .go svg{animation:ccnudge 1.6s var(--ease) infinite}
+@keyframes ccnudge{0%,60%,100%{transform:none}30%{transform:translate(2px,-2px)}}
+@media (hover:hover) and (pointer:fine){#work .case,#work .case *{cursor:none!important}}
+@media (prefers-reduced-motion:reduce){.ccur.on:not(.is-lock) .go svg{animation:none}}
 @media (max-width:1199px){
   .statement{max-width:min(100%,18em)}
   .case{padding:44px;gap:32px}
@@ -775,6 +795,7 @@ h1,h2,h3{text-wrap:balance}
       <span class="tl-count" aria-hidden="true"><b>01</b> / 05</span>
     </div>
   </div>
+  <div class="ccur" id="ccur" aria-hidden="true"><div class="ccur-in"><span class="cc go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg><b>View</b></span><span class="cc lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 018 0v3"/></svg><b>Soon</b></span></div></div>
   <div class="lcur" id="lcur" aria-hidden="true"><div class="lcur-in"><span class="lg" data-k="marketfeed"><svg viewBox="171 242 858 116" width="180" height="23" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Marketfeed logo" style="--lw:180px;--lh:23px">
 <path d="M1015.51 354.393C1018.36 354.393 1020.72 353.428 1022.61 351.498C1024.49 349.567 1025.44 347.23 1025.44 344.486C1025.44 341.742 1024.49 339.405 1022.61 337.474C1020.72 335.544 1018.36 334.578 1015.51 334.578C1012.76 334.578 1010.42 335.544 1008.49 337.474C1006.55 339.405 1005.59 341.742 1005.59 344.486C1005.59 347.23 1006.55 349.567 1008.49 351.498C1010.42 353.428 1012.76 354.393 1015.51 354.393Z" fill="#FFC400"/>
 <path d="M944.837 354.398C957.454 354.398 967.071 349.368 973.687 339.308V352.417H986.967V245.719H973.687V289.312C967.071 279.252 957.454 274.222 944.837 274.222C934.148 274.222 925.043 278.109 917.511 285.883C909.98 293.656 906.214 303.132 906.214 314.31C906.214 325.488 909.98 334.964 917.511 342.737C925.043 350.511 934.148 354.398 944.837 354.398ZM946.512 341.594C938.884 341.594 932.473 338.977 927.279 333.745C922.091 328.511 919.494 322.033 919.494 314.31C919.494 306.587 922.091 300.109 927.279 294.876C932.473 289.643 938.884 287.026 946.512 287.026C954.249 287.026 960.708 289.643 965.902 294.876C971.09 300.109 973.687 306.587 973.687 314.31C973.687 322.033 971.09 328.511 965.902 333.745C960.708 338.977 954.249 341.594 946.512 341.594Z" fill="#001439"/>
@@ -1037,6 +1058,27 @@ h1,h2,h3{text-wrap:balance}
     const paint=v=>{el.innerHTML=pre+v+'<i>'+suf+'</i>'};if(reduce){paint(to);return}
     const t0=performance.now(),d=1500;const step=t=>{const k=Math.min((t-t0)/d,1);paint(Math.round(to*(1-Math.pow(1-k,3))));if(k<1)requestAnimationFrame(step)};paint(0);requestAnimationFrame(step)}),{threshold:.6});
   document.querySelectorAll('[data-count]').forEach(el=>cio.observe(el));
+
+  /* case card cursor: "View" over the live case study, a lock over coming-soon cards */
+  const cc=document.getElementById('ccur');
+  if(cc&&matchMedia('(hover:hover) and (pointer:fine)').matches){
+    let tx=-200,ty=-200,x=-200,y=-200,run=0;
+    const loop=()=>{x+=(tx-x)*(reduce?1:.24);y+=(ty-y)*(reduce?1:.24);cc.style.transform=`translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0)`;run=(Math.abs(tx-x)+Math.abs(ty-y)>.3)?requestAnimationFrame(loop):0};
+    const kick=()=>{if(!run)run=requestAnimationFrame(loop)};
+    stack.forEach(c=>{const lock=!!c.querySelector('.soon');
+      c.addEventListener('pointerenter',e=>{tx=e.clientX;ty=e.clientY;if(!cc.classList.contains('on')){x=tx;y=ty}cc.classList.toggle('is-lock',lock);cc.classList.add('on');kick()});
+      c.addEventListener('pointermove',e=>{tx=e.clientX;ty=e.clientY;kick()});
+      c.addEventListener('pointerdown',()=>cc.classList.add('down'));
+      c.addEventListener('pointerup',()=>cc.classList.remove('down'));
+      c.addEventListener('pointerleave',()=>cc.classList.remove('on','down'));});
+    addEventListener('scroll',()=>{if(!cc.classList.contains('on'))return;const el=document.elementFromPoint(tx,ty),c=el&&el.closest('#work .case');
+      if(!c){cc.classList.remove('on');return}cc.classList.toggle('is-lock',!!c.querySelector('.soon'))},{passive:true});
+  }
+
+  /* the whole live card opens the case study, not just its button */
+  stack.forEach(c=>{const a=c.querySelector('a.case-go');if(!a)return;
+    c.addEventListener('click',e=>{if(e.target.closest('a,button')||(getSelection()+'').length)return;
+      if(e.metaKey||e.ctrlKey||e.button===1){open(a.href,'_blank');return}location.href=a.href});});
 
 })();
 /* career timeline: the section is as tall as the horizontal distance to travel; the pinned track slides left with scroll */
