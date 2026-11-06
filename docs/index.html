@@ -132,7 +132,7 @@ h1,h2,h3{text-wrap:balance}
 /* footer */
 .cta-top{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap}
 .cta-top .dl{flex:none;margin-bottom:10px}
-.reach{display:grid;grid-template-columns:1.25fr 1fr auto;margin-top:72px;border-top:1px solid var(--line-2)}
+.reach{display:grid;grid-template-columns:1.25fr 1fr auto;margin-top:56px}
 .reach .cell{display:flex;flex-direction:column;gap:14px;padding:32px 40px 6px;border-left:1px solid var(--line-2);min-width:0}
 .reach .cell:first-child{border-left:0;padding-left:0}
 .reach .cell:last-child{padding-right:0}
@@ -362,7 +362,7 @@ h1,h2,h3{text-wrap:balance}
 .idx .yr{font:400 20px/1 var(--display);letter-spacing:.01em;color:#A2A3B1;font-variant-numeric:tabular-nums}
 
 /* career: pinned stage, cards ride a timeline to the left as you scroll */
-.career{position:relative;background:#fff}
+.career{position:relative;background:#fff;padding-bottom:120px}
 .tl-pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:flex;flex-direction:column}
 .tl-pin .head{padding-top:112px;margin-bottom:0;flex:none}
 .tl-stage{position:relative;flex:1;min-height:0}
@@ -433,6 +433,10 @@ h1,h2,h3{text-wrap:balance}
 .case:hover .case-vis.has-img img{transform:scale(1.03)}
 @media (max-width:900px){.case-vis.has-img{min-height:0;aspect-ratio:968/880;height:auto}}
 
+
+.portrait img{inset:-3px!important;width:calc(100% + 6px)!important;height:calc(100% + 6px)!important}
+.portrait .cap .pin{margin-right:var(--pinr,12px)}
+@media (max-width:767px){.career{padding-bottom:72px}}
 @media (max-width:1199px){
   .statement{max-width:min(100%,18em)}
   .case{padding:44px;gap:32px}
@@ -923,7 +927,7 @@ h1,h2,h3{text-wrap:balance}
       </div>
       <div class="cell">
         <span class="col-l">WhatsApp</span>
-        <a class="ct ct-wa" href="https://api.whatsapp.com/send?phone=919447784143" target="_blank" rel="noopener" aria-label="Chat on WhatsApp, +91 94477 84143">+91 94477 84143</a>
+        <a class="ct ct-wa" href="https://api.whatsapp.com/send?phone=919447784143&amp;text=Hi%20Sijo%20%F0%9F%91%8B%F0%9F%8F%BB%0AReaching%20out%20for%20a%20quick%20chat%2C%0AAre%20you%20open%20to%20new%20opportunities%3F" target="_blank" rel="noopener" aria-label="Chat on WhatsApp, +91 94477 84143">+91 94477 84143</a>
         <span class="ct-note" data-touch="Tap to chat"></span>
       </div>
       <div class="cell">
