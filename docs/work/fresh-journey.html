@@ -494,6 +494,10 @@ section.cs.alt{background:var(--surface)}
 
 .qav picture,.qav img{display:block;width:100%;height:100%;object-fit:cover}
 
+/* designer-supplied media fills the whole area and keeps its shape on every screen */
+.stage.media,.feat .stage.media{height:auto!important;padding:0!important;display:block;aspect-ratio:2240/1040;background:#F1EFF8}
+.stage.media video,.stage.media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+
 </style>
 <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
@@ -544,7 +548,7 @@ section.cs.alt{background:var(--surface)}
 </header>
 <div class="wrap rv"><div class="stage hero-stage"><div class="ph tilt-l"><div class="sc shot"><picture><source srcset="../assets/v2/screen-pitch.webp" type="image/webp"><img src="../assets/v2/screen-pitch.jpg" alt="Value pitch before login" width="660" height="1416" loading="lazy" decoding="async"></picture></div></div><div class="ph "><div class="sc shot"><picture><source srcset="../assets/v2/screen-home.webp" type="image/webp"><img src="../assets/v2/screen-home.jpg" alt="Adaptive home screen" width="660" height="1416" loading="lazy" decoding="async"></picture></div></div><div class="ph tilt-r"><div class="sc shot"><picture><source srcset="../assets/v2/screen-login.webp" type="image/webp"><img src="../assets/v2/screen-login.jpg" alt="Phone number and OTP entry" width="660" height="1416" loading="lazy" decoding="async"></picture></div></div></div></div>
 
-<section class="cs" id="context">
+<section data-cs="context" class="cs" id="context">
   <div class="wrap">
     <div class="ctx">
       <div>
@@ -582,7 +586,7 @@ section.cs.alt{background:var(--surface)}
   <div class="wrap"><p class="note rv">Adapted from real user feedback and support queries<br>Personal information has been modified</p></div>
 </section>
 <div class="wrap"><div class="divider" aria-hidden="true"><span></span></div></div>
-<section class="cs">
+<section data-cs="goals" class="cs">
   <div class="wrap">
     <div class="head"><span class="eyebrow rv"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg>Goals<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg></span><h2 class="d2 rv">What we set out to do</h2><p class="lede rv">Three clear goals shaped the redesign from the start. Not all of them were equally visible to users. All of them mattered to the product</p></div>
     <div class="goals">
@@ -593,7 +597,7 @@ section.cs.alt{background:var(--surface)}
   </div>
 </section>
 
-<section class="cs alt">
+<section data-cs="approach" class="cs alt">
   <div class="wrap">
     <div class="head"><span class="eyebrow rv"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg>Approach<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg></span><h2 class="d2 rv">Key product decisions</h2><p class="lede rv">Before designing screens, I worked through the decisions that would shape the whole experience. A few mattered more than the rest, and each one came with a tradeoff</p></div>
     <div class="decisions">
@@ -605,7 +609,7 @@ section.cs.alt{background:var(--surface)}
   </div>
 </section>
 
-<section class="cs">
+<section data-cs="journey" class="cs">
   <div class="wrap">
     <div class="head"><span class="eyebrow rv"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg>New acquisition flow<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg></span><h2 class="d2 rv">The complete entry journey</h2><p class="lede rv">The new entry flow brings the entire acquisition journey directly into the Marketfeed app. Instead of a mandatory live session, we built education and trust right into the app itself, helping users learn at their own pace and feel confident to start investing</p></div>
     <div class="flow">
@@ -620,7 +624,7 @@ section.cs.alt{background:var(--surface)}
 </section>
 
 <div class="wrap"><div class="divider" aria-hidden="true"><span></span></div></div>
-<section class="cs">
+<section data-cs="design_decisions" class="cs">
   <div class="wrap">
     <div class="feat">
       <div class="feat-copy"><span class="eyebrow rv"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg>First impression</span><h2 class="d2 rv">Value before the ask</h2>
@@ -649,16 +653,16 @@ section.cs.alt{background:var(--surface)}
   </div>
 </section>
 
-<section class="cs">
+<section data-cs="safety_net" class="cs">
   <div class="wrap">
     <div class="center-block"><span class="eyebrow rv"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg>The safety net<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg></span><h2 class="d2 rv">The webinar as an optional fallback</h2>
       <p class="lede rv">We didn't remove the live webinar because making a big financial decision purely on an app can be hard. For users needing more assurance, we positioned our CEO webinar as an exclusive invite, offering real-time Q&amp;A and a human touch to build final confidence</p>
       <div class="callout rv"><span class="co-lab">Why this matters</span><p>Changing the narrative from a mandatory session to an exclusive invite removes friction. Plus, talking directly to the founder builds the highest level of trust</p></div></div>
-    <div class="stage soft wide rv"><div class="ph tilt-l"><div class="sc shot"><picture><source srcset="../assets/v2/screen-old-webinar.webp" type="image/webp"><img src="../assets/v2/screen-old-webinar.jpg" alt="Old dashboard with Join Live Event" width="660" height="1416" loading="lazy" decoding="async"></picture></div></div><div class="ph "><div class="sc shot"><picture><source srcset="../assets/v2/screen-home.webp" type="image/webp"><img src="../assets/v2/screen-home.jpg" alt="Adaptive home screen" width="660" height="1416" loading="lazy" decoding="async"></picture></div></div><div class="ph tilt-r"><div class="sc shot"><picture><source srcset="../assets/v2/screen-invite.webp" type="image/webp"><img src="../assets/v2/screen-invite.jpg" alt="Still confused? Join a 30 minute webinar with the CEO" width="660" height="1416" loading="lazy" decoding="async"></picture></div></div></div>
+    <div class="stage wide media rv"><video class="cs-vid" autoplay muted loop playsinline preload="metadata" poster="../assets/v2/cs-safety-net-poster.jpg" aria-label="The CEO webinar shown as an optional invite: home screen, webinar details, invitation and registration confirmation"><source src="../assets/v2/cs-safety-net.webm" type="video/webm"><source src="../assets/v2/cs-safety-net.mp4" type="video/mp4"></video></div>
   </div>
 </section>
 
-<section class="cs">
+<section data-cs="happy_path" class="cs">
   <div class="wrap">
     <div class="center-block"><span class="eyebrow rv"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg>Beyond the happy path<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg></span><h2 class="d2 rv">Designing for when things break</h2>
       <p class="lede rv">Live events can be unpredictable. If a webinar's date changes, users instantly see a clear "Rescheduled" update on their home screen. If no sessions are currently available, the section doesn't just vanish. It gracefully falls back to a "Contact Support" card showing real photos of our team. This ensures hesitant users always find a human connection to help them make big financial decisions</p>
@@ -668,7 +672,7 @@ section.cs.alt{background:var(--surface)}
 </section>
 
 <div class="wrap"><div class="divider" aria-hidden="true"><span></span></div></div>
-<section class="cs">
+<section data-cs="outcome" class="cs">
   <div class="wrap">
     <div class="head"><span class="eyebrow rv"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg>Outcome<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg></span><h2 class="d2 rv">We made it easier to get started without a live webinar</h2><p class="lede rv">We tested the new app flow alongside the legacy webinar. Once data proved faster onboarding and higher-intent support conversations, we shifted 100% of our traffic to the app</p></div>
     <div class="outcomes">
@@ -679,7 +683,7 @@ section.cs.alt{background:var(--surface)}
   </div>
 </section>
 
-<section class="cs learn-band">
+<section data-cs="reflections" class="cs learn-band">
   <div class="wrap">
     <div class="paper rv"><svg class="clip" viewBox="0 0 40 96" fill="none" aria-hidden="true"><path d="M27 30V14a9 9 0 00-18 0v58a12 12 0 0024 0V24" stroke="url(#clipg)" stroke-width="4.2" stroke-linecap="round"/><defs><linearGradient id="clipg" x1="0" y1="0" x2="40" y2="96" gradientUnits="userSpaceOnUse"><stop stop-color="#C9CBD6"/><stop offset=".5" stop-color="#8E91A3"/><stop offset="1" stop-color="#C9CBD6"/></linearGradient></defs></svg>
       <span class="eyebrow"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5c.6 5.6 4.9 9.9 10.5 10.5-5.6.6-9.9 4.9-10.5 10.5C11.4 16.9 7.1 12.6 1.5 12 7.1 11.4 11.4 7.1 12 1.5z"/></svg>Takeaways</span>
@@ -783,6 +787,71 @@ section.cs.alt{background:var(--surface)}
   /* copy email: the whole address is the control; a note confirms */
   document.querySelectorAll('.ct[data-copy]').forEach(b=>{const note=b.parentElement.querySelector('.ct-note');let to;b.addEventListener('click',async()=>{let msg='Copied to clipboard';try{await navigator.clipboard.writeText(b.dataset.copy)}catch(e){const r=document.createRange();r.selectNodeContents(b);const s=getSelection();s.removeAllRanges();s.addRange(r);msg='Selected, press Ctrl/Cmd+C'}note.textContent=msg;note.classList.add('show');clearTimeout(to);to=setTimeout(()=>{note.classList.remove('show');setTimeout(()=>{note.textContent=''},300)},1800)})});
   window.__reduce=reduce;
+})();
+
+/* ---------- Microsoft Clarity tracking: custom events + tags ----------
+   Events: case_card_click, case_locked_click, case_study_open, cs_reached_<section>, cs_read_complete,
+   contact_view, email_copy, whatsapp_click, linkedin_click, medium_click, dribbble_click, resume_download,
+   get_in_touch_click, dwell_<section> (10s+ spent in a section).
+   Tags: page_type, resume_from, top_section, time_<section>. */
+(()=>{
+  const C=(...a)=>{try{if(typeof window.clarity==='function')window.clarity(...a)}catch(e){}};
+  const ev=n=>C('event',n), tag=(k,v)=>C('set',k,String(v)), keep=r=>C('upgrade',r);
+  const isCase=!!document.querySelector('[data-cs]');
+  tag('page_type',isCase?'case_study':'home');
+  if(isCase){ev('case_study_open');keep('case study opened')}
+
+  /* clicks */
+  document.addEventListener('click',e=>{
+    const a=e.target.closest('a,button'); const card=e.target.closest('#work .case');
+    if(card){ if(card.querySelector('.soon')) ev('case_locked_click'); else ev('case_card_click'); }
+    if(!a) return;
+    const href=a.getAttribute('href')||'';
+    if(a.matches('[data-copy]')){ev('email_copy');keep('email copied')}
+    else if(/whatsapp\.com|wa\.me/.test(href)){ev('whatsapp_click');keep('whatsapp')}
+    else if(/linkedin\.com/.test(href))ev('linkedin_click');
+    else if(/medium\.com/.test(href))ev('medium_click');
+    else if(/dribbble\.com/.test(href))ev('dribbble_click');
+    else if(a.hasAttribute('download')||/\.pdf($|\?)/.test(href)){
+      tag('resume_from',a.closest('footer,#contact')?'footer':a.closest('.mmenu,.menu,[class*="mobile"]')?'menu':'nav');
+      ev('resume_download');keep('resume download')}
+    else if(/#contact$/.test(href))ev('get_in_touch_click');
+  },true);
+
+  /* section reach (fires once each) */
+  if('IntersectionObserver' in window){
+    const once=new Set();
+    const hit=n=>{if(once.has(n))return;once.add(n);
+      if(n==='contact'){ev('contact_view')} else {ev('cs_reached_'+n); if(n==='outcome'){ev('cs_read_complete');keep('read case study')}}};
+    /* a case study section counts as reached once its top passes the middle of the screen, however tall it is */
+    const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){hit(x.target.dataset.cs);io.unobserve(x.target)}}),{rootMargin:'0px 0px -45% 0px',threshold:0});
+    document.querySelectorAll('[data-cs]').forEach(s=>io.observe(s));
+    const ct=document.getElementById('contact');
+    if(ct){const io2=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){hit('contact');io2.disconnect()}}),{threshold:.35});io2.observe(ct)}
+  }
+
+  /* dwell: time spent per section (section under the middle of the screen, tab visible only) */
+  const zones=isCase
+    ? [['case_study',document.body]]
+    : [['hero',document.querySelector('.hero')],['hero',document.getElementById('what')],['work',document.getElementById('work')],
+       ['about',document.getElementById('about')],['career',document.getElementById('career')]];
+  const contact=document.getElementById('contact'); if(contact) zones.push(['contact',contact]);
+  const t={},fired=new Set(); let lead='';
+  const bucket=s=>s<10?'under 10s':s<30?'10-30s':s<60?'30-60s':s<180?'1-3 min':'3 min+';
+  const cur=()=>{const y=innerHeight/2;let hit='';for(const [n,el] of zones){if(!el)continue;const r=el.getBoundingClientRect();if(r.top<=y&&r.bottom>=y)hit=n}
+    if(isCase&&contact){const r=contact.getBoundingClientRect();if(r.top<=y)hit='contact'}return hit};
+  setInterval(()=>{if(document.hidden)return;const n=cur();if(!n)return;t[n]=(t[n]||0)+1;
+    if(t[n]>=10&&!fired.has(n)){fired.add(n);ev('dwell_'+n)}
+    if(t[n]%5===0)tag('time_'+n,bucket(t[n]));
+    const top=Object.keys(t).sort((a,b)=>t[b]-t[a])[0]; if(top&&top!==lead&&t[top]>=5){lead=top;tag('top_section',top)}
+  },1000);
+})();
+
+/* designer videos: play only while on screen, still poster for reduced motion */
+(()=>{const vs=[...document.querySelectorAll('video.cs-vid')];if(!vs.length)return;
+  const rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  vs.forEach(v=>{v.muted=true;if(rm){v.removeAttribute('autoplay');v.pause();return}
+    if('IntersectionObserver' in window){new IntersectionObserver(es=>es.forEach(x=>{x.isIntersecting?v.play().catch(()=>{}):v.pause()}),{threshold:.2}).observe(v)}});
 })();
 
 /* case page: gentle parallax on the hero phones */

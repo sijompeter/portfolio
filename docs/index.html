@@ -1027,6 +1027,71 @@ h1,h2,h3{text-wrap:balance}
   window.__reduce=reduce;
 })();
 
+/* ---------- Microsoft Clarity tracking: custom events + tags ----------
+   Events: case_card_click, case_locked_click, case_study_open, cs_reached_<section>, cs_read_complete,
+   contact_view, email_copy, whatsapp_click, linkedin_click, medium_click, dribbble_click, resume_download,
+   get_in_touch_click, dwell_<section> (10s+ spent in a section).
+   Tags: page_type, resume_from, top_section, time_<section>. */
+(()=>{
+  const C=(...a)=>{try{if(typeof window.clarity==='function')window.clarity(...a)}catch(e){}};
+  const ev=n=>C('event',n), tag=(k,v)=>C('set',k,String(v)), keep=r=>C('upgrade',r);
+  const isCase=!!document.querySelector('[data-cs]');
+  tag('page_type',isCase?'case_study':'home');
+  if(isCase){ev('case_study_open');keep('case study opened')}
+
+  /* clicks */
+  document.addEventListener('click',e=>{
+    const a=e.target.closest('a,button'); const card=e.target.closest('#work .case');
+    if(card){ if(card.querySelector('.soon')) ev('case_locked_click'); else ev('case_card_click'); }
+    if(!a) return;
+    const href=a.getAttribute('href')||'';
+    if(a.matches('[data-copy]')){ev('email_copy');keep('email copied')}
+    else if(/whatsapp\.com|wa\.me/.test(href)){ev('whatsapp_click');keep('whatsapp')}
+    else if(/linkedin\.com/.test(href))ev('linkedin_click');
+    else if(/medium\.com/.test(href))ev('medium_click');
+    else if(/dribbble\.com/.test(href))ev('dribbble_click');
+    else if(a.hasAttribute('download')||/\.pdf($|\?)/.test(href)){
+      tag('resume_from',a.closest('footer,#contact')?'footer':a.closest('.mmenu,.menu,[class*="mobile"]')?'menu':'nav');
+      ev('resume_download');keep('resume download')}
+    else if(/#contact$/.test(href))ev('get_in_touch_click');
+  },true);
+
+  /* section reach (fires once each) */
+  if('IntersectionObserver' in window){
+    const once=new Set();
+    const hit=n=>{if(once.has(n))return;once.add(n);
+      if(n==='contact'){ev('contact_view')} else {ev('cs_reached_'+n); if(n==='outcome'){ev('cs_read_complete');keep('read case study')}}};
+    /* a case study section counts as reached once its top passes the middle of the screen, however tall it is */
+    const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){hit(x.target.dataset.cs);io.unobserve(x.target)}}),{rootMargin:'0px 0px -45% 0px',threshold:0});
+    document.querySelectorAll('[data-cs]').forEach(s=>io.observe(s));
+    const ct=document.getElementById('contact');
+    if(ct){const io2=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){hit('contact');io2.disconnect()}}),{threshold:.35});io2.observe(ct)}
+  }
+
+  /* dwell: time spent per section (section under the middle of the screen, tab visible only) */
+  const zones=isCase
+    ? [['case_study',document.body]]
+    : [['hero',document.querySelector('.hero')],['hero',document.getElementById('what')],['work',document.getElementById('work')],
+       ['about',document.getElementById('about')],['career',document.getElementById('career')]];
+  const contact=document.getElementById('contact'); if(contact) zones.push(['contact',contact]);
+  const t={},fired=new Set(); let lead='';
+  const bucket=s=>s<10?'under 10s':s<30?'10-30s':s<60?'30-60s':s<180?'1-3 min':'3 min+';
+  const cur=()=>{const y=innerHeight/2;let hit='';for(const [n,el] of zones){if(!el)continue;const r=el.getBoundingClientRect();if(r.top<=y&&r.bottom>=y)hit=n}
+    if(isCase&&contact){const r=contact.getBoundingClientRect();if(r.top<=y)hit='contact'}return hit};
+  setInterval(()=>{if(document.hidden)return;const n=cur();if(!n)return;t[n]=(t[n]||0)+1;
+    if(t[n]>=10&&!fired.has(n)){fired.add(n);ev('dwell_'+n)}
+    if(t[n]%5===0)tag('time_'+n,bucket(t[n]));
+    const top=Object.keys(t).sort((a,b)=>t[b]-t[a])[0]; if(top&&top!==lead&&t[top]>=5){lead=top;tag('top_section',top)}
+  },1000);
+})();
+
+/* designer videos: play only while on screen, still poster for reduced motion */
+(()=>{const vs=[...document.querySelectorAll('video.cs-vid')];if(!vs.length)return;
+  const rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  vs.forEach(v=>{v.muted=true;if(rm){v.removeAttribute('autoplay');v.pause();return}
+    if('IntersectionObserver' in window){new IntersectionObserver(es=>es.forEach(x=>{x.isIntersecting?v.play().catch(()=>{}):v.pause()}),{threshold:.2}).observe(v)}});
+})();
+
 (()=>{
   const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   /* scroll-linked word reveal: grey -> ink, tied to scroll position */
